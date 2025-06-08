@@ -1,0 +1,591 @@
+@charset "UTF-8"; 
+
+/* Reset básico *//* Reset básico */
+
+@import url('https://fonts.googleapis.com/css2?family=Sriracha&display=swap');
+
+* {
+box-sizing: border-box;
+margin: 0;
+padding: 0;
+}
+html {
+  scroll-behavior: smooth;
+}
+
+/* Garante que o body ocupe toda a altura e não tenha margem */
+body {
+  background-color: black;
+  margin: 0;
+  padding: 0;
+  min-height: 200vh;
+  overflow-x: hidden;
+}
+/* Reset básico *//* Reset básico */
+
+
+/* header *//* header *//* header *//* header *//* header *//* header *//* header *//* header */
+header {
+  background-image: url(https://img.freepik.com/fotos-gratis/textura-da-superficie-da-parede-do-tijolo-de-derramamento-de-oleo_23-2151262389.jpg?uid=R27915155&ga=GA1.1.633700070.1748310171&semt=ais_items_boosted&w=740);
+  background-position: top;
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding-bottom: 100px;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10; /* Valor menor que o main para permitir sobreposição */
+  background-color: white; /* Ou a cor de fundo que você preferir */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra opcional para destacar o header */
+
+  
+
+  
+}
+/* chuva de corações  chuva de corações chuva de corações chuva de corações*/
+
+#efeito-coracoes {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 10;
+
+  /* Efeito de corações deve ficar por cima de tudo */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* Permite clicar através dos corações */
+  z-index: 30; /* Valor maior que todos para garantir que fique por cima */
+
+}
+
+.item-coracao {
+  position: absolute;
+  font-size: 20px;
+  color: #e91e63; /* Rosa */
+  animation: animar-queda 3s linear infinite;
+  opacity: 0.7; /* Discreto */
+}
+
+@keyframes animar-queda {
+  0% {
+    transform: translateY(-20px) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(600px) rotate(360deg);
+    opacity: 0;
+  }
+}
+/* chuva de corações  chuva de corações chuva de corações chuva de corações*/
+
+/* calendario calendario  calendario calendario calendario calendario calendario calendario*/ 
+/* Data exibida no topo */
+#ano {
+margin-left: 15px;
+font-weight: bolder;
+padding-top: 5px;
+color: white;
+}
+/* Container dos dias do calendário */
+#container {
+display: flex;
+padding: 10px;
+border-bottom: 1px solid #000000;
+}
+/* Estilo padrão dos itens (dias) */
+.itens {
+flex: auto;
+text-align: center;
+font-weight: bold;
+padding: 8px;
+border: 2px solid white;
+color: white;
+}
+/* Dia destacado */
+#data {
+border: 1px solid white;
+background-color: #36FEE3;
+color: white;
+border-radius: 30px;
+}
+/* calendario calendario  calendario calendario calendario calendario calendario calendario*/ 
+
+
+/* Estilo do cabeçalho com mensagem Estilo do cabeçalho com mensagem */
+
+@keyframes slideInRight {
+  0% {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Animação para o parágrafo vindo da esquerda */
+@keyframes slideInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Título principal */
+#titulo-principal {
+  font-family: Sriracha, Arial, Helvetica, sans-serif;
+  color: #36FEE3;
+  text-align: center;
+  font-size: 2.8em;
+  margin: 30px;
+  margin-top: 0px;
+  margin-bottom: 5px;
+  padding-top: 10px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.591);
+  animation: slideInRight 1.5s ease forwards;
+}
+#box-text {
+background-color: rgba(250, 235, 215, 0.835);
+text-align: center;
+padding: 20px;
+border-radius: 30px;
+color: black;
+padding-top: 20px;
+margin-bottom: 50px;
+}
+#frase-dia-dos-namorados {
+  font-family: Sriracha, Arial, Helvetica, sans-serif;
+  font-size: 1.3em;
+  color: black;
+  max-width: 600px;
+  opacity: 0; /* Começa invisível */
+  animation: slideInLeft 1.8s ease forwards;
+  animation-delay: 0.5s; /* Começa um pouco depois do título */
+}
+
+/* Classe para ativar animação */
+#icone-namorados {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* Imagem principal do bolo */
+#icone-namorados > img {
+width: 100px;
+}
+/* Mensagem de parabéns */
+
+header > div > p {
+text-align: center;
+font-weight: bold;
+margin-left: 5px;
+border-radius: 30px;
+padding: 10px;
+}
+/* Estilo do cabeçalho com mensagem Estilo do cabeçalho com mensagem */
+
+
+/* header *//* header *//* header *//* header *//* header *//* header *//* header *//* header */
+ 
+
+
+
+/* main *//* main *//* main *//* main *//* main *//* main *//* main *//* main *//* main */
+
+/* Área estilo rede social */
+main {
+  margin-top: -60px;
+  border-top-left-radius: 100px;
+  border-top-right-radius: 100px;
+  box-shadow: 0px -1px 20px 13px #00000094;
+
+  /* Configura o main para sobrepor o header ao rolar */
+  position: relative;
+  z-index: 20; /* Valor maior que o header para garantir que fique por cima */
+  margin-top: 100vh; /* Inicialmente posicionado abaixo do header em altura total da viewport */
+  background-color: white; /* Ou a cor de fundo que você preferir */
+  border-top-left-radius: 20px; /* Cantos arredondados para um efeito visual melhor */
+  border-top-right-radius: 20px;
+  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1); /* Sombra para destacar a sobreposição */
+}
+
+#insta {
+background-color: black;
+color: white;
+padding: 10px;
+padding-left: 0px;
+padding-right: 5px;
+border-top-left-radius:20px;
+border-top-right-radius: 20px;
+}
+
+/* Container do perfil */
+#perfil-container {
+display: flex;
+align-items: center;
+gap: 8px;
+margin-top: 15px;
+margin-left: 20px;
+}
+
+/* Imagem do perfil */
+#perfil {
+width: 50px;
+border-radius: 200px;
+}
+
+/* Ícone de verificado */
+#verificado {
+width: 18px;
+margin-left: 3px;
+}
+
+/* Container do carrossel */
+.carrossel {
+position: relative;
+max-width: 600px;
+margin: 30px auto 10px auto;
+margin-top: 15px;
+margin-bottom: 3px;
+overflow: hidden;
+border-radius: 10px;
+}
+/* Imagens do carrossel */
+.slides {
+width: 470px;
+height: 500px;
+object-fit: cover; /* ou 'contain' se quiser que ela toda apareça */
+display: block;
+margin: 0 auto;
+}
+/* Container dos pontos indicadores */
+.dots {
+text-align: center;
+margin-bottom: 0px;
+}
+/* Estilo dos pontos */
+.dot {
+cursor: pointer;
+height: 7px;
+width: 7px;
+margin: 0 4px;
+background-color: #bbb;
+border-radius: 50%;
+display: inline-block;
+transition: background-color 0.3s ease;
+}
+/* Ponto ativo */
+.active {
+background-color: #c2185b;
+}
+/* Área de curtidas */
+#curtida {
+display: flex;
+align-items: center;
+gap: 8px;
+
+}
+
+/* Ícone de curtida */
+#likeIcon {
+width: 30px;
+margin-left: 18px;
+}
+  #comentario {
+      background-color: black;
+      margin-left: 30px;
+      margin-right: 30px;
+      margin-top: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      position: relative;
+    }
+
+    #nome-perfil {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+      font-size: small;
+    }
+
+    #perfil-lucas {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    #meu-comentario {
+      margin-left: 45px;
+      font-size: 0.95rem;
+      
+    }
+
+    .curtir-btn {
+      background: none;
+      border: none;
+      color: #888;
+      cursor: pointer;
+      font-size: 0.85rem;
+      position: absolute;
+      right: 10px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: color 0.3s ease;
+    }
+
+    .curtir-btn:hover {
+      color: #ff007f;
+    }
+
+  .contador {
+  font-weight: normal;
+  color: #555;
+  font-size: 0.95rem !important;
+}
+
+#carrosel-juntos {
+margin-top: 100px;
+margin-top: px;
+margin-bottom: 50px;
+}
+#p-carrosel-juntos {
+  text-align: center;
+  font-weight: bold;
+  padding: 15px;
+  font-size: 1.2em;
+  line-height: 2;
+  margin-bottom: 50px;
+
+
+}
+.carrosselLuiza-container {
+overflow: hidden;
+width: 99vw; /* largura da viewport */
+max-width: 900px; /* se quiser limitar o máximo */
+margin: auto;
+border: 3px solid #000000;
+border-radius: 12px;
+}
+
+.carrosselLuiza {
+display: flex;
+width: auto; /* muda de width fixa para automática */
+transition: transform 1.5s ease-in-out;
+}
+
+.carrosselLuiza img {
+width: 100vw;
+height: 300px;
+object-fit: cover;
+}
+
+.controlesLuiza {
+display: flex;
+justify-content: center;
+gap: 10px;
+margin-top: 10px;
+}
+
+.btnLuiza {
+background: #555;
+border: none;
+padding: 10px 20px;
+color: #fff;
+cursor: pointer;
+border-radius: 5px;
+}
+
+.btnLuiza:hover {
+background: #777;
+}
+.carrosselLuiza.active {
+cursor: grabbing;
+cursor: -webkit-grabbing;
+user-select: none; /* evita seleção de texto durante o drag */
+}
+#spotify {
+background-color: black;
+padding: 30px;
+border: 1px solid #00d95e42;
+border-radius: 10px;
+
+}
+
+#frase-spotify {
+background-color: #00D95F;
+color: black;
+margin-left: 0;
+padding-left: 30px;
+padding-top: 10px;
+padding-bottom: 10px;
+border-bottom-right-radius: 50px;
+border-top-right-radius: 50px;
+}
+.h3 {
+margin: 30px; 
+
+}
+#ico-spotify {
+width: 100px;
+
+}
+
+.audio {
+margin: 2px;
+}
+/* Área principal da animação */
+/* Espaço para o sistema solar */
+
+.espaco {
+position: relative;
+width: 100vw;
+height: 400px;
+background-color: black;
+margin-top: 100px;
+}
+.audio {
+  opacity: 0;
+  transform: translateX(-50px);
+  transition: all 1.5s ease;
+}
+
+.audio.show {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+
+/* Sol central */
+.sol {
+position: absolute;
+top: 50%;
+left: 50%;
+width: 100px;
+height: 100px;
+background: radial-gradient(circle, #FFD700, #fff700);
+border-radius: 50%;
+transform: translate(-50%, -50%);
+box-shadow: 0 0 30px #FFD700;
+}
+
+/* Órbita da Terra */
+.orbita-terra {
+position: absolute;
+top: 50%;
+left: 50%;
+width: 300px;
+height: 300px;
+border: 1px dashed #aaaaaa6c;
+border-radius: 50%;
+transform: translate(-50%, -50%);
+animation: orbita-terra 10s linear infinite;
+}
+
+/* Terra */
+.terra {
+position: absolute;
+top: 50%;
+left: 0;
+width: 30px;
+height: 30px;
+background: radial-gradient(circle, #2051f2, #1c60e9);
+border-radius: 50%;
+transform: translate(-50%, -50%);
+box-shadow: 0 0 10px #00f;
+}
+
+/* Órbita da Lua */
+.orbita-lua {
+position: absolute;
+top: 50%;
+left: 50%;
+width: 60px;
+height: 60px;
+
+border-radius: 50%;
+transform: translate(-50%, -50%);
+animation: orbita-lua 2s linear infinite;
+}
+
+/* Lua */
+.lua {
+position: absolute;
+top: 50%;
+left: 0;
+width: 8px;
+height: 8px;
+background: #eee;
+border-radius: 50%;
+transform: translate(-50%, -50%);
+box-shadow: 0 0 5px #fff;
+}
+
+/* Animação da órbita da Terra */
+@keyframes orbita-terra {
+0% {
+transform: translate(-50%, -50%) rotate(0deg);
+}
+100% {
+transform: translate(-50%, -50%) rotate(360deg);
+}
+}
+
+/* Animação da órbita da Lua */
+@keyframes orbita-lua {
+0% {
+transform: translate(-50%, -50%) rotate(0deg);
+}
+100% {
+transform: translate(-50%, -50%) rotate(360deg);
+}
+}
+
+#temporizador {
+background-color: black;
+padding-bottom: 100px;
+}
+h1 {
+font-size: 1.3rem;
+margin-bottom: 30px;
+text-align: center;
+color: white;
+}
+
+.contador {
+display: flex;
+justify-content: center;
+font-size: 1.4rem;
+text-align: center;
+border-radius: 50px;
+
+}
+
+.tempo {
+color: white;
+padding: 20px;
+padding: 15px;
+
+}
+
+.tempo span {
+display: block;
+font-size: 1.2rem;
+margin-top: 5px;
+color: #8b949e;
+}

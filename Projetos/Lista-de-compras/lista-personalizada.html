@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista Personalizada</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=arrow_back" />
+    <link rel="stylesheet" href="style/style.css">
+</head>
+<body>
+    <header>
+        <h1>Lista de Compras</h1>
+        <img src="https://static.vecteezy.com/system/resources/previews/019/787/045/non_2x/shopping-cart-icon-shopping-basket-on-transparent-background-free-png.png" alt="icone">
+    </header>
+    <h2 id="resultado"><span id="reais">R$</span><span id="total">0.00</span></h2>
+    <main>
+        <form action="">
+            <section id="lista-compras-section">
+            <fieldset>
+                    <legend>Itens da Lista</legend>
+                    <div class="item">
+                        <label class="item-label">
+                            <input type="checkbox" class="check">
+                            <span class="nome-item">Manteiga</span>
+                            <label class="num-label">
+                                R$<input type="number" class="num" step="0.10" placeholder="0.00" min="0">
+                                <input type="number" class="multiplicador" placeholder="1" min="1">
+                            </label>
+                        </label>
+                    </div>
+                </fieldset>
+            </section>
+        </form> 
+        <section class="aside" id="aside1">
+            <a href="index02.html" id="voltar">
+                <span class="material-symbols-outlined">
+                    arrow_back
+                </span>  
+            </a>
+        </section>
+        <section class="aside" id="aside2">
+            <button id="duplicar-item"><span id="burguer" class="material-icons md-36">add</span></button>
+        </section>
+        
+    </main>
+    
+    
+        
+    
+    <script>
+        function calcularTotal() {
+            let total = 0;
+            document.querySelectorAll('.num').forEach(input => {
+                let valor = parseFloat(input.value) || 0;
+                let multiplicador = parseInt(input.nextElementSibling.value) || 1;
+                total += valor * multiplicador;
+            });
+            document.getElementById('total').textContent = total.toFixed(2);
+        }
+
+        document.querySelectorAll('.num, .multiplicador').forEach(input => {
+            input.addEventListener('input', calcularTotal);
+        });
+
+        function duplicarUltimoItem() {
+            let itens = document.querySelectorAll('.item');
+            if (itens.length === 0) {
+                alert("Nenhum item para duplicar!");
+                return;
+            }
+
+            let ultimoItem = itens[itens.length - 1];
+            let novoNome = prompt("Digite o nome do novo item:");
+            if (!novoNome) {
+                alert("Nome inválido! O item não foi duplicado.");
+                return;
+            }
+
+            let itemClone = ultimoItem.cloneNode(true);
+            itemClone.querySelector('.nome-item').textContent = novoNome;
+            itemClone.querySelectorAll('.num, .multiplicador').forEach(input => {
+                input.value = "";
+                input.addEventListener('input', calcularTotal);
+            });
+
+            document.querySelector("#lista-compras-section fieldset").appendChild(itemClone);
+        }
+
+        document.getElementById('duplicar-item').addEventListener('click', duplicarUltimoItem);
+
+        document.getElementById('voltar').addEventListener('click', function(event) {
+            event.preventDefault();
+            let confirmar = confirm("Tem certeza de que deseja voltar?");
+            if (confirmar) {
+                window.location.href = this.href;
+            }
+        });
+    </script>
+</body>
+</html>

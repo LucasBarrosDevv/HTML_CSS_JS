@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Delivery</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: gray;
+            margin: 0;
+            padding: 0;
+        }
+        header > h1 {
+            font-size: 3.5em;
+            background-color: red;
+            color: white;
+            margin: 0;
+            padding: 50px;
+            text-shadow: 0px 0px 20px black;
+            text-align: center;
+        }
+        body > div {
+            height: 30px;
+            background-color: rgb(4, 217, 4);
+
+        }
+        main {
+            height: 100vh;
+            max-width: 1200px;
+            background-color: white;
+            margin: auto;
+            padding: 15px;
+            box-shadow: -20px 0px 10px -10px black, 20px 0px 10px -10px black;           
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: red;
+            color: white;
+        }
+        #total {
+            color: rgb(4, 211, 4);
+        }
+        textarea {
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Delivery</h1>
+    </header>
+    <div>
+
+    </div>
+    <main>
+        <h1>Tabela Mágica</h1>
+        <h2>Lista de Entregas</h2>
+        <div id="input-area">
+            <label for="dados">Insira os dados (ex: "1 Centro 2.5km" ou "1 Centro 2.5"):</label>
+            <textarea id="dados" rows="5" style="width: 100%;"></textarea>
+            <button onclick="adicionarDados()">Adicionar</button>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Ordem</th>
+                    <th>Bairro</th>
+                    <th>Valor (R$)</th>
+                </tr>
+            </thead>
+            <tbody id="tabela-corpo"></tbody>
+        </table>
+        <h3 id="total">Total: R$0</h3>
+    </main>
+    <script>
+        let precoPorKm = { 1.0: 6, 2.2: 7, 3.2: 8, 4.0: 9, 4.8: 10, 5.6: 11, 6.4: 12, 7.2: 13, 8.0: 14, 8.8: 15, 9.6: 16, 10.4: 17, 11.2: 18, 12.0: 19, 13.0: 20, 15.0: 25 };
+        
+        function adicionarDados() {
+            let entrada = document.getElementById("dados").value.trim();
+            if (!entrada) return;
+            let linhas = entrada.split("\n");
+            let dadosValidos = [];
+            
+            for (let linha of linhas) {
+                let partes = linha.split(" ");
+                if (partes.length < 3) {
+                    alert(`Erro: A linha "${linha}" está incompleta. Use o formato correto: "1 Bairro 2.5km" ou "1 Bairro 2.5"`);
+                    return;
+                }
+                let ordem = partes[0].replace("°", ""); // Remove o símbolo ° caso exista
+                let bairro = partes.slice(1, -1).join(" ");
+                let kmTexto = partes[partes.length - 1].replace("km", "").replace(",", "."); // Remove "km" se existir
+                
+                if (!/^[0-9]+$/.test(ordem)) {
+                    alert(`Erro na linha "${linha}": Ordem inválida. Deve ser um número inteiro.`);
+                    return;
+                }
+                
+                let km = parseFloat(kmTexto);
+                if (isNaN(km)) {
+                    alert(`Erro na linha "${linha}": Distância inválida.`);
+                    return;
+                }
+                dadosValidos.push(`${ordem} ${bairro} ${km}km`);
+            }
+            document.getElementById("dados").value = "";
+            atualizarTabela(dadosValidos);
+        }
+        
+        function atualizarTabela(dadosLista) {
+            let tabelaCorpo = document.getElementById("tabela-corpo");
+            tabelaCorpo.innerHTML = "";
+            let total = 0;
+            
+            dadosLista.forEach(linha => {
+                let partes = linha.split(" ");
+                let ordem = partes[0];
+                let bairro = partes.slice(1, -1).join(" ");
+                let km = parseFloat(partes[partes.length - 1].replace("km", "").replace(",", "."));
+                let valor = Object.keys(precoPorKm).find(k => km <= parseFloat(k));
+                if (!valor) return;
+                
+                valor = precoPorKm[valor];
+                total += valor;
+                
+                let novaLinha = `<tr><td>${ordem}</td><td>${bairro}</td><td>R$${valor}</td></tr>`;
+                tabelaCorpo.innerHTML += novaLinha;
+            });
+            
+            document.getElementById("total").innerText = `Total: R$${total}`;
+        }
+    </script>
+</body>
+</html>

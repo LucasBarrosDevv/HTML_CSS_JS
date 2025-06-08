@@ -1,0 +1,53 @@
+@charset "UTF-8";
+
+* {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        body {
+            margin: 0;
+            
+        }
+        header  {
+            background-color: rgb(231, 12, 107);
+            height: 150px;
+            color: white;
+            margin: 0;
+            border-bottom-right-radius: 100px;
+        }
+        header > div > h1 {
+            display: block;
+            font-size: 1.4em;
+            padding-top: 20px;
+            margin-left: 20px;
+        }
+        #titulo {
+            margin-left: 20px;
+            font-size: 2em;
+            color: #160F29;
+            text-align: center;
+        }
+        #paragrafo {
+            margin-left: 20px;
+            margin-right: 20px;
+            font-size: larger;
+            border: 1px solid rgb(231, 12, 107);
+            padding: 20px;
+            color: #160F29;
+            border-radius: 20px;
+            box-shadow: 0px 1px 13px 3px rgba(0, 0, 0, 0.349);
+        }
+        .topicos {
+            display: inline-block;
+            background-image: linear-gradient(to right, #5EFC8D, #05F04B );
+            text-decoration: none;
+            margin-left: 20px;
+            margin-bottom: 5px;
+            font-size: 1.2em;
+            padding: 10px;
+            border-radius: 20px;
+            width: 200px;
+            color: black;       
+        }
+        .icones {
+            width: 40px;
+        }

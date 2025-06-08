@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luiza</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="image.png" type="image/png">
+
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        canvas {
+            max-width: 700px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div id="cabeça">
+            <h1> L </h1>
+        </div>
+    </header>
+    <section>
+        <h1 >Controle de evolução</h1>
+        <p>A avaliação permite estabelecer parâmetros de comparação. Com ela, você consegue acompanhar se os treinos e a alimentação estão dando resultado ou se algo precisa ser ajustado.</p>
+    </section>
+    <main>
+        <section>
+            <fieldset>
+                <legend class="legendas">Informações Básicas</legend>
+                <ul>
+                    <li class="infobase">Ana Luiza de Cristo Ferreira</li>
+                    <li class="infobase">Idade: 17 anos</li>
+                    <li class="infobase">Data da Avaliação: 03/05/2025</li>
+                </ul>
+            </fieldset>
+
+            <fieldset>
+                <legend class="legendas">Estatura</legend>
+                <ul>
+                    <li class="inf-estatura">Peso: 54,89 kg</li>
+                    <li class="inf-estatura">Altura: 164,0 cm</li>
+                    <li class="inf-estatura">IMC: 20,37</li>
+                    <li class="inf-estatura">ICQ: 0,71</li>
+                    <li class="inf-estatura">Metabolismo: 1525,05 kcal</li>
+                </ul>
+            </fieldset>
+
+            <fieldset>
+                <legend class="legendas">Circunferência</legend>
+
+                <fieldset>
+                    <legend id="legenda-superiores">Superiores</legend>
+                    <ul>
+                        <li class="infocircuferencia">Braço: 25,00</li>
+                        <li class="infocircuferencia">Braço Contralateral: 26,00</li>
+                        <li class="infocircuferencia">Braço (Ideal): 25,00 / 25,50</li>
+                        <li class="infocircuferencia">Tórax: 80,00</li>
+                    </ul>
+                </fieldset>
+
+                <ul>
+                    <li class="infocircuferencia">Cintura: 65,00</li>
+                    <li class="infocircuferencia">Abdome Umbilical: 71,00</li>
+                    <li class="infocircuferencia">Abdome Protuso: (não especificado separadamente)</li>
+                    <li class="infocircuferencia">Quadril: 96,00</li>
+                    <li class="infocircuferencia">Coxa Medial: 48,00</li>
+                    <li class="infocircuferencia">Coxa Medial (Ideal): 47,50</li>
+                    <li class="infocircuferencia">Perna: 30,00 (ambos os lados)</li>
+                </ul>
+
+                <!-- Aqui entra o gráfico -->
+                <h3>Gráfico de Medidas Corporais</h3>
+                <canvas id="medidasChart"></canvas>
+
+            </fieldset>
+        </section>
+    </main>
+
+    <script>
+        const ctx = document.getElementById('medidasChart').getContext('2d');
+        const medidasChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: [
+                    'Braço',
+                    'Braço Contralateral',
+                    'Braço (Ideal)',
+                    'Tórax',
+                    'Cintura',
+                    'Abdome Umbilical',
+                    'Quadril',
+                    'Coxa Medial',
+                    'Coxa Medial (Ideal)',
+                    'Perna'
+                ],
+                datasets: [{
+                    label: 'Medidas (cm)',
+                    data: [
+                        25.00,
+                        26.00,
+                        25.25,
+                        80.00,
+                        65.00,
+                        71.00,
+                        96.00,
+                        48.00,
+                        47.50,
+                        30.00
+                    ],
+                    backgroundColor: 'rgba(54, 162, 235, 0.7)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                scales: {
+                    x: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>

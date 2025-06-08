@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="PT-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style/style_topicos.css">
+    <title></title>
+</head>
+<body>
+    <header>
+        <div>
+            <img id="img_header" src="imagens/3 Lanche.png" alt="img" />
+            <h1>Café <br />da <br />Manha</h1>
+        </div>
+    </header>
+    <div id="calorias">
+        <p id="total">kcal=0.00</p>
+    </div>
+    <main>
+        <section>
+            <fieldset>
+                <legend>Carboidrato</legend>
+
+                <label for="pao_frances">
+                    <input type="checkbox" name="pao_frances" id="pao_frances" class="checkbox" />
+                    <span>Pão Francês</span>
+                    <input type="number" placeholder="0" class="multiplicador" />
+                </label><br />
+
+                <label for="pao_massa_fina">
+                    <input type="checkbox" name="pao_massa_fina" id="pao_massa_fina" />
+                    <span>Pão Massa Fina</span>
+                    <input type="number" placeholder="0" class="multiplicador" />
+                </label><br />
+
+                <label for="pao_de_forma">
+                    <input type="checkbox" name="pao_de_forma" id="pao_de_forma" />  
+                    <span>Pão de Forma</span>
+                    <input type="number" placeholder="0" class="multiplicador" />
+                </label><br />
+
+                <label for="cuscuz_milho">
+                    <input type="checkbox" name="cuscuz_milho" id="cuscuz_milho" />
+                    <span>Cuscuz de Milho</span>
+                    <input type="number" placeholder="0" class="multiplicador" />
+                </label><br />
+
+                <label for="cuscuz_arroz">
+                    <input type="checkbox" name="cuscuz_arroz" id="cuscuz_arroz" />
+                    <span>Cuscuz de Arroz</span>
+                    <input type="number" placeholder="0" class="multiplicador" />
+                </label><br />
+
+                <label for="tapioca">
+                    <input type="checkbox" name="tapioca" id="tapioca" />
+                    <span>Tapioca</span>
+                    <input type="number" placeholder="0" class="multiplicador" />
+                </label><br />
+
+                <label for="pao_de_queijo">
+                    <input type="checkbox" name="pao_de_queijo" id="pao_de_queijo" />
+                    <span>Pão de Queijo</span>
+                    <input type="number" placeholder="0" class="multiplicador" />
+                </label><br />
+            </fieldset>
+        </section>
+
+        <section>
+            <fieldset>
+                <legend>Proteínas</legend>
+
+                <label for="ovo">
+                    <input type="checkbox" name="ovo" id="ovo" />
+                    <span>Ovo</span>
+                    <input type="number" placeholder="0" class="multiplicador" />
+                </label><br />
+
+                <label for="leite">
+                    <input type="checkbox" name="leite" id="leite" />
+                    <span>Leite</span>
+                    <input type="number" placeholder="0" class="multiplicador" />
+                </label><br />
+
+                <label for="iogurte">
+                    <input type="checkbox" name="iogurte" id="iogurte" />
+                    <span>Iogurte</span>
+                    <input type="number" placeholder="0" class="multiplicador" />
+                </label><br />
+
+                <label for="iogurte_natural">
+                    <input type="checkbox" name="iogurte_natural" id="iogurte_natural" />
+                    <span>Iogurte Natural</span>
+                    <input type="number" placeholder="0" class="multiplicador" />
+                </label><br />
+            </fieldset>
+        </section>
+
+        <section>
+            <fieldset>
+                <legend>Fibras</legend>
+
+                <label for="cereal">
+                    <input type="checkbox" name="cereal" id="cereal" />
+                    <span>Cereal</span>
+                    <input type="number" placeholder="0" class="multiplicador" />
+                </label><br />
+
+                <label for="maca">
+                    <input type="checkbox" name="maca" id="maca" />
+                    <span>Maçã</span>
+                    <input type="number" placeholder="0" class="multiplicador" />
+                </label><br />
+
+                <label for="laranja">
+                    <input type="checkbox" name="laranja" id="laranja" />
+                    <span>Laranja</span>
+                    <input type="number" placeholder="0" class="multiplicador" />
+                </label><br />
+
+                <label for="banana">
+                    <input type="checkbox" name="banana" id="banana" />
+                    <span>Banana</span>
+                    <input type="number" placeholder="0" class="multiplicador" />
+                </label><br />
+
+                <label for="abacate">
+                    <input type="checkbox" name="abacate" id="abacate" />
+                    <span>Abacate</span>
+                    <input type="number" placeholder="0" class="multiplicador" />
+                </label><br />
+            </fieldset>
+        </section>
+    </main>
+    <section>
+        <div>
+            <a id="voltar" href="index.html">Voltar</a>
+        </div>
+    </section>
+    <script>
+    const caloriasPorItem = {
+    // Carboidratos
+    pao_frances: 2.74,
+    pao_massa_fina: 2.65,      
+    pao_de_forma: 2.44,
+    cuscuz_milho: 1.73,
+    cuscuz_arroz: 3.51,
+    tapioca: 3.47,
+    pao_de_queijo: 2.73,
+
+    // Proteínas
+    ovo: 1.54,
+    leite: 0.60,
+    iogurte: 0.63,
+    iogurte_natural: 0.63,
+
+    // Fibras
+    cereal: 3.76,
+    maca: 0.52,
+    laranja: 0.47,
+    banana: 0.89,
+    abacate: 1.60
+};
+
+
+    function calcularCalorias() {
+        let total = 0;
+
+        for (let id in caloriasPorItem) {
+            let checkbox = document.getElementById(id);
+            let multiplicador = checkbox.nextElementSibling.nextElementSibling.value || 0;
+
+            if (checkbox.checked) {
+                total += caloriasPorItem[id] * parseFloat(multiplicador);
+            }
+        }
+
+        document.querySelector("#calorias p").textContent = `Kal: ${total.toFixed(2)}`;
+    }
+
+    // Adiciona os eventos
+    document.querySelectorAll('input[type="checkbox"], .multiplicador').forEach(input => {
+        input.addEventListener('input', calcularCalorias);
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" href="Minha_prikita.jpg">
+    <link rel="apple-touch-icon" href="Minha_prikita.jpg">
+  <title>Chuva de Te Amo</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: #1E002E;
+      color: #FFC1CC;
+      font-family: 'Arial', sans-serif;
+    }
+
+    .teamo {
+      position: absolute;
+      font-size: 24px;
+      pointer-events: none;
+      animation: cair 3s linear forwards;
+      will-change: transform, opacity;
+      text-shadow: 0 0 8px #FFCCE5;
+    }
+
+    .coracao {
+      position: absolute;
+      font-size: 20px;
+      opacity: 0.7;
+      animation: subir 5s linear forwards;
+      will-change: transform, opacity;
+      pointer-events: none;
+      color: #FF5CA8;
+      text-shadow: 0 0 8px #FFCCE5;
+    }
+
+    @keyframes cair {
+      0% {
+        top: -50px;
+        opacity: 1;
+      }
+      100% {
+        top: 100%;
+        opacity: 0;
+      }
+    }
+
+    @keyframes subir {
+      0% {
+        bottom: -50px;
+        opacity: 0.8;
+      }
+      100% {
+        bottom: 100%;
+        opacity: 0;
+      }
+    }
+    
+    #principal {
+      
+        position: absolute; /* fica fixo na viewport, independente do body */
+        top: 60%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 10; /* fica na frente da chuva */
+        text-align: center; /* opcional, centraliza conteúdo dentro da div */
+        
+        
+        }
+        audio#meuAudio {
+        width: 100vw; /* aumenta a largura para 300 pixels */
+        max-width: 100%; /* para responsividade */
+        height: 50px; /* opcional, pode ajustar a altura */
+        }
+
+  </style>
+</head>
+<body>
+    <div id="principal">
+        <img src="Minha_prikita.jpg" alt="">
+        <audio id="meuAudio" src="MeuBombom.mp3" controls></audio>
+    </div>
+<script>
+  const audio = document.getElementById("meuAudio");
+
+  // Tenta tocar o áudio automaticamente ao carregar
+  window.addEventListener('load', () => {
+    audio.play().catch(() => {
+      // Se autoplay for bloqueado, espere clique para tocar
+      document.body.addEventListener('click', () => {
+        audio.play();
+      }, { once: true });
+    });
+  });
+</script>
+
+
+    </div>
+    <script>
+
+  const frases = [
+    "Te Amo Luiza ❤️",
+    "Meu Bombom 🍫",
+    "Prikita Cheirosa 🌸",
+    "🌸",
+    "❤️"
+  ];
+
+  function criarTeAmo(x = Math.random() * window.innerWidth, y = -50) {
+    const texto = document.createElement("div");
+    texto.classList.add("teamo");
+
+    const frase = frases[Math.floor(Math.random() * frases.length)];
+    texto.innerText = frase;
+
+    texto.style.left = x + "px";
+    texto.style.top = y + "px";
+    texto.style.animationDuration = (1 + Math.random() * 2) + "s";
+    texto.style.fontSize = (20 + Math.random() * 30) + "px";
+
+    const cores = ["#FFC1CC", "#FFB347", "#FADADD", "#E0BBE4", "#FF9AA2", "#FFDAC1"];
+    texto.style.color = cores[Math.floor(Math.random() * cores.length)];
+
+    document.body.appendChild(texto);
+
+    texto.addEventListener("animationend", () => {
+      texto.remove();
+    });
+  }
+
+  function criarCoracao() {
+    const coracao = document.createElement("div");
+    coracao.classList.add("coracao");
+    coracao.innerText = "❤️";
+
+    coracao.style.left = Math.random() * window.innerWidth + "px";
+    coracao.style.bottom = "-50px";
+    coracao.style.fontSize = (14 + Math.random() * 20) + "px";
+    coracao.style.animationDuration = (3 + Math.random() * 4) + "s";
+    coracao.style.opacity = Math.random();
+
+    document.body.appendChild(coracao);
+
+    coracao.addEventListener("animationend", () => {
+      coracao.remove();
+    });
+  }
+
+  setInterval(() => criarTeAmo(), 100);
+  setInterval(() => criarCoracao(), 300);
+
+  document.body.addEventListener("click", (e) => {
+    const som = document.getElementById("plimSound");
+    som.currentTime = 0;
+    som.play();
+
+    for (let i = 0; i < 5; i++) {
+      criarTeAmo(e.clientX, e.clientY);
+    }
+
+    const textos = document.querySelectorAll(".teamo");
+
+    textos.forEach(texto => {
+      const angulo = Math.random() * Math.PI * 2;
+      const distancia = 100 + Math.random() * 400;
+      const x = Math.cos(angulo) * distancia;
+      const y = Math.sin(angulo) * distancia;
+      const cor = `hsl(${Math.random() * 360}, 100%, 85%)`;
+
+      texto.style.animation = "none";
+      texto.style.transition = "transform 0.8s ease, opacity 0.8s ease, color 0.3s";
+      texto.style.color = cor;
+      texto.style.transform = `translate(${x}px, ${y}px) rotate(${720 + Math.random() * 720}deg) scale(1.5)`;
+      texto.style.opacity = "0";
+
+      setTimeout(() => texto.remove(), 800);
+    });
+  });
+</script>
+
+</body>
+</html>

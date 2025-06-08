@@ -1,0 +1,76 @@
+@charset "UTF-8";
+
+* {
+    font-family: Arial, Helvetica, sans-serif;
+}
+body {
+    background-color: #ECEBE4;
+}
+header {
+    height: 150px;
+    background-color: #E70C6B;
+    border-bottom-right-radius: 100px;
+}
+header > div {
+    display: flex;
+    gap: 10px;
+}
+#calorias {
+    display: inline-block;
+    font-weight: bolder;
+    font-size: 1.5em;
+    color: #E70C6B;
+    width: 100px;
+    border-radius: 100px;
+    text-align: center;
+    margin-bottom: 0;
+}
+#img_header {
+    width: 40vw;
+}
+fieldset {
+    border: 1px solid #FFED66;
+    background-image: linear-gradient(to right, #5EFC8D, #05F04B );
+    border-radius: 20px;
+    border-top-left-radius: 0px;
+    margin-top: 10px;
+    font-weight: bold; 
+}
+legend {
+    font-size: 1.3em;
+    background-color: #160F29;
+    color: white;
+    padding: 10px;
+    border-radius: 20px;
+}
+label {
+    display: flex;
+    font-size: 1.3em;
+    
+}
+input[type="checkbox"] {
+    width: 1.5em;
+    margin-right: 15px;
+    accent-color: #E70C6B;
+}
+label input[type="number"] {
+    text-align: center;
+    width: 50px;
+    border: none;
+    border-radius: 30px;
+    background-color: #5EFC8D;
+    
+}
+.multiplicador {
+    margin-left: auto;
+}
+#voltar {
+    display: inline-block;
+    font-size: larger;
+    font-weight: bolder;
+    padding: 8px;
+    margin-left: 20px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: bla;
+}

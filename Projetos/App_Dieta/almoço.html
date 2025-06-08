@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="PT-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style/style_topicos.css">
+    <title>Almoço</title>
+</head>
+<body>
+    <main>
+         <header>
+        <div>
+            <img id="img_header" src="imagens/2 Almoço.png" alt="img" />
+            <h1>Almoço</h1>
+        </div>
+    </header>
+    <div id="calorias">
+        <p id="total">kcal=0.00</p>
+    </div>
+
+    <main>
+        <section>
+            <fieldset>
+                <legend>Carboidratos</legend>
+
+                <label>
+                    <input type="checkbox" id="arroz" />
+                    <span>Arroz</span>
+                    <input type="number" placeholder="0" class="multiplicador" />
+                </label><br />
+
+                <label>
+                    <input type="checkbox" id="feijao" />
+                    <span>Feijão</span>
+                    <input type="number" placeholder="0" class="multiplicador" />
+                </label><br />
+
+                <label>
+                    <input type="checkbox" id="macarrao" />
+                    <span>Macarrão</span>
+                    <input type="number" placeholder="0" class="multiplicador" />
+                </label><br />
+
+                <label>
+                    <input type="checkbox" id="batata_inglesa" />
+                    <span>Batata Inglesa</span>
+                    <input type="number" placeholder="0" class="multiplicador" />
+                </label><br />
+
+                <label>
+                    <input type="checkbox" id="batata_doce" />
+                    <span>Batata Doce</span>
+                    <input type="number" placeholder="0" class="multiplicador" />
+                </label><br />
+            </fieldset>
+        </section>
+
+        <section>
+            <fieldset>
+                <legend>Proteínas</legend>
+
+                <label>
+                    <input type="checkbox" id="ovo" />
+                    <span>Ovo</span>
+                    <input type="number" placeholder="0" class="multiplicador" />
+                </label><br />
+
+                <label>
+                    <input type="checkbox" id="carne_vermelha" />
+                    <span>Carne Vermelha</span>
+                    <input type="number" placeholder="0" class="multiplicador" />
+                </label><br />
+
+                <label>
+                    <input type="checkbox" id="peito_frango" />
+                    <span>Peito de Frango</span>
+                    <input type="number" placeholder="0" class="multiplicador" />
+                </label><br />
+
+                <label>
+                    <input type="checkbox" id="peixe" />
+                    <span>Peixe</span>
+                    <input type="number" placeholder="0" class="multiplicador" />
+                </label><br />
+            </fieldset>
+        </section>
+
+        <section>
+            <fieldset>
+                <legend>Fibras</legend>
+
+                <label>
+                    <input type="checkbox" id="maca" />
+                    <span>Maçã</span>
+                    <input type="number" placeholder="0" class="multiplicador" />
+                </label><br />
+
+                <label>
+                    <input type="checkbox" id="banana" />
+                    <span>Banana</span>
+                    <input type="number" placeholder="0" class="multiplicador" />
+                </label><br />
+
+                <label>
+                    <input type="checkbox" id="pepino" />
+                    <span>Pepino</span>
+                    <input type="number" placeholder="0" class="multiplicador" />
+                </label><br />
+
+                <label>
+                    <input type="checkbox" id="tomate" />
+                    <span>Tomate</span>
+                    <input type="number" placeholder="0" class="multiplicador" />
+                </label><br />
+            </fieldset>
+        </section>
+    </main>
+    <section>
+        <div>
+            <a id="voltar" href="index.html">Voltar</a>
+        </div>
+    </section>
+    <script>
+        const caloriasPorItem = {
+            // Grãos e Tubérculos (calorias por grama)
+            arroz: 1.29,
+            feijao: 0.91,
+            macarrao: 1.57,
+            batata_inglesa: 0.52,
+            batata_doce: 0.77,
+
+            // Proteínas (calorias por grama)
+            ovo: 1.47,
+            carne_vermelha: 2.88,
+            peito_frango: 1.95,
+            peixe: 1.09,
+
+            // Fibras (calorias por grama)
+            maca: 0.52,
+            banana: 0.89,
+            pepino: 0.12,
+            tomate: 0.18
+        };
+
+        function calcularCalorias() {
+            let total = 0;
+
+            for (let id in caloriasPorItem) {
+                let checkbox = document.getElementById(id);
+                let multiplicador = checkbox.nextElementSibling.nextElementSibling.value || 0;
+
+                if (checkbox.checked) {
+                    total += caloriasPorItem[id] * parseFloat(multiplicador);
+                }
+            }
+
+            document.querySelector("#calorias p").textContent = `Kal: ${total.toFixed(2)}`;
+        }
+
+        // Adiciona eventos
+        document.querySelectorAll('input[type="checkbox"], .multiplicador').forEach(input => {
+            input.addEventListener('input', calcularCalorias);
+        });
+    </script>
+</body>
+</html>

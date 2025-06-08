@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style/style.css">
+  <title>Feliz Aniversário</title>
+</head>
+<body>
+  <section id="feliz-aniversario-meu-amor"></section>
+<header>
+  <!-- Data -->
+  <p id="ano">Junho / 2025</p>
+
+  <!-- Linhas de dias do calendário -->
+  <div id="container">
+    <p id="none" class="itens">30</p>
+    <p id="none2" class="itens">31</p>
+    <p id="data" class="itens">01</p>
+    <p class="itens">02</p>
+    <p class="itens">03</p>
+    <p class="itens">04</p>
+  </div>
+  <div id="container">
+    <p class="itens">05</p>
+    <p class="itens">06</p>
+    <p class="itens">07</p>
+    <p class="itens">08</p>
+    <p class="itens">09</p>
+    <p class="itens">10</p>
+  </div>
+</header>
+<!-- Título -->
+
+  <h1 id="titulo-principal">Feliz Aniversario Meu <br> Amooooor !!</h1>
+
+  <!-- Imagem do bolo -->
+  <div id="imagem-bolo">
+    <img id="bolo_grande" src="imagens/17-anos.png" alt="Bolo de Aniversário">
+  </div>
+
+  <!-- Container dos confetes -->
+  <div id="confetes-container"></div>
+</section>
+
+  <!-- Mensagem de parabéns -->
+  <div id="parabens">
+    <p id="frase-parabens"><stro>Parabéns Meu amor!</stro> <br> Sou muito grato por ter você na minha vida, iluminando meus dias com seu jeito doce.
+      Que esse novo ciclo venha cheio de sonhos realizados, momentos felizes e muito amor. Você merece tudo de melhor que o mundo pode oferecer.
+      Estarei ao seu lado em cada passo, celebrando suas vitórias e segurando sua mão nos desafios. Te amo mais a cada dia, e desejo que sua vida seja repleta de paz, saúde e felicidade. Parabéns pelo seu dia princesa! 💖✨
+     <br> Quais serão os desafios que você vai desbloquear daqui pra frente gatinha?</p>
+  </div>
+
+
+  <main  id="principal">
+    <!-- Área estilo rede social -->
+    <section id="insta">
+      <div id="perfil-container">
+        <img id="perfil" src="imagem_Luiza/Perfil_luiza.jpg" alt="perfil">
+        <p>Luiza Ferreira <img id="verificado" src="imagens/verificado.png" alt="Verificado"> <br> <i style="font-size: small;">imperatriz</i></p>
+    
+      </div>
+      <!-- Carrossel de fotos -->
+      <div class="carrossel">
+        <img class="slides" src="imagem_Luiza/ft-01.jpg" alt="Foto 1">
+        <img class="slides" src="imagem_Luiza/ft-05.jpg" alt="Foto 5">
+        <img class="slides" src="imagem_Luiza/ft-12.jpg" alt="Foto 2">
+        <img class="slides" src="imagem_Luiza/ft-07.jpg" alt="Foto 7">
+        <img class="slides" src="imagem_Luiza/ft-03.jpg" alt="Foto 3">
+        
+         
+      </div>
+      <!-- Pontos do carrossel -->
+      <div class="dots">
+        <span class="dot active" onclick="moveToSlide(0)"></span>
+        <span class="dot" onclick="moveToSlide(1)"></span>
+        <span class="dot" onclick="moveToSlide(2)"></span>
+        <span class="dot" onclick="moveToSlide(3)"></span>
+        <span class="dot" onclick="moveToSlide(4)"></span>
+        
+        
+      </div>
+      <!-- Curtidas -->
+      <div id="curtida">
+        <img id="likeIcon" src="imagens/coracao.png" alt="Curtir">
+        <p id="quant_like">1.943</p>
+      </div>
+
+    <div id="comentario">
+  <p id="nome-perfil">
+    <img id="perfil-lucas" src="imagem_Luiza/perfil-Lucas.jpg" alt="">
+    <i>Lucas Barros</i>
+  </p>
+  <p id="meu-comentario">De longe a mais linda que já entrou na minha vida &#10084;&#65039;&#10084;&#65039;&#10084;&#65039;&#10084;&#65039;</p>
+  <button class="curtir-btn">curtir <span class="contador">1347</span></button>
+</div>
+
+<div id="comentario">
+  <p id="nome-perfil">
+    <img id="perfil-lucas" src="imagem_Luiza/perfil-Lucas.jpg" alt="">
+    <i>Lucas Barros</i>
+  </p>
+  <p id="meu-comentario">Linda é pouco, você é maravilhosa, perfeita e minha! &#129392;&#129392;</p>
+  <button class="curtir-btn">curtir <span class="contador">789</span></button>
+</div>
+
+<div id="comentario">
+  <p id="nome-perfil">
+    <img id="perfil-lucas" src="imagem_Luiza/perfil-Lucas.jpg" alt="">
+    <i>Lucas Barros</i>
+  </p>
+  <p id="meu-comentario">Deus caprichou demais quando te fez. &#128120;</p>
+  <button class="curtir-btn">curtir <span class="contador">1105</span></button>
+</div>
+
+<div id="comentario">
+  <p id="nome-perfil">
+    <img id="perfil-lucas" src="imagem_Luiza/perfil-Lucas.jpg" alt="">
+    <i>Lucas Barros</i>
+  </p>
+  <p id="meu-comentario">A mulher mais incrível que já conheci, sorte a minha te ter. &#128525;&#128525;&#128525;&#128525;</p>
+  <button class="curtir-btn">curtir️ <span class="contador">426</span></button>
+</div>
+
+<div id="comentario">
+  <p id="nome-perfil">
+    <img id="perfil-lucas" src="imagem_Luiza/perfil-Lucas.jpg" alt="">
+    <i>Lucas Barros</i>
+  </p>
+  <p id="meu-comentario">Cada dia mais apaixonado por você, meu amor! &#128293;&#128293;&#128293;</p>
+  <button class="curtir-btn">curtir <span class="contador">1398</span></button>
+</div>
+
+<div id="comentario">
+  <p id="nome-perfil">
+    <img id="perfil-lucas" src="imagem_Luiza/perfil-Lucas.jpg" alt="">
+    <i>Lucas Barros</i>
+  </p>
+  <p id="meu-comentario">Se beleza fosse crime, você estaria presa pra sempre, meu amor! &#128514;&#128514; &#10084;</p>
+  <button class="curtir-btn">curtir <span class="contador">632</span></button>
+</div>
+
+<hr style="margin-top: 80px;">
+    <section id="carrosel-juntos">
+      <p id="p-carrosel-juntos">Se eu pudesse congelar o tempo, seria em todos os momentos em que a gente esteve juntos, porque são nesses instantes que eu me sinto completo, feliz e com a certeza de que encontrei o amor da minha vida. &#127757 </p>
+      <div class="carrosselLuiza-container">
+        <div class="carrosselLuiza" id="carrosselLuiza">
+          <img src="imagem_Luiza/eu-ela-01.jpg" alt="fot-01">
+          <img src="imagem_Luiza/eu-ela-02.jpg" alt="fot-02">
+          <img src="imagem_Luiza/eu-ela-03.jpg" alt="fot-03">
+          <img src="imagem_Luiza/eu-ela-04.jpg" alt="fot-04">
+          <img src="imagem_Luiza/eu-ela-05.jpg" alt="fot-05">
+          <img src="imagem_Luiza/eu-ela-06.jpg" alt="fot-06">
+          <img src="imagem_Luiza/eu-ela-07.jpg" alt="fot-07">
+          <img src="imagem_Luiza/eu-ela-08.jpg" alt="fot-08">
+          <img src="imagem_Luiza/eu-ela-09.jpg" alt="fot-09">
+          <img src="imagem_Luiza/eu-ela-10.jpg" alt="fot-10">
+          <img src="imagem_Luiza/eu-ela-11.jpg" alt="fot-11">
+          <img src="imagem_Luiza/eu-ela-12.jpg" alt="fot-12">
+          <img src="imagem_Luiza/eu-ela-13.jpg" alt="fot-13">
+          <img src="imagem_Luiza/eu-ela-14.jpg" alt="fot-14">
+          <img src="imagem_Luiza/eu-ela-15.jpg" alt="fot-15">
+        </div>
+      </div>
+    
+
+    <div class="controlesLuiza">
+      <button class="btnLuiza" onclick="voltarLuiza()">← Voltar</button>
+      <button class="btnLuiza" onclick="avancarLuiza()">Avançar →</button>
+    </div>
+    </section>
+    <section id="spotify">
+      <h3 class="h3" id="frase-spotify">Músicas que marcaram quando você entrou na minha vida. </h3>
+      <h3 class="h3"><i><img id="ico-spotify" src="imagens/spotify.png" alt="">Previas do Spotify</i> </h3>
+      
+    
+    
+      <iframe class="audio" style="border-radius:12px" src="https://open.spotify.com/embed/track/1i2kguziI3ZbUZnZMKNhQ2?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+      <iframe class="audio" style="border-radius:12px" src="https://open.spotify.com/embed/track/7JtPSBiZGwFcWQRnrualuq?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+      <iframe class="audio" style="border-radius:12px" src="https://open.spotify.com/embed/track/65SlJkgtdhFkL6JpDvuEq3?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+      <iframe class="audio" style="border-radius:12px" src="https://open.spotify.com/embed/track/0OBv4CEP5FKS19ZQGHAUM6?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+      <iframe class="audio" style="border-radius:12px" src="https://open.spotify.com/embed/track/1W7zkKgRv9mrLbfdQ8XyH3?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+      <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/2WCl1euC7A6bJM6ZbTsEff?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+      <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/2LnlsuPFsJI2ZhSR0UadVB?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+      
+    </section>
+    <!-- Legenda explicativa fixa na tela -->
+    
+    <!-- Área onde os astros são colocados -->
+    <div class="espaco">
+      <!-- Sol central -->
+      <div class="sol"></div>
+      <!-- Órbita da Terra -->
+      <div class="orbita-terra">
+        <!-- Terra -->
+        <div class="terra">
+          <!-- Órbita da Lua ao redor da Terra -->
+          <div class="orbita-lua">
+            <!-- Lua -->
+            <div class="lua"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- contagem regressiva -->
+    <section id="temporizador">
+      <h1>Contagem Regressiva <br> para o nível <br> <strong style="color: gold; font-size: larger;">18</strong></h1>
+    <div class="contador">
+      <div class="tempo" id="dias">0<span>Dias</span></div>
+      <div class="tempo" id="horas">0<span>Horas</span></div>
+      <div class="tempo" id="minutos">0<span>Minutos</span></div>
+      <div class="tempo" id="segundos">0<span>Segundos</span></div>
+    
+    <script src="script.js"></script> <!-- Aqui chama o JS -->
+    </section>
+    
+    
+  </main>
+  
+<script>
+  function criarConfete() {
+  const confete = document.createElement('div');
+  confete.classList.add('confete');
+
+  // Cores variadas
+  const cores = ['#f39c12', '#e74c3c', '#9b59b6', '#2ecc71', '#3498db'];
+  confete.style.backgroundColor = cores[Math.floor(Math.random() * cores.length)];
+
+  // Posição aleatória no topo
+  confete.style.left = Math.random() * window.innerWidth + 'px';
+
+  // Tamanho aleatório
+  const tamanho = Math.random() * 8 + 5;
+  confete.style.width = tamanho + 'px';
+  confete.style.height = tamanho + 'px';
+
+  // Animação com duração aleatória
+  confete.style.animationDuration = (Math.random() * 3 + 2) + 's';
+
+  document.getElementById('confetes-container').appendChild(confete);
+
+  // Remover o confete depois que sair da tela
+  setTimeout(() => {
+    confete.remove();
+  }, 5000);
+}
+
+// Criar confetes a cada 200ms
+setInterval(criarConfete, 200);
+
+  // Índice atual do slide
+  let slideIndex = 0;
+  // Coletando elementos
+  let slides = document.getElementsByClassName("slides");
+  let dots = document.getElementsByClassName("dot");
+
+  // Exibe o slide atual e atualiza os dots
+  function showSlide(index) {
+    for (let i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";
+    }
+    for (let i = 0; i < dots.length; i++) {
+      dots[i].classList.remove("active");
+    }
+    slides[index].style.display = "block";
+    dots[index].classList.add("active");
+  }
+
+  // Função para avançar automaticamente os slides
+  function carrossel() {
+    slideIndex++;
+    if (slideIndex >= slides.length) { slideIndex = 0; }
+    showSlide(slideIndex);
+    setTimeout(carrossel, 3000); // muda a cada 3s
+  }
+
+  // Função para selecionar um slide manualmente
+  function moveToSlide(index) {
+    slideIndex = index;
+    showSlide(slideIndex);
+  }
+
+  // Inicializa carrossel automático
+  showSlide(slideIndex);
+  setTimeout(carrossel, 3000);
+
+  // Variáveis para capturar o toque
+  let startX = 0;
+  let endX = 0;
+  const carrosselEl = document.querySelector(".carrossel");
+
+  // Detecta início do toque
+  carrosselEl.addEventListener("touchstart", function(e) {
+    startX = e.touches[0].clientX;
+  }, false);
+
+  // Detecta fim do toque
+  carrosselEl.addEventListener("touchend", function(e) {
+    endX = e.changedTouches[0].clientX;
+    handleSwipe();
+  }, false);
+
+  // Função para identificar swipe e mover slide
+  function handleSwipe() {
+    if (startX - endX > 50) {
+      slideIndex++;
+      if (slideIndex >= slides.length) { slideIndex = 0; }
+      showSlide(slideIndex);
+    } else if (endX - startX > 50) {
+      slideIndex--;
+      if (slideIndex < 0) { slideIndex = slides.length - 1; }
+      showSlide(slideIndex);
+    }
+  }
+
+  // Variáveis de curtidas
+  let likeIcon = document.getElementById("likeIcon");
+  let quantLike = document.getElementById("quant_like");
+  let curtidasAtuais = parseInt(quantLike.innerText.replace('.', ''));
+
+  // Atualiza as curtidas continuamente
+  function aumentarCurtidas() {
+    curtidasAtuais++;
+    quantLike.innerText = curtidasAtuais.toLocaleString('pt-BR');
+  }
+
+  // Atualiza curtidas a cada 50ms
+  setInterval(aumentarCurtidas, 50);
+
+  // Animação de pulo ao clicar no ícone de coração
+  likeIcon.addEventListener("click", function() {
+    likeIcon.style.animation = "pulse 0.3s";
+    setTimeout(() => {
+      likeIcon.style.animation = "";
+    }, 300);
+  });
+  
+    const botoesCurtir = document.querySelectorAll('.curtir-btn');
+
+    botoesCurtir.forEach(botao => {
+      botao.addEventListener('click', () => {
+        const contador = botao.querySelector('.contador');
+        contador.textContent = parseInt(contador.textContent) + 1;
+      });
+    });
+  
+
+  const carrosselLuiza = document.getElementById("carrosselLuiza");
+const totalImagensLuiza = 11;
+const larguraImagemLuiza = 300;
+let posicaoLuiza = 0;
+
+function avancarLuiza() {
+  posicaoLuiza += 3;
+  if (posicaoLuiza >= totalImagensLuiza) {
+    posicaoLuiza = 0;
+  }
+  atualizarCarrosselLuiza();
+}
+
+function voltarLuiza() {
+  posicaoLuiza -= 3;
+  if (posicaoLuiza < 0) {
+    posicaoLuiza = totalImagensLuiza - (totalImagensLuiza % 3 || 3);
+  }
+  atualizarCarrosselLuiza();
+}
+
+function atualizarCarrosselLuiza() {
+  carrosselLuiza.style.transform = `translateX(-${posicaoLuiza * larguraImagemLuiza}px)`;
+}
+const audios = document.querySelectorAll('.audio');
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('show');
+    }
+  });
+}, {
+  threshold: 0.1
+});
+
+audios.forEach(audio => {
+  observer.observe(audio);
+});
+
+
+// Loop automático
+setInterval(avancarLuiza, 3000);
+
+  function atualizarContagem() {
+  const agora = new Date();
+  const anoAlvo = agora.getFullYear() + 1; // sempre próximo ano
+  const dataAlvo = new Date(anoAlvo, 5, 1, 0, 0, 0); // Junho é mês 5 (começa do zero)
+
+  const tempoRestante = dataAlvo - agora;
+
+  const segundos = Math.floor((tempoRestante / 1000) % 60);
+  const minutos = Math.floor((tempoRestante / 1000 / 60) % 60);
+  const horas = Math.floor((tempoRestante / (1000 * 60 * 60)) % 24);
+  const dias = Math.floor(tempoRestante / (1000 * 60 * 60 * 24));
+
+  document.getElementById('dias').innerHTML = dias + "<span>Dias</span>";
+  document.getElementById('horas').innerHTML = horas + "<span>Horas</span>";
+  document.getElementById('minutos').innerHTML = minutos + "<span>Minutos</span>";
+  document.getElementById('segundos').innerHTML = segundos + "<span>Segundos</span>";
+}
+
+// Atualiza a contagem a cada segundo
+setInterval(atualizarContagem, 1000);
+atualizarContagem();
+
+</script>
+
+</body>
+</html>

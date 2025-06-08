@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="PT-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feliz Aniversário Meu Amor</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            overflow: hidden;
+            background: linear-gradient(to top, #ffe6f0, #ffffff);
+        }
+
+        img {
+            width: 60px;
+            position: absolute;
+            bottom: -60px;
+        }
+
+        /* Animação só subindo */
+        @keyframes subir {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-120vh);
+                opacity: 0.5;
+            }
+        }
+
+        /* Animação subindo e girando */
+        @keyframes subirGirando {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-120vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        #feliz-aniversario {
+            width: 300px;
+            position: absolute; 
+            top: 60%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10; 
+            text-align: center; 
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <a href="Amor_em_pixels.html"><img id="feliz-aniversario" src="icones/feliz-aniversario.png" alt=""></a>
+    </div>
+
+    <!-- Balões (só sobem) -->
+    <img src="icones/balao.png" style="left: 10%; animation: subir 7s linear infinite 0s;">
+    <img src="icones/baloes.png" style="left: 25%; animation: subir 9s linear infinite 1s;">
+    <img src="icones/balao.png" style="left: 75%; animation: subir 10s linear infinite 3s;">
+    <img src="icones/baloes.png" style="left: 85%; animation: subir 7.5s linear infinite 1.5s;">
+
+    <!-- Bolo e confete (sobem e giram) -->
+    <img src="icones/bolo-de-aniversario.png" style="left: 40%; animation: subirGirando 6s linear infinite 2s;">
+    <img src="icones/confete.png" style="left: 60%; animation: subirGirando 8s linear infinite 0.5s;">
+
+</body>
+</html>
