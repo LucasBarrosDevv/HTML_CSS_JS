@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style/style.css">
+  
+  <title>Feliz dia dos Namorados </title>
+</head>
+
+
+<!-- Atenção antes de começar a codar fique atentao as intruções e confira se tudo esta perfeitamente personalizado para subir -->
+
+<!-- vou enumerar as classer e ID para facilitar alterações -->
+
+
+<body>
+  <section id="feliz-aniversario-meu-amor"></section> 
+<header>
+  <!-- Data -->
+  <p id="ano">Junho / 2025</p>
+
+  <!-- Linhas de dias do calendário -->
+
+  <!-- Aqui Você pode Personalizar suas datas  -->
+  <div id="container">
+
+  <!-- essas duas linhas reprezentam os dias do mês aterios que vai ser estilizada em cinza no CSS -->
+    <p id="none" class="itens">10</p>
+    <p id="none2" class="itens">11</p>
+
+    <!-- Essa linha é a data de destaque que vai ser estilizada em destaque no CSS -->
+    <p id="data" class="itens">12</p>
+
+    <p class="itens">13</p>
+    <p class="itens">14</p>
+    <p class="itens">15</p>
+  </div>
+  <div id="container">
+    <p class="itens">16</p>
+    <p class="itens">17</p>
+    <p class="itens">18</p>
+    <p class="itens">19</p>
+    <p class="itens">20</p>
+    <p class="itens">21</p>
+  </div>
+</header>
+
+<!-- Título Principal -->
+  <h1 id="titulo-principal">Feliz dia dos namorados Meu <br> Amooooor !!</h1>
+
+  <!-- Imagem do bolo -->
+  <div id="imagem-bolo">
+    
+    <img id="bolo_grande" src="icones/coracao.png" alt="Bolo de Aniversário"> <!--   Aqui você vai precisar usar outra imagem caso a idade não seja compativel -->
+  </div>
+
+  <!-- Container dos confetes -->
+  <div id="confetes-container"></div>
+</section>
+
+  <!-- Mensagem de parabéns -->
+  <div id="parabens">
+    <p id="frase-parabens">Feliz Dia dos Namorados, meu amor!
+Vc é uma das melhores coisas que já aconteceu na minha vida. É incrível como só de estar perto de vc, tudo fica mais leve, mais bonito, mais especial. Obrigada por ser esse companheiro tão incrível, que me apoia, me escuta, me faz rir e me faz sentir amada de verdade.
+
+Hoje eu só quero te lembrar o quanto te amo e o quanto quero estar do seu lado em cada momento, enfrentando os desafios da vida, sonhando junto, construindo coisas lindas com vc.
+
+Te amo cada dia mais, de um jeitinho que nem sei explicar. 
+Feliz nosso dia, príncipe!</p>
+  </div>
+
+
+  <main  id="principal">
+    <!-- Área estilo rede social -->
+    <section id="insta">
+      <div id="perfil-container">
+
+        <!-- Aqui vai a foto de perfio da sua namorada(o) aconselho usar uma foto de tamanho quadrado pois se usar um tamanho diferente vai ficar destorcido-->
+        <img id="perfil" src="imagem_perfil/perfil_leandro.jpg" alt="perfil">
+
+        <!-- bote o nome da sua namorada aqui-->
+        <p >Leandro777.mdm <img id="verificado" src="icones/verificado.png" alt="Verificado"> <br> <i style="font-size: small;">Acaraú</i></p>
+    
+      </div>
+      <!-- Carrossel de fotos -->
+      <div class="carrossel">
+        <!-- escolha 5 fotos diferente que de preferencia seja so dela onde vai ser simulado um perfil de do feed do intagram-->
+        <img class="slides" src="imagem_perfil/ft-1.webp" alt="Foto 1">
+        <img class="slides" src="imagem_perfil/ft-2.webp" alt="Foto 5">
+        <img class="slides" src="imagem_perfil/ft-3.jpg" alt="Foto 2">
+        
+        
+      </div>
+      <!-- Pontos do carrossel -->
+      <div class="dots">
+        <span class="dot active" onclick="moveToSlide(0)"></span>
+        <span class="dot" onclick="moveToSlide(1)"></span>
+        <span class="dot" onclick="moveToSlide(2)"></span>
+        
+        
+      </div>
+      <!-- Curtidas -->
+      <div id="curtida">
+        <img id="likeIcon" src="icones/coracao.png" alt="Curtir">
+        
+        <p id="quant_like">1.943</p>  <!-- Aquio você pode personalizar o numero de curtidas inicial onde vai subir ao infinito -->
+      </div>
+
+
+      <!-- A seguir vai é a sequencia de comentarios que
+      vai ser eixibida você pode deixar como está mas 
+      também pode personalizar-->
+
+      <!-- Lembre-se de tirar o (style="color: yellow;) que eu coloquei para melhorar a visualização do que precisa ser alterado -->
+
+<div id="comentario">
+  <p id="nome-perfil">
+    <img id="perfil-lucas" src="imagem_perfil/perfil_hellen.jpg" alt="">
+    <i >hellem.vasc_ </i>
+  </p>
+  <p id="meu-comentario">De longe o mais lindo que já entrou na minha vida &#10084;&#65039;&#10084;&#65039;&#10084;&#65039;&#10084;&#65039;</p>
+  <button class="curtir-btn">curtir <span class="contador">1347</span></button>
+</div>
+
+<div id="comentario">
+  <p id="nome-perfil">
+    <img id="perfil-lucas" src="imagem_perfil/perfil_hellen.jpg" alt="">
+    <i >hellem.vasc_ </i>
+  </p>
+  <p id="meu-comentario">
+    Lindo é pouco, você é maravilhoso, perfeito e meu! &#129392;&#129392;
+  </p>
+  <button class="curtir-btn">
+    curtir 
+    <span class="contador">789</span>
+  </button>
+</div>
+
+<div id="comentario">
+  <p id="nome-perfil">
+    <img id="perfil-lucas" src="imagem_perfil/perfil_hellen.jpg" alt="">
+    <i >hellem.vasc_ </i>
+  </p>
+  <p id="meu-comentario">
+    Deus caprichou demais quando te fez. &#128120;
+  </p>
+  <button class="curtir-btn">
+    curtir
+    <span class="contador">1105</span>
+  </button>
+</div>
+
+<div id="comentario">
+  <p id="nome-perfil">
+    <img id="perfil-lucas" src="imagem_perfil/perfil_hellen.jpg" alt="">
+    <i >hellem.vasc_ </i>
+  </p>
+  <p id="meu-comentario">
+    O homem mais incrível que já conheci, sorte a minha te ter. &#128525;&#128525;&#128525;&#128525;
+  </p>
+  <button class="curtir-btn">
+    curtir
+    <span class="contador">426</span>
+  </button>
+</div>
+
+<div id="comentario">
+  <p id="nome-perfil">
+    <img id="perfil-lucas" src="imagem_perfil/perfil_hellen.jpg" alt="">
+    <i >hellem.vasc_ </i>
+  </p>
+  <p id="meu-comentario">
+    Cada dia mais apaixonada por você, meu amor! &#128293;&#128293;&#128293;
+  </p>
+  <button class="curtir-btn">
+    curtir
+    <span class="contador">1398</span>
+  </button>
+</div>
+
+<div id="comentario">
+  <p id="nome-perfil">
+    <img id="perfil-lucas" src="imagem_perfil/perfil_hellen.jpg" alt="">
+    <i >hellem.vasc_ </i>
+  </p>
+  <p id="meu-comentario">
+    Se beleza fosse crime, você estaria preso pra sempre, meu amor! &#128514;&#128514; &#10084;
+  </p>
+  <button class="curtir-btn">
+    curtir
+    <span class="contador">632</span>
+  </button>
+</div>
+
+
+
+<!-- A seguir o segundo carrossel a ser exibido você vai precisar de 15 fotos -->
+ <!-- aqui seria melhor você usar fotos juntos ou de momentos que vocês estavam juntos -->
+
+<hr style="margin-top: 80px;">
+    <section id="carrosel-juntos">
+      <p id="p-carrosel-juntos">Se eu pudesse congelar o tempo, seria em todos os momentos em que a gente esteve juntos, porque são nesses instantes que eu me sinto completo, feliz e com a certeza de que encontrei o amor da minha vida. &#127757 </p>
+      <div class="carrosselLuiza-container">
+        <div class="carrosselLuiza" id="carrosselLuiza">
+          <img src="imagem_perfil/eu-e-ele-1.webp" alt="fot-01"> 
+          <img src="imagem_perfil/eu-e-ele-2.webp" alt="fot-02"> 
+          <img src="imagem_perfil/eu-e-ele-3.webp" alt="fot-03"> 
+          <img src="imagem_perfil/eu-e-ele-4.webp" alt="fot-04">   
+          <img src="imagem_perfil/eu-e-ele-6.webp" alt="fot-06"> 
+          <img src="imagem_perfil/eu-e-ele-1.webp" alt="fot-01"> 
+          <img src="imagem_perfil/eu-e-ele-2.webp" alt="fot-02"> 
+          <img src="imagem_perfil/eu-e-ele-3.webp" alt="fot-03"> 
+          <img src="imagem_perfil/eu-e-ele-4.webp" alt="fot-04"> 
+          <img src="imagem_perfil/eu-e-ele-6.webp" alt="fot-06"> 
+          <img src="imagem_perfil/eu-e-ele-4.webp" alt="fot-04">
+          <img src="imagem_perfil/eu-e-ele-2.webp" alt="fot-02"> 
+          <img src="imagem_perfil/eu-e-ele-3.webp" alt="fot-03"> 
+          <img src="imagem_perfil/eu-e-ele-4.webp" alt="fot-04">     
+          <img src="imagem_perfil/eu-e-ele-6.webp" alt="fot-06">
+          <img src="imagem_perfil/eu-e-ele-2.webp" alt="fot-02"> 
+          <img src="imagem_perfil/eu-e-ele-3.webp" alt="fot-03"> 
+          <img src="imagem_perfil/eu-e-ele-4.webp" alt="fot-04">     
+          <img src="imagem_perfil/eu-e-ele-6.webp" alt="fot-06">
+      </div>
+    
+    <div class="controlesLuiza">
+      <button class="btnLuiza" onclick="voltarLuiza()">← Voltar</button>
+      <button class="btnLuiza" onclick="avancarLuiza()">Avançar →</button>
+    </div>
+
+    <!-- Aqui pode parecer um pouco complexo
+      mas é mais simples do que você imagina, 
+      va ate o spotify web e escolha uma musica e procure o 
+      botão compartilhar la foce vacê vai pode copiar o codigo iframe pronot 
+     dapra escolher tamnho cor, se mesmo assim parecer complicado da procura um tutorial no em 
+     qualquer plataforma que em 2 minutos você aprende -->
+
+    </section>
+    <section id="spotify">
+
+      <h3 class="h3" id="frase-spotify">Músicas que marcaram quando você entrou na minha vida. </h3>
+      <h3 class="h3"><i><img id="ico-spotify" src="icones/spotify.png" alt="">Previas do Spotify</i> </h3>
+
+      <!-- importe seus iframes -->
+     <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/4404ixp3ApDtyRwje7Kgu4?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+     <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/13UY9fXJBE32mR6GUhYIfO?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+     <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/0hJHknE2yxSNwC2jQTBuyq?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+     <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/1DLKuppSYytOuxhtI6KBGu?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+     <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/4d0DpU7Odiv0ztvX2GxJlk?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+     <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/3AJwUDP919kvQ9QcozQPxg?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    </section>
+
+
+      <!-- Área onde os astros são colocados -->
+      <div class="espaco">
+        <!-- Sol central -->
+        <div class="sol"></div>
+        <!-- Órbita da Terra -->
+        <div class="orbita-terra">
+          <!-- Terra -->
+          <div class="terra">
+            <!-- Órbita da Lua ao redor da Terra -->
+            <div class="orbita-lua">
+              <!-- Lua -->
+              <div class="lua"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+    <!-- contagem regressiva -->
+
+    <!-- MURITA ATENÇÃO NESSA PARTE !!!!!!!!!! -->
+     <!-- MURITA ATENÇÃO NESSA PARTE !!!!!!!!!! -->
+      <!-- MURITA ATENÇÃO NESSA PARTE !!!!!!!!!! -->
+       <!-- MURITA ATENÇÃO NESSA PARTE !!!!!!!!!! -->
+        <!-- MURITA ATENÇÃO NESSA PARTE !!!!!!!!!! -->
+
+
+        <!-- A CONTAGEM REGRECISSA É RESULTADE DE UM CALCULO MATEMATICO NO SCRIPT POCURE 
+         ESSE TRECHO DO SCRIPT A BAIXO DE CONTOL X NO SCRIPT E COLE UMA IA E PEÇA PARA ELA ALTERAR O SCRIPT PARA A DATA DESEJADA  -->
+
+         <!-- O SCRIPT É O ULTIMO MAS CUIDADO PARA NÃO ALTERAR O SCRIPT ERRADO E PERDER OUTRAS FUNCIONALIDADES -->
+
+    <!-- // Loop automático
+
+  setInterval(avancarLuiza, 3000);
+
+  function atualizarContagem() {
+  const agora = new Date();
+  const anoAlvo = agora.getFullYear() + 1; // sempre próximo ano
+  const dataAlvo = new Date(anoAlvo, 5, 1, 0, 0, 0); // Junho é mês 5 (começa do zero)
+
+  const tempoRestante = dataAlvo - agora;
+
+  const segundos = Math.floor((tempoRestante / 1000) % 60);
+  const minutos = Math.floor((tempoRestante / 1000 / 60) % 60);
+  const horas = Math.floor((tempoRestante / (1000 * 60 * 60)) % 24);
+  const dias = Math.floor(tempoRestante / (1000 * 60 * 60 * 24));
+
+  document.getElementById('dias').innerHTML = dias + "<span>Dias</span>";
+  document.getElementById('horas').innerHTML = horas + "<span>Horas</span>";
+  document.getElementById('minutos').innerHTML = minutos + "<span>Minutos</span>";
+  document.getElementById('segundos').innerHTML = segundos + "<span>Segundos</span>";
+  }
+
+      // Atualiza a contagem a cada segundo
+      setInterval(atualizarContagem, 1000);
+      atualizarContagem(); 
+      
+      -->
+
+    <section id="temporizador">
+      <h1>Nossa Jornada de Amor infinito <br> &#8987; &#128150;</h1>
+
+    <div class="contador">
+      <div class="tempo" id="meses">0<span>Meses</span></div>
+      <div class="tempo" id="dias">0<span>Dias</span></div>
+      <div class="tempo" id="horas">0<span>Horas</span></div>
+      <div class="tempo" id="minutos">0<span>Minutos</span></div>
+      <div class="tempo" id="segundos">0<span>Segundos</span></div>
+    
+    <script src="script.js"></script> <!-- Aqui chama o JS -->
+    </section>
+    
+  </main>
+  <!-- chama o script.js -->
+  <script src="script/script.js"></script>
+
+</body>
+</html>
