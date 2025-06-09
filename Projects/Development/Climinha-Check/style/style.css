@@ -1,0 +1,106 @@
+@charset "UTF-8";
+
+ body {
+      background-image: url(../img/background-sex.webp);
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-attachment: fixed;
+    
+      height: 100vh;
+    }
+    header > h1 {
+      font-family: "Sriracha", cursive;
+      font-size: 2.5em;
+      text-align: center;
+      color: white;
+      text-shadow: 1px 10px 20px black;
+    }
+    main {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    #h2 {
+      text-align: center;
+      color: white;
+      font-size: 1.9em;
+      text-shadow: 1px 0px 20px black;
+    }
+    #check {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      width: 100vw;
+    }
+    #sim,#nao {
+      display: inline-block;
+      font-size: 1.2em;
+      padding: 2px 15px;
+      color: white;
+      gap: 8px;
+      cursor: pointer;
+      border-radius: 7px;
+    }
+    #sim {
+      background-color: rgba(0, 255, 17, 0.177);
+      border: 2px solid rgb(0, 255, 17);  
+    }
+    #sim:active {
+    animation: pulo 0.3s ease;
+    }
+
+    @keyframes pulo {
+    0% { transform: translateY(0); }
+    30% { transform: translateY(-20px); }
+    50% { transform: translateY(0); }
+    70% { transform: translateY(-10px); }
+    100% { transform: translateY(0); }
+    }
+    #nao {
+      background-color: rgba(255, 0, 0, 0.177);
+      border: 2px solid rgb(255, 0, 0);
+      transition: top 0.5s ease, left 0.5s ease;
+    }
+
+    .foguinho {
+      position: fixed;
+      font-size: 2em;
+      animation: subir 2s linear forwards;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    @keyframes subir {
+      0% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-100vh);
+      }
+    }
+
+    /* Estilo para foguinhos da explosão */
+    .explosao {
+      position: absolute;
+      font-size: 2em;
+      animation: explodir 0.8s linear forwards;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    @keyframes explodir {
+      0% {
+        opacity: 1;
+        transform: translate(0, 0) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(var(--x), var(--y)) scale(0.5);
+      }
+    }
+    
+    
