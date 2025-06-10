@@ -1,34 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+  <!-- Meta informações básicas -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Título da página -->
   <title>Climinha Check</title>
+
+  <!-- Importação das folhas de estilo -->
   <link rel="stylesheet" href="style/style.css">
+  <link rel="stylesheet" href="style/style-particles.css">
+
+  <!-- Pré-conexão para otimizar carregamento das fontes do Google -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Love+Light&family=Sriracha&display=swap"
-    rel="stylesheet"/> 
+
+  <!-- Importação das fontes personalizadas -->
+  <link href="https://fonts.googleapis.com/css2?family=Love+Light&family=Sriracha&display=swap" rel="stylesheet" />
 </head>
+
 <body>
+  <!-- Cabeçalho principal da página -->
   <header>
     <h1>Climinha Check</h1>
   </header>
+
+  <!-- Conteúdo principal da página -->
   <main>
-    
+    <!-- Subtítulo -->
     <h2 id="h2">
       Hoje Tem? &#128166;
     </h2>
-    <div id="check">
-      <a href="https://wa.me/5599991299667?text=Hoje%20tem!!!%20Seu%20gostoso.%20kkkk%20(Vim%20do%20CliminhaCheck)">
 
+    <!-- Área dos botões de resposta -->
+    <div id="check">
+      <!-- Botão "Sim" com link para o WhatsApp -->
+      <a href="https://wa.me/5599991299667?text=Hoje%20tem!!!%20Seu%20gostoso.%20kkkk%20(Vim%20do%20CliminhaCheck)">
         <button id="sim">Sim &#128293;</button>
       </a>
 
+      <!-- Botão "Não" sem link -->
       <button id="nao">Não &#128148;</button>
     </div>
-    <script src="script/script.js"></script>
   </main>
+
+  <!-- Canvas para partículas animadas no fundo -->
+  <canvas id="canvas"></canvas>
+
+  <!-- Scripts JS (animação de partículas e lógica principal) -->
+  <script src="script/script-particles.js"></script>
+  <script src="script/script.js"></script>
 </body>
+
 </html>
