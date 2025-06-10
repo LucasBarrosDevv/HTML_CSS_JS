@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 body {
-  background-image: linear-gradient(to top right,#f91f5d, #bc0539);
+  background-image: linear-gradient(to bottom, #e83d6e 0%, #c5033a 70%);
   height: 100vh;
 }
 header > h1 {
@@ -9,7 +9,7 @@ header > h1 {
   font-size: 2.5em;
   text-align: center;
   color: white;
-  text-shadow: 1px 10px 20px rgba(0, 0, 0, 0.419);
+  text-shadow: 1px 10px 20px rgba(0, 0, 0, 0.436);
 }
 main {
   position: absolute;
@@ -18,9 +18,10 @@ main {
   transform: translate(-50%, -50%);
 }
 #h2 {
+  font-family: Arial, Helvetica, sans-serif;
   text-align: center;
   color: white;
-  font-size: 1.9em;
+  font-size: 1.4em;
   text-shadow: 1px 0px 20px black;
 }
 #check {
