@@ -9,7 +9,7 @@ let foguinhosAtivos = false;
 function criarExplosao() {
   const fogo = document.createElement("div");
   fogo.classList.add("explosao");
-  fogo.textContent = "🔥";
+  fogo.textContent = "🔥🥵🍆💦";
 
   // Calcula a posição inicial (centro do botão)
   const rect = btnSim.getBoundingClientRect();
