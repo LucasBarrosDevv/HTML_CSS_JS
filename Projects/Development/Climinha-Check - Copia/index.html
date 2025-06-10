@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Climinha Check</title>
   <link rel="stylesheet" href="style/style.css">
-  <link rel="stylesheet" href="style/style-particles.css">
+  <link rel="stylesheet" href="style/style-fire.css">
   <!-- Pré-conexão para otimizar carregamento das fontes do Google -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,7 +15,9 @@
 <body>
   <!-- Cabeçalho principal da página -->
   <header>
-    <h1>Climinha Check <br> &#127826;</h1>
+    <h1>Climinha Check </h1>
+    <p id="icone" style="margin-top: 0;">&#127826;</p>
+
   </header>
   <!-- Conteúdo principal da página -->
   <main>
@@ -35,13 +37,13 @@
       <button id="nao">Não &#128148;</button>
     </div>
   </main>
-
+  <script src="script/script.js"></script>
   <!-- Canvas para partículas animadas no fundo -->
-  <canvas id="canvas"></canvas>
+  <canvas id="fireCanvas"></canvas>
 
   <!-- Scripts JS (animação de partículas e lógica principal) -->
-  <script src="script/script-particles.js"></script>
-  <script src="script/script.js"></script>
+  <script src="script/script-fire.js"></script>
+  
 </body>
 
 </html>

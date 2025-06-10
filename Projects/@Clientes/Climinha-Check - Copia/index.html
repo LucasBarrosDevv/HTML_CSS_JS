@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Tela Estilo "Te Amo"</title>
+<style>
+  body, html {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: black;
+    height: 100vh;
+    position: relative;
+  }
+  canvas {
+    display: block;
+    background-color: black;
+  }
+  #clickHereLink {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Arial Black', Arial, sans-serif;
+    font-size: 16px;
+    color: white;
+    background: rgba(0,0,0,0.7);
+    padding: 12px 30px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.403);
+    text-decoration: none;
+    opacity: 0;
+    transition: opacity 1s ease;
+    z-index: 10;
+  }
+  #clickHereLink:hover {
+    background: #F52420;
+    color: black;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+</style>
+</head>
+<body>
+
+<canvas id="teamoCanvas"></canvas>
+<a id="clickHereLink" href="carrossel.html"  rel="noopener noreferrer">Clique Aqui</a>
+
+<script>
+  const canvas = document.getElementById('teamoCanvas');
+  const ctx = canvas.getContext('2d');
+
+  const phrase = "TeAmo";
+  const fontSize = 18;
+
+  let columns;
+  let drops;
+
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    ctx.font = fontSize + 'px monospace';
+
+    // Largura da palavra "TeAmo"
+    const colWidth = ctx.measureText(phrase).width;
+
+    // Usa Math.ceil para garantir que as colunas ocupem toda a largura da tela
+    columns = Math.ceil(canvas.width / colWidth);
+
+    drops = new Array(columns).fill(0);
+  }
+
+  resizeCanvas();
+
+  const heartColor = '#F52420';
+
+  function drawLove() {
+    // Fundo preto com transparência para efeito de fade
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.07)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = heartColor;
+    ctx.font = fontSize + 'px monospace';
+
+    const colWidth = ctx.measureText(phrase).width;
+
+    for (let i = 0; i < columns; i++) {
+      const x = i * colWidth;
+      const y = drops[i] * fontSize;
+
+      ctx.fillText(phrase, x, y);
+
+      drops[i]++;
+
+      if (y > canvas.height && Math.random() > 0.960) {
+        drops[i] = 0;
+      }
+    }
+  }
+
+  setInterval(drawLove, 65);
+
+  window.addEventListener('resize', resizeCanvas);
+
+  // Mostrar o link "Clique Aqui" após 7 segundos
+  const clickLink = document.getElementById('clickHereLink');
+  setTimeout(() => {
+    clickLink.style.opacity = '1';
+  }, 7000);
+</script>
+
+</body>
+</html>
