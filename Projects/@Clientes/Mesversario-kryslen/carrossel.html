@@ -33,7 +33,6 @@
     }
 
     #frase {
-       
       text-align: center;
       padding: 0 1rem 1rem;
       font-size: 1rem;
@@ -42,52 +41,47 @@
     }
 
     .slider-container {
-        position: relative;
-        max-width: 100vw;      /* ocupa 100% da largura da tela */
-        max-height: 60vh;      /* altura máxima 60% da viewport, ajusta conforme quiser */
-        margin: 20px auto;
-        overflow: hidden;
+      position: relative;
+      max-width: 90vw;
+      max-height: 50vh;
+      margin: 20px auto;
+      overflow: hidden;
     }
 
     .slider {
-        display: flex;
-        transition: transform 0.5s ease-in-out;
-        height: 100%;          /* ocupa altura total do container */
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+      height: 100%;
     }
 
     .slide {
-        flex: 0 0 33.3333%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        transition: all 0.5s ease;
-        height: 100%;
+      flex: 0 0 30%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: all 0.5s ease;
+      height: 100%;
     }
 
     .slide img {
-        max-width: 90%;
-        max-height: 55vh;      /* limita altura da imagem para não estourar a viewport */
-        border-radius: 10px;
-        transition: all 0.5s ease;
-        opacity: 0.5;
-        transform: scale(0.8);
-        object-fit: cover;
-    }
-
-    .slide.active img {
-        opacity: 1;
-        transform: scale(1);
-    }
-
-    .slide img {
-        object-position: center top;
-
+      max-width: 85%;
+      max-height: 45vh;
+      border-radius: 10px;
+      transition: all 0.5s ease;
+      opacity: 0.5;
+      transform: scale(0.8);
+      object-fit: cover;
+      object-position: center top;
       width: 100%;
       height: auto;
-      border-radius: 15px;
       user-select: none;
       pointer-events: none;
       display: block;
+    }
+
+    .slide.active img {
+      opacity: 1;
+      transform: scale(1);
     }
 
     .dots {
@@ -162,7 +156,14 @@
       border: 1px solid white;
       border-radius: 10px;
       cursor: pointer;
-      transition: transform 0.1s;
+      transition: transform 0.2s, background-color 0.3s, color 0.3s;
+      animation: pulseBotao 1.5s infinite;
+    }
+
+    #proximo > a > button:hover {
+      background-color: white;
+      color: black;
+      transform: scale(1.08);
     }
 
     .botao-clicado {
@@ -181,7 +182,21 @@
       }
     }
 
-    /* Media Queries para mobile */
+    @keyframes pulseBotao {
+      0% {
+        transform: scale(1);
+        box-shadow: 0 0 0px rgba(255, 255, 255, 0.7);
+      }
+      50% {
+        transform: scale(1.05);
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.9);
+      }
+      100% {
+        transform: scale(1);
+        box-shadow: 0 0 0px rgba(255, 255, 255, 0.7);
+      }
+    }
+
     @media (max-width: 600px) {
       header > h1 {
         font-size: 1.3rem;
@@ -240,26 +255,11 @@
 
   <footer>
     <div class="contador">
-      <div>
-        <p>Anos</p>
-        <span id="anos">0</span>
-      </div>
-      <div>
-        <p>Meses</p>
-        <span id="meses">0</span>
-      </div>
-      <div>
-        <p>Dias</p>
-        <span id="dias">0</span>
-      </div>
-      <div>
-        <p>Horas</p>
-        <span id="horas">0</span>
-      </div>
-      <div>
-        <p>Segundos</p>
-        <span id="segundos">0</span>
-      </div>
+      <div><p>Anos</p><span id="anos">0</span></div>
+      <div><p>Meses</p><span id="meses">0</span></div>
+      <div><p>Dias</p><span id="dias">0</span></div>
+      <div><p>Horas</p><span id="horas">0</span></div>
+      <div><p>Segundos</p><span id="segundos">0</span></div>
     </div>
   </footer>
 
@@ -276,7 +276,6 @@
 
     let currentIndex = 0;
 
-    // Criar dots
     for (let i = 0; i < slides.length; i++) {
       const dot = document.createElement("span");
       dot.classList.add("dot");
@@ -289,9 +288,7 @@
 
     function updateSlider() {
       const slideWidth = slides[0].clientWidth;
-      // Como o slide ativo está centralizado, calculamos o offset para que ele fique centralizado
       const offset = currentIndex * slideWidth - (window.innerWidth - slideWidth) / 2;
-
       slider.style.transform = `translateX(${-offset}px)`;
 
       slides.forEach((slide, i) => {
@@ -313,42 +310,39 @@
     }
 
     updateSlider();
-
-    // Trocar automático a cada 4s
     setInterval(nextSlide, 4000);
 
     function atualizarContador() {
-      const inicio = new Date("2020-10-12T00:00:00");
+      const inicio = new Date("2019-12-10T00:00:00");
       const agora = new Date();
+
+      let diff = agora - inicio;
+
+      const msPorSegundo = 1000;
+      const msPorMinuto = msPorSegundo * 60;
+      const msPorHora = msPorMinuto * 60;
+      const msPorDia = msPorHora * 24;
+
+      const diasTotais = Math.floor(diff / msPorDia);
 
       let anos = agora.getFullYear() - inicio.getFullYear();
       let meses = agora.getMonth() - inicio.getMonth();
       let dias = agora.getDate() - inicio.getDate();
-      let horas = agora.getHours() - inicio.getHours();
-      let minutos = agora.getMinutes() - inicio.getMinutes();
-      let segundos = agora.getSeconds() - inicio.getSeconds();
 
-      if (segundos < 0) {
-        segundos += 60;
-        minutos--;
-      }
-      if (minutos < 0) {
-        minutos += 60;
-        horas--;
-      }
-      if (horas < 0) {
-        horas += 24;
-        dias--;
-      }
       if (dias < 0) {
-        const ultimoMes = new Date(agora.getFullYear(), agora.getMonth(), 0).getDate();
-        dias += ultimoMes;
+        const ultimoDiaMesAnterior = new Date(agora.getFullYear(), agora.getMonth(), 0).getDate();
+        dias += ultimoDiaMesAnterior;
         meses--;
       }
+
       if (meses < 0) {
         meses += 12;
         anos--;
       }
+
+      const horas = agora.getHours();
+      const minutos = agora.getMinutes();
+      const segundos = agora.getSeconds();
 
       document.getElementById("anos").innerText = anos;
       document.getElementById("meses").innerText = meses;
@@ -360,7 +354,6 @@
     setInterval(atualizarContador, 1000);
     atualizarContador();
 
-    // Atualiza o slider no resize para manter centralização correta
     window.addEventListener("resize", updateSlider);
   </script>
 </body>
