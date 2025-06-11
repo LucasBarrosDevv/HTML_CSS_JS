@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Coração de Partículas</title>
+  <style>
+    @charset "UTF-8";
+
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background-color: #000;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+      color: white;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    #heartCanvas {
+      display: block;
+    }
+
+    #teamoCanvas {
+      display: none;
+      background-color: black;
+    }
+
+    #text-container {
+      position: fixed;
+      top: calc(50% + 250px);
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      width: 100%;
+      max-width: 400px;
+      height: 80px;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    #text-container p {
+      margin: 0;
+      position: absolute;
+      width: 100%;
+      bottom: 0;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      font-size: 2em;
+      color: #fff;
+    }
+
+    #text-container p.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="heartCanvas"></canvas>
+  <canvas id="teamoCanvas"></canvas>
+
+  <div id="text-container">
+    <p>Oi Luiza!</p>
+    <p>Esse é meu jeito de dizer...</p>
+    <p>TE AMO!</p>
+    <p>Meu BomBom</p>
+  </div>
+
+  <script>
+    // Animação dos parágrafos
+    const paragraphs = document.querySelectorAll("#text-container p");
+    let currentIndex = 0;
+
+    function showParagraph(index) {
+      paragraphs.forEach((p, i) => {
+        if (i === index) {
+          p.classList.add("show");
+        } else {
+          p.classList.remove("show");
+        }
+      });
+    }
+
+    function cycleParagraphs() {
+      if (currentIndex < paragraphs.length) {
+        showParagraph(currentIndex);
+        currentIndex++;
+        setTimeout(cycleParagraphs, 2500);
+      } else {
+        // Quando terminar todos, esconde o último parágrafo
+        paragraphs.forEach(p => p.classList.remove("show"));
+      }
+    }
+
+    setTimeout(() => {
+      cycleParagraphs();
+    }, 5000);
+
+    // Código das partículas do coração
+    const heartCanvas = document.getElementById("heartCanvas");
+    const heartCtx = heartCanvas.getContext("2d");
+    let particles = [];
+    let heartAnimationId;
+
+    function resizeHeartCanvas() {
+      heartCanvas.width = window.innerWidth;
+      heartCanvas.height = window.innerHeight;
+      generateParticles();
+    }
+
+    window.addEventListener("resize", resizeHeartCanvas);
+    resizeHeartCanvas();
+
+    function heartFunction(t, scale) {
+      const x = scale * 16 * Math.pow(Math.sin(t), 3);
+      const y = -scale * (13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
+      return { x, y };
+    }
+
+    function generateParticles() {
+      particles = [];
+      const numParticles = 800;
+      const scale = 12;
+      const centerX = heartCanvas.width / 2;
+      const centerY = heartCanvas.height / 2;
+
+      for (let i = 0; i < numParticles; i++) {
+        const t = Math.random() * Math.PI * 2;
+        const { x, y } = heartFunction(t, scale);
+
+        particles.push({
+          x: Math.random() * heartCanvas.width,
+          y: Math.random() * heartCanvas.height,
+          destX: centerX + x,
+          destY: centerY + y,
+          radius: 1.5 + Math.random(),
+          speed: 0.01 + Math.random() * 0.03
+        });
+      }
+    }
+
+    let animationProgress = 0;
+    const animationDuration = 300;
+    let explodePhase = false;
+    let particlesAlpha = 1;
+
+    // Depois de 14 segundos começa a fase de "explosão"
+    setTimeout(() => {
+      explodePhase = true;
+      for (let p of particles) {
+        const angle = Math.random() * 2 * Math.PI;
+        const speed = 2 + Math.random() * 3;
+        p.vx = Math.cos(angle) * speed;
+        p.vy = Math.sin(angle) * speed;
+      }
+    }, 14000);
+
+    function animateHeart() {
+      heartCtx.clearRect(0, 0, heartCanvas.width, heartCanvas.height);
+
+      if (!explodePhase) {
+        if (animationProgress < 1) {
+          animationProgress += 1 / animationDuration;
+          if (animationProgress > 1) animationProgress = 1;
+        }
+
+        for (let p of particles) {
+          const dx = p.destX - p.x;
+          const dy = p.destY - p.y;
+          const currentSpeed = p.speed * animationProgress;
+
+          p.x += dx * currentSpeed;
+          p.y += dy * currentSpeed;
+
+          heartCtx.beginPath();
+          heartCtx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          heartCtx.fillStyle = "red";
+          heartCtx.fill();
+        }
+      } else {
+        particlesAlpha -= 0.015;
+        if (particlesAlpha < 0) particlesAlpha = 0;
+
+        for (let p of particles) {
+          p.x += p.vx;
+          p.y += p.vy;
+
+          heartCtx.beginPath();
+          heartCtx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          heartCtx.fillStyle = `rgba(255, 0, 0, ${particlesAlpha})`;
+          heartCtx.fill();
+        }
+      }
+
+      heartAnimationId = requestAnimationFrame(animateHeart);
+    }
+
+    animateHeart();
+
+    // Transição após 18 segundos
+    setTimeout(() => {
+      // Para a animação do coração
+      cancelAnimationFrame(heartAnimationId);
+      
+      // Esconde o canvas do coração
+      heartCanvas.style.display = 'none';
+      
+      // Mostra o canvas da chuva
+      const teamoCanvas = document.getElementById('teamoCanvas');
+      teamoCanvas.style.display = 'block';
+      
+      // Esconde o texto
+      document.getElementById('text-container').style.display = 'none';
+      
+      // Inicia a chuva de "Te Amo"
+      startRainLove();
+    }, 17000);
+
+    // Código da chuva de "Te Amo"
+    function startRainLove() {
+      const canvas = document.getElementById('teamoCanvas');
+      const ctx = canvas.getContext('2d');
+
+      const phrase = "TeAmo";
+      const fontSize = 18;
+
+      function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        ctx.font = fontSize + 'px Arial';
+        const colWidth = fontSize; // cada coluna terá a largura do fontSize (ajuste se quiser mais ou menos colado)
+columns = Math.floor(canvas.width / colWidth);
+drops = new Array(columns).fill(0);
+
+      }
+
+      let columns;
+      let drops;
+
+      resizeCanvas();
+
+      const heartColor = '#F52420';
+
+      function drawLove() {
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.07)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.fillStyle = heartColor;
+        ctx.font = fontSize + 'px monospace';
+
+        const colWidth = ctx.measureText(phrase).width;
+
+        for (let i = 0; i < columns; i++) {
+          const x = i * colWidth;
+          const y = drops[i] * fontSize;
+
+          ctx.fillText(phrase, x, y);
+
+          drops[i]++;
+
+          if (y > canvas.height && Math.random() > 0.960) {
+            drops[i] = 0;
+          }
+        }
+      }
+
+      // Inicia a chuva imediatamente
+      setInterval(drawLove, 65);
+
+      window.addEventListener('resize', resizeCanvas);
+    }
+  </script>
+
+</body>
+</html>

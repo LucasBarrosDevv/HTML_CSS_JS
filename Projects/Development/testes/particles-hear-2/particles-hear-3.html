@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<title>Partículas em formato de coração interagindo com touch</title>
+<style>
+  body, html {
+    margin: 0; padding: 0; overflow: hidden;
+    background: #111;
+  }
+  canvas {
+    display: block;
+  }
+</style>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+<script>
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+
+let width, height;
+function resize() {
+  width = window.innerWidth;
+  height = window.innerHeight;
+  canvas.width = width;
+  canvas.height = height;
+}
+resize();
+window.addEventListener('resize', resize);
+
+// Partícula
+class Particle {
+  constructor(x, y) {
+    this.originX = x;
+    this.originY = y;
+    this.x = x;
+    this.y = y;
+    this.vx = 0;
+    this.vy = 0;
+  }
+
+  update() {
+    const spring = 0.1;
+    const friction = 0.8;
+
+    let dx = this.originX - this.x;
+    let dy = this.originY - this.y;
+
+    this.vx += dx * spring;
+    this.vy += dy * spring;
+
+    this.vx *= friction;
+    this.vy *= friction;
+
+    this.x += this.vx;
+    this.y += this.vy;
+  }
+
+  draw(ctx) {
+    ctx.beginPath();
+    ctx.fillStyle = 'cyan';
+    ctx.arc(this.x, this.y, 3, 0, Math.PI * 2);
+    ctx.fill();
+  }
+}
+
+const particles = [];
+
+// Criar forma de coração em canvas invisível para pegar pixels
+const heartCanvas = document.createElement('canvas');
+const hctx = heartCanvas.getContext('2d');
+heartCanvas.width = 400;
+heartCanvas.height = 400;
+
+// Função para desenhar um coração no canvas
+function drawHeart(ctx, x, y, size) {
+  ctx.beginPath();
+  const topCurveHeight = size * 0.3;
+  ctx.moveTo(x, y + topCurveHeight);
+  // Curva esquerda
+  ctx.bezierCurveTo(
+    x, y,
+    x - size / 2, y,
+    x - size / 2, y + topCurveHeight
+  );
+  // Curva esquerda inferior
+  ctx.bezierCurveTo(
+    x - size / 2, y + (size + topCurveHeight) / 2,
+    x, y + (size + topCurveHeight) / 1.5,
+    x, y + size
+  );
+  // Curva direita inferior
+  ctx.bezierCurveTo(
+    x, y + (size + topCurveHeight) / 1.5,
+    x + size / 2, y + (size + topCurveHeight) / 2,
+    x + size / 2, y + topCurveHeight
+  );
+  // Curva direita
+  ctx.bezierCurveTo(
+    x + size / 2, y,
+    x, y,
+    x, y + topCurveHeight
+  );
+  ctx.closePath();
+  ctx.fill();
+}
+
+// Desenha o coração preenchido branco
+hctx.fillStyle = 'white';
+drawHeart(hctx, heartCanvas.width / 2, heartCanvas.height / 4, 180);
+
+// Pega os dados da imagem para gerar partículas
+const imgData = hctx.getImageData(0, 0, heartCanvas.width, heartCanvas.height);
+
+for(let y = 0; y < imgData.height; y += 6) {
+  for(let x = 0; x < imgData.width; x += 6) {
+    const alpha = imgData.data[(y * imgData.width + x) * 4 + 3];
+    if(alpha > 128) {
+      let posX = x + (width / 2 - heartCanvas.width / 2);
+      let posY = y + (height / 2 - heartCanvas.height / 2);
+      particles.push(new Particle(posX, posY));
+    }
+  }
+}
+
+// Controla o toque/mouse
+let pointer = { x: 0, y: 0, active: false };
+
+function repelParticles() {
+  const radius = 80;
+  const force = 5;
+
+  particles.forEach(p => {
+    let dx = p.x - pointer.x;
+    let dy = p.y - pointer.y;
+    let dist = Math.sqrt(dx * dx + dy * dy);
+    if(dist < radius) {
+      let angle = Math.atan2(dy, dx);
+      let repelForce = (radius - dist) / radius * force;
+      p.vx += Math.cos(angle) * repelForce;
+      p.vy += Math.sin(angle) * repelForce;
+    }
+  });
+}
+
+function animate() {
+  ctx.clearRect(0, 0, width, height);
+
+  if(pointer.active) {
+    repelParticles();
+  }
+
+  particles.forEach(p => {
+    p.update();
+    p.draw(ctx);
+  });
+
+  requestAnimationFrame(animate);
+}
+
+animate();
+
+function pointerDown(e) {
+  pointer.active = true;
+  let rect = canvas.getBoundingClientRect();
+  if(e.touches) {
+    pointer.x = e.touches[0].clientX - rect.left;
+    pointer.y = e.touches[0].clientY - rect.top;
+  } else {
+    pointer.x = e.clientX - rect.left;
+    pointer.y = e.clientY - rect.top;
+  }
+}
+
+function pointerMove(e) {
+  if(pointer.active) {
+    let rect = canvas.getBoundingClientRect();
+    if(e.touches) {
+      pointer.x = e.touches[0].clientX - rect.left;
+      pointer.y = e.touches[0].clientY - rect.top;
+    } else {
+      pointer.x = e.clientX - rect.left;
+      pointer.y = e.clientY - rect.top;
+    }
+  }
+}
+
+function pointerUp(e) {
+  pointer.active = false;
+}
+
+canvas.addEventListener('mousedown', pointerDown);
+canvas.addEventListener('mousemove', pointerMove);
+canvas.addEventListener('mouseup', pointerUp);
+
+canvas.addEventListener('touchstart', pointerDown);
+canvas.addEventListener('touchmove', pointerMove);
+canvas.addEventListener('touchend', pointerUp);
+</script>
+</body>
+</html>

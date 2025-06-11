@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<title>Partículas interagindo com touch</title>
+<style>
+  body, html {
+    margin: 0; padding: 0; overflow: hidden;
+    background: #111;
+  }
+  canvas {
+    display: block;
+  }
+</style>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+<script>
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+
+let width, height;
+function resize() {
+  width = window.innerWidth;
+  height = window.innerHeight;
+  canvas.width = width;
+  canvas.height = height;
+}
+resize();
+window.addEventListener('resize', resize);
+
+// Partícula
+class Particle {
+  constructor(x, y) {
+    this.originX = x; // posição fixa original
+    this.originY = y;
+    this.x = x;
+    this.y = y;
+    this.vx = 0;
+    this.vy = 0;
+  }
+
+  update() {
+    // Voltar lentamente para a posição original (com "ressalto" suave)
+    const spring = 0.1;
+    const friction = 0.8;
+
+    let dx = this.originX - this.x;
+    let dy = this.originY - this.y;
+
+    this.vx += dx * spring;
+    this.vy += dy * spring;
+
+    this.vx *= friction;
+    this.vy *= friction;
+
+    this.x += this.vx;
+    this.y += this.vy;
+  }
+
+  draw(ctx) {
+    ctx.beginPath();
+    ctx.fillStyle = 'cyan';
+    ctx.arc(this.x, this.y, 3, 0, Math.PI * 2);
+    ctx.fill();
+  }
+}
+
+// Criar partículas formando uma figura — aqui vou usar uma palavra "Hi"
+const particles = [];
+const text = "Hi";
+ctx.font = "bold 150px Arial";
+ctx.textAlign = "center";
+ctx.textBaseline = "middle";
+
+// Para pegar a forma do texto, vamos desenhar no canvas invisível e pegar os pixels:
+const textCanvas = document.createElement('canvas');
+const tctx = textCanvas.getContext('2d');
+textCanvas.width = 400;
+textCanvas.height = 200;
+tctx.font = "bold 150px Arial";
+tctx.textAlign = "center";
+tctx.textBaseline = "middle";
+tctx.fillStyle = "white";
+tctx.fillText(text, textCanvas.width/2, textCanvas.height/2);
+
+const imgData = tctx.getImageData(0, 0, textCanvas.width, textCanvas.height);
+
+for(let y = 0; y < imgData.height; y += 6) {
+  for(let x = 0; x < imgData.width; x += 6) {
+    const alpha = imgData.data[(y * imgData.width + x) * 4 + 3];
+    if(alpha > 128) { // pixel opaco - tem parte da letra
+      // Ajustar para o centro da tela
+      let posX = x + (width/2 - textCanvas.width/2);
+      let posY = y + (height/2 - textCanvas.height/2);
+      particles.push(new Particle(posX, posY));
+    }
+  }
+}
+
+// Touch/mouse tracking
+let pointer = { x: 0, y: 0, active: false };
+
+// Ao mover o dedo (ou mouse), partículas próximas se afastam do ponto
+function repelParticles() {
+  const radius = 80; // alcance da repulsão
+  const force = 5;
+
+  particles.forEach(p => {
+    let dx = p.x - pointer.x;
+    let dy = p.y - pointer.y;
+    let dist = Math.sqrt(dx*dx + dy*dy);
+    if(dist < radius) {
+      let angle = Math.atan2(dy, dx);
+      let repelForce = (radius - dist) / radius * force;
+      p.vx += Math.cos(angle) * repelForce;
+      p.vy += Math.sin(angle) * repelForce;
+    }
+  });
+}
+
+function animate() {
+  ctx.clearRect(0, 0, width, height);
+
+  if(pointer.active) {
+    repelParticles();
+  }
+
+  particles.forEach(p => {
+    p.update();
+    p.draw(ctx);
+  });
+
+  requestAnimationFrame(animate);
+}
+
+animate();
+
+// Eventos touch e mouse para suportar desktop e mobile
+function pointerDown(e) {
+  pointer.active = true;
+  let rect = canvas.getBoundingClientRect();
+  if(e.touches) {
+    pointer.x = e.touches[0].clientX - rect.left;
+    pointer.y = e.touches[0].clientY - rect.top;
+  } else {
+    pointer.x = e.clientX - rect.left;
+    pointer.y = e.clientY - rect.top;
+  }
+}
+
+function pointerMove(e) {
+  if(pointer.active) {
+    let rect = canvas.getBoundingClientRect();
+    if(e.touches) {
+      pointer.x = e.touches[0].clientX - rect.left;
+      pointer.y = e.touches[0].clientY - rect.top;
+    } else {
+      pointer.x = e.clientX - rect.left;
+      pointer.y = e.clientY - rect.top;
+    }
+  }
+}
+
+function pointerUp(e) {
+  pointer.active = false;
+}
+
+canvas.addEventListener('mousedown', pointerDown);
+canvas.addEventListener('mousemove', pointerMove);
+canvas.addEventListener('mouseup', pointerUp);
+
+canvas.addEventListener('touchstart', pointerDown);
+canvas.addEventListener('touchmove', pointerMove);
+canvas.addEventListener('touchend', pointerUp);
+</script>
+</body>
+</html>
