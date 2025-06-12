@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Script Store</title>
+    <style>
+        header {
+            display: flex;
+            height: 100px;
+        }
+        #left{
+            background-color: blue;
+            height: 300px;
+            width: 80vw;
+            flex: 1;
+            clip-path: polygon(
+            0 0,       /* canto superior esquerdo */
+            100% 0,    /* canto superior direito */
+            100% 90%,  /* ponto um pouco antes do canto inferior direito */
+            90% 100%,  /* ponto um pouco antes do canto inferior direito na vertical */
+            0 100%     /* canto inferior esquerdo */
+        );
+        }
+        
+
+        #rigth{
+            background-color: orange;
+            height: 300px;
+            width: 80vw;
+            flex: 1;
+            
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div id="left"></div>
+        <div id="rigth"></div>
+    </header>
+</body>
+</html>

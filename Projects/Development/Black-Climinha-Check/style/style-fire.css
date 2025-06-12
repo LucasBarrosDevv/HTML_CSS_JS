@@ -1,0 +1,11 @@
+@charset "UTF-8";
+
+    body {
+      background: linear-gradient(to top, #660000 ,#300000 ,black ,black  );
+    }
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+    }
