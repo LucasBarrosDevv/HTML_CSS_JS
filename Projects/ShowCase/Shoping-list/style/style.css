@@ -1,124 +1,68 @@
 @charset "UTF-8";
 
-/* Todas as demais mídias */
-
-/* Typical Device Breakpoints
----------------------------
-Pequenas telas: até 600px
-Celular: de 600px até 768px
-Tablet: 768px até 992px
-Desktop: 992px até 1200px
-Grandes telas: acima de 1200px
-*/
-
+/* Reset e Tipografia Geral */
 * {
     font-family: Arial, Helvetica, sans-serif;
 }
+
 html {
     margin: 0;
 }
+
 body {
-   background-color: burlywood;
+    background-color: burlywood;
 }
-header {  
+
+/* Cabeçalho */
+header {
     display: flex;
     text-align: center;
     margin: 0;
     padding: 15px;
     padding-top: 0;
 }
+
 header > h1 {
     display: block;
     margin-top: 40px;
     margin-left: 0px;
     font-size: 1.8em;
 }
+
+/* Imagens */
 img {
     height: 100px;
     margin-left: 0px;
     margin-top: 20px;
-    
 }
-#icone-sidebar {
-    display: flex;
-    justify-content: flex-end;
-    padding-right: 20px;
-}
-#icone-sidebar:checked + #sidebar {
-    background-color: lightblue; /* Muda a cor do sidebar ao clicar no ícone */
-}
-#sidebar {
-    display: flex;
-    display: none;
-    flex-direction: column;
-    position: absolute;
-    z-index: 1000;
-    background-color: black;
-    right: 0;
-    width: 100px;
-    margin: 20px;
-    margin-top: 0;
-    border-radius: 20px;
-    padding: 20px;
-    
-}
-#sidebar > a {
-    text-decoration: none;
-    color: white;
-    font-size: 1.3em;
-    margin-bottom: 20px;
-}
-main {
-    margin-bottom: 50px;
-}
-fieldset {
-   margin-top: 5px;
-   border-radius: 20px;
-   border: 1px solid #704D1F;
-   box-shadow: -2px 3px 7px 0px #00000063;
-}
-legend {
-    background-color: #704D1F;
-    color: white;
-    font-size: 1.3em;
-    margin-bottom: 10px;
-    border-radius: 10px;
-    padding: 8px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    box-shadow: -3px -2px 11px 0px #00000038;
-}
-label {
-    margin-left: 5px;
-    font-size: 1.1em;
-    
-}
-label:has(input:checked) {
-    padding: 5px; 
-    border-radius: 5px;
-    margin-left: 5px;
-}
-.num-label {
-    position: relative;
-    float: right;
-}
-.num {
+
+/* Inputs */
+input.multiplicador[type="number"] {
     background-color: burlywood;
-    border: none;
-}
-input.num[type="number"] {
-    width: 50px;
- }
- input.multiplicador[type="number"] {
+    font-weight: bold;
+    color: rgb(37, 146, 219);
     width: 30px;
 }
-input[type="checkbox"]{
+
+input.num[type="number"] {
+    background-color: burlywood;
+    border: none;
+    color: green;
+    font-weight: bold;
+    font-size: 16px;
+    padding: 5px;
+    border-radius: 4px;
+    width: 50px;
+}
+
+input[type="checkbox"] {
     accent-color: rgb(8, 240, 8);
     transform: scale(1.9);
     margin-right: 20px;
     margin-bottom: 15px;
     border: 2px solid burlywood;
 }
+
 input[type="number"] {
     padding: 5px;
     border: none;
@@ -126,34 +70,58 @@ input[type="number"] {
     font-size: 16px;
 }
 
-.multiplicador {
-    background-color: burlywood;
-    font-weight: bold;
-    color: rgb(37, 146, 219);
+/* Labels */
+label {
+    font-size: 1.1em;
+    margin-left: 5px;
 }
 
-span {
-    font-size: 1.4em;
+label:has(input:checked) {
+    padding: 5px;
+    border-radius: 5px;
+    margin-left: 5px;
 }
-#resultado {
-    text-align: center;
-    position: sticky;
-    background-color: burlywood;
-    top: 0;
-    margin: 0;
-    margin-bottom: 20px;
-}    
-#total {
-    color: rgb(8, 147, 8);
+
+/* Layouts e Containers */
+.aside {
+    display: inline-block;
+    margin-top: 20px;
 }
-#reais {
+
+#aside1 {
+    position: absolute;
+    left: 0;
+    margin-left: 10px;
+}
+
+#aside2 {
+    position: absolute;
+    right: 0;
     margin-right: 10px;
-    font-size: medium;
 }
-.num {
-    color: green;
-    font-weight: bold;
+
+fieldset {
+    margin-top: 5px;
+    border-radius: 20px;
+    border: 1px solid #704D1F;
+    box-shadow: -2px 3px 7px 0px #00000063;
 }
+
+legend {
+    background-color: #704D1F;
+    color: white;
+    font-size: 1.3em;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    padding: 5px 8px;
+    box-shadow: -3px -2px 11px 0px #00000038;
+}
+
+main {
+    margin-bottom: 50px;
+}
+
+
 #section-botao {
     display: flex;
     justify-content: end;
@@ -161,6 +129,8 @@ span {
     margin-top: 10px;
     margin-left: 20%;
 }
+
+/* Botões */
 #duplicar-item {
     background-color: burlywood;
     color: green;
@@ -170,30 +140,87 @@ span {
     padding: 10px;
     border: none;
 }
+
+
+/* Resultados */
+#reais {
+    font-size: medium;
+    margin-right: 10px;
+}
+
+#resultado {
+    background-color: burlywood;
+    margin: 0 0 20px 0;
+    position: sticky;
+    text-align: center;
+    top: 0;
+}
+
+#total {
+    color: rgb(8, 147, 8);
+    font-size: 1.4em;
+}
+
+/* Span Geral */
+span {
+    font-size: 1.4em;
+}
+
+/* Sidebar */
+#icone-sidebar {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 20px;
+}
+
+#icone-sidebar:checked + #sidebar {
+    background-color: lightblue; /* Muda a cor do sidebar ao clicar no ícone */
+}
+
+#sidebar {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    right: 0;
+    width: 100px;
+    margin: 20px 20px 0 20px;
+    border-radius: 20px;
+    padding: 20px;
+    background-color: black;
+    z-index: 1000;
+}
+
+#sidebar > a {
+    color: white;
+    font-size: 1.3em;
+    margin-bottom: 20px;
+    text-decoration: none;
+}
+
+/* Ícones Material */
 .material-icons {
     font-size: 2em;
 }
-#voltar {
-    text-decoration: none;
-    color: black;
-    font-size:3em; 
-    font-weight: bolder;
-}
-.aside {
-    display: inline-block;
-    margin-top: 20px;
-}
-#aside1 {
-    position: absolute;
-    left: 0;
-    margin-left: 10px;
-}
-#aside2 {
-    position: absolute;
-    right: 0;
-    margin-right: 10px;
-}
+
 .material-symbols-outlined {
-    font-size: 0.8em;
     color: #704D1F;
+    font-size: 0.8em;
+}
+
+/* Num-label (se houver) */
+.num-label {
+    float: right;
+    position: relative;
+}
+.num {
+  color: green; /* cor do texto digitado */
+  border: 1px solid #ccc;
+}
+.item {
+    margin-bottom: 20px;
+}
+.item-topo {
+    margin-left: 25px;
+    font-size: 1.2em;
+    font-weight: 600;
 }

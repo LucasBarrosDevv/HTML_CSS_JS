@@ -1,69 +1,393 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista Personalizada</title>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=arrow_back" />
+
+    <!-- Ícones do Google -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=arrow_back" />
+
+    <!-- Estilo externo -->
     <link rel="stylesheet" href="style/style.css">
 </head>
+
 <body>
+    <!-- Cabeçalho -->
     <header>
         <h1>Lista de Compras</h1>
-        <img src="https://static.vecteezy.com/system/resources/previews/019/787/045/non_2x/shopping-cart-icon-shopping-basket-on-transparent-background-free-png.png" alt="icone">
+        <img src="https://static.vecteezy.com/system/resources/previews/019/787/045/non_2x/shopping-cart-icon-shopping-basket-on-transparent-background-free-png.png"
+            alt="icone">
     </header>
-    <h2 id="resultado"><span id="reais">R$</span><span id="total">0.00</span></h2>
+
+    <!-- Valor total -->
+    <h2 id="resultado">
+        <span id="reais">R$</span>
+        <span id="total">0.00</span>
+    </h2>
+
     <main>
-        <form action="">
-            <section id="lista-compras-section">
-            <fieldset>
-                    <legend>Itens da Lista</legend>
-                    <div class="item">
-                        <label class="item-label">
-                            <input type="checkbox" class="check">
-                            <span class="nome-item">Manteiga</span>
-                            <label class="num-label">
-                                R$<input type="number" class="num" step="0.10" placeholder="0.00" min="0">
-                                <input type="number" class="multiplicador" placeholder="1" min="1">
-                            </label>
-                        </label>
-                    </div>
-                </fieldset>
-            </section>
-        </form> 
+       <section id="lista-compras-section">
+    <fieldset>
+        <legend>Itens da Lista</legend>
+
+    <div class="item">
+  <div class="item-topo">
+    <input type="checkbox" class="check">
+    <span class="nome-item">Porta frios</span>
+  </div>
+  <div class="item-valores">
+    <label>R$
+      <input type="number" class="num" step="0.10" placeholder="0.00" min="0">
+    </label>
+    <label>Qtd.
+      <input type="number" class="multiplicador" placeholder="1" min="1">
+    </label>
+  </div>
+</div>
+
+<div class="item">
+  <div class="item-topo">
+    <input type="checkbox" class="check">
+    <span class="nome-item">Descascador</span>
+  </div>
+  <div class="item-valores">
+    <label>R$
+      <input type="number" class="num" step="0.10" placeholder="0.00" min="0">
+    </label>
+    <label>Qtd.
+      <input type="number" class="multiplicador" placeholder="1" min="1">
+    </label>
+  </div>
+</div>
+
+<div class="item">
+  <div class="item-topo">
+    <input type="checkbox" class="check">
+    <span class="nome-item">Fruteira</span>
+  </div>
+  <div class="item-valores">
+    <label>R$
+      <input type="number" class="num" step="0.10" placeholder="0.00" min="0">
+    </label>
+    <label>Qtd.
+      <input type="number" class="multiplicador" placeholder="1" min="1">
+    </label>
+  </div>
+</div>
+
+<div class="item">
+  <div class="item-topo">
+    <input type="checkbox" class="check">
+    <span class="nome-item">Porta óleo e vinagre</span>
+  </div>
+  <div class="item-valores">
+    <label>R$
+      <input type="number" class="num" step="0.10" placeholder="0.00" min="0">
+    </label>
+    <label>Qtd.
+      <input type="number" class="multiplicador" placeholder="1" min="1">
+    </label>
+  </div>
+</div>
+
+<div class="item">
+  <div class="item-topo">
+    <input type="checkbox" class="check">
+    <span class="nome-item">Organizador de ovo</span>
+  </div>
+  <div class="item-valores">
+    <label>R$
+      <input type="number" class="num" step="0.10" placeholder="0.00" min="0">
+    </label>
+    <label>Qtd.
+      <input type="number" class="multiplicador" placeholder="1" min="1">
+    </label>
+  </div>
+</div>
+
+<div class="item">
+  <div class="item-topo">
+    <input type="checkbox" class="check">
+    <span class="nome-item">Rolo para abrir massa</span>
+  </div>
+  <div class="item-valores">
+    <label>R$
+      <input type="number" class="num" step="0.10" placeholder="0.00" min="0">
+    </label>
+    <label>Qtd.
+      <input type="number" class="multiplicador" placeholder="1" min="1">
+    </label>
+  </div>
+</div>
+
+<div class="item">
+  <div class="item-topo">
+    <input type="checkbox" class="check">
+    <span class="nome-item">Pegador de panelas</span>
+  </div>
+  <div class="item-valores">
+    <label>R$
+      <input type="number" class="num" step="0.10" placeholder="0.00" min="0">
+    </label>
+    <label>Qtd.
+      <input type="number" class="multiplicador" placeholder="1" min="1">
+    </label>
+  </div>
+</div>
+
+<div class="item">
+  <div class="item-topo">
+    <input type="checkbox" class="check">
+    <span class="nome-item">Porta papel toalha</span>
+  </div>
+  <div class="item-valores">
+    <label>R$
+      <input type="number" class="num" step="0.10" placeholder="0.00" min="0">
+    </label>
+    <label>Qtd.
+      <input type="number" class="multiplicador" placeholder="1" min="1">
+    </label>
+  </div>
+</div>
+
+<div class="item">
+  <div class="item-topo">
+    <input type="checkbox" class="check">
+    <span class="nome-item">Assadeira de vidro para forno (grande)</span>
+  </div>
+  <div class="item-valores">
+    <label>R$
+      <input type="number" class="num" step="0.10" placeholder="0.00" min="0">
+    </label>
+    <label>Qtd.
+      <input type="number" class="multiplicador" placeholder="1" min="1">
+    </label>
+  </div>
+</div>
+
+<div class="item">
+  <div class="item-topo">
+    <input type="checkbox" class="check">
+    <span class="nome-item">Assadeira de vidro para forno (média)</span>
+  </div>
+  <div class="item-valores">
+    <label>R$
+      <input type="number" class="num" step="0.10" placeholder="0.00" min="0">
+    </label>
+    <label>Qtd.
+      <input type="number" class="multiplicador" placeholder="1" min="1">
+    </label>
+  </div>
+</div>
+
+<div class="item">
+  <div class="item-topo">
+    <input type="checkbox" class="check">
+    <span class="nome-item">Assadeira de vidro para forno (pequena)</span>
+  </div>
+  <div class="item-valores">
+    <label>R$
+      <input type="number" class="num" step="0.10" placeholder="0.00" min="0">
+    </label>
+    <label>Qtd.
+      <input type="number" class="multiplicador" placeholder="1" min="1">
+    </label>
+  </div>
+</div>
+
+
+<div class="item">
+  <div class="item-topo">
+    <input type="checkbox" class="check">
+    <span class="nome-item">Forma para bolo com furo no meio (grande)</span>
+  </div>
+  <div class="item-valores">
+    <label>R$
+      <input type="number" class="num" step="0.10" placeholder="0.00" min="0">
+    </label>
+    <label>Qtd.
+      <input type="number" class="multiplicador" placeholder="1" min="1">
+    </label>
+  </div>
+</div>
+
+<div class="item">
+  <div class="item-topo">
+    <input type="checkbox" class="check">
+    <span class="nome-item">Forma para bolo com furo no meio (pequena)</span>
+  </div>
+  <div class="item-valores">
+    <label>R$
+      <input type="number" class="num" step="0.10" placeholder="0.00" min="0">
+    </label>
+    <label>Qtd.
+      <input type="number" class="multiplicador" placeholder="1" min="1">
+    </label>
+  </div>
+</div>
+
+
+<div class="item">
+  <div class="item-topo">
+    <input type="checkbox" class="check">
+    <span class="nome-item">1 Forma para pão (quadrada)</span>
+  </div>
+  <div class="item-valores">
+    <label>R$
+      <input type="number" class="num" step="0.10" placeholder="0.00" min="0">
+    </label>
+    <label>Qtd.
+      <input type="number" class="multiplicador" placeholder="1" min="1">
+    </label>
+  </div>
+</div>
+
+<div class="item">
+  <div class="item-topo">
+    <input type="checkbox" class="check">
+    <span class="nome-item">1 Forma para pizza (média)</span>
+  </div>
+  <div class="item-valores">
+    <label>R$
+      <input type="number" class="num" step="0.10" placeholder="0.00" min="0">
+    </label>
+    <label>Qtd.
+      <input type="number" class="multiplicador" placeholder="1" min="1">
+    </label>
+  </div>
+</div>
+
+<div class="item">
+  <div class="item-topo">
+    <input type="checkbox" class="check">
+    <span class="nome-item">Conjunto de medidores</span>
+  </div>
+  <div class="item-valores">
+    <label>R$
+      <input type="number" class="num" step="0.10" placeholder="0.00" min="0">
+    </label>
+    <label>Qtd.
+      <input type="number" class="multiplicador" placeholder="1" min="1">
+    </label>
+  </div>
+</div>
+
+<div class="item">
+  <div class="item-topo">
+    <input type="checkbox" class="check">
+    <span class="nome-item">Moedor de pimenta e sal</span>
+  </div>
+  <div class="item-valores">
+    <label>R$
+      <input type="number" class="num" step="0.10" placeholder="0.00" min="0">
+    </label>
+    <label>Qtd.
+      <input type="number" class="multiplicador" placeholder="1" min="1">
+    </label>
+  </div>
+</div>
+
+<div class="item">
+  <div class="item-topo">
+    <input type="checkbox" class="check">
+    <span class="nome-item">Cortador de pizza</span>
+  </div>
+  <div class="item-valores">
+    <label>R$
+      <input type="number" class="num" step="0.10" placeholder="0.00" min="0">
+    </label>
+    <label>Qtd.
+      <input type="number" class="multiplicador" placeholder="1" min="1">
+    </label>
+  </div>
+</div>
+
+<div class="item">
+  <div class="item-topo">
+    <input type="checkbox" class="check">
+    <span class="nome-item">Funil</span>
+  </div>
+  <div class="item-valores">
+    <label>R$
+      <input type="number" class="num" step="0.10" placeholder="0.00" min="0">
+    </label>
+    <label>Qtd.
+      <input type="number" class="multiplicador" placeholder="1" min="1">
+    </label>
+  </div>
+</div>
+
+<div class="item">
+  <div class="item-topo">
+    <input type="checkbox" class="check">
+    <span class="nome-item">Jogo de taças para vinho</span>
+  </div>
+  <div class="item-valores">
+    <label>R$
+      <input type="number" class="num" step="0.10" placeholder="0.00" min="0">
+    </label>
+    <label>Qtd.
+      <input type="number" class="multiplicador" placeholder="1" min="1">
+    </label>
+  </div>
+</div>
+
+<div class="item">
+  <div class="item-topo">
+    <input type="checkbox" class="check">
+    <span class="nome-item">Tesoura para cozinha</span>
+  </div>
+  <div class="item-valores">
+    <label>R$
+      <input type="number" class="num" step="0.10" placeholder="0.00" min="0">
+    </label>
+    <label>Qtd.
+      <input type="number" class="multiplicador" placeholder="1" min="1">
+    </label>
+  </div>
+</div>
+
+    </section>
+        </form>
+        <!-- Botão de Voltar -->
         <section class="aside" id="aside1">
             <a href="index02.html" id="voltar">
-                <span class="material-symbols-outlined">
-                    arrow_back
-                </span>  
+                <span class="material-symbols-outlined">arrow_back</span>
             </a>
         </section>
-        <section class="aside" id="aside2">
-            <button id="duplicar-item"><span id="burguer" class="material-icons md-36">add</span></button>
-        </section>
-        
-    </main>
-    
-    
-        
-    
-    <script>
-        function calcularTotal() {
-            let total = 0;
-            document.querySelectorAll('.num').forEach(input => {
-                let valor = parseFloat(input.value) || 0;
-                let multiplicador = parseInt(input.nextElementSibling.value) || 1;
-                total += valor * multiplicador;
-            });
-            document.getElementById('total').textContent = total.toFixed(2);
-        }
 
+        <!-- Botão de Adicionar Item -->
+        <section class="aside" id="aside2">
+            <button id="duplicar-item" type="button">
+                <span id="burguer" class="material-icons md-36">add</span>
+            </button>
+        </section>
+    </main>
+
+    <!-- JavaScript -->
+    <script>
+        // Calcula o total da compra somando valor x multiplicador de cada item
+       function calcularTotal() {
+    let total = 0;
+    document.querySelectorAll('.item').forEach(item => {
+        let valor = parseFloat(item.querySelector('.num').value) || 0;
+        let multiplicador = parseInt(item.querySelector('.multiplicador').value) || 1;
+        total += valor * multiplicador;
+    });
+    document.getElementById('total').textContent = total.toFixed(2);
+}
+
+
+        // Adiciona evento de cálculo ao digitar nos inputs
         document.querySelectorAll('.num, .multiplicador').forEach(input => {
             input.addEventListener('input', calcularTotal);
         });
 
+        // Duplicar o último item da lista
         function duplicarUltimoItem() {
             let itens = document.querySelectorAll('.item');
             if (itens.length === 0) {
@@ -80,6 +404,8 @@
 
             let itemClone = ultimoItem.cloneNode(true);
             itemClone.querySelector('.nome-item').textContent = novoNome;
+
+            // Limpa os valores e adiciona eventos
             itemClone.querySelectorAll('.num, .multiplicador').forEach(input => {
                 input.value = "";
                 input.addEventListener('input', calcularTotal);
@@ -90,7 +416,8 @@
 
         document.getElementById('duplicar-item').addEventListener('click', duplicarUltimoItem);
 
-        document.getElementById('voltar').addEventListener('click', function(event) {
+        // Confirmação antes de voltar
+        document.getElementById('voltar').addEventListener('click', function (event) {
             event.preventDefault();
             let confirmar = confirm("Tem certeza de que deseja voltar?");
             if (confirmar) {
@@ -99,4 +426,5 @@
         });
     </script>
 </body>
+
 </html>
