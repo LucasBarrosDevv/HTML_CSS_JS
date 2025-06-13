@@ -44,11 +44,18 @@ document.getElementById('botao-limpar-dados').addEventListener('click', function
         });
 
         calcularTotal();
-        salvarDadosSemAlerta(); // Salva os dados zerados sem alertar
 
-        alert('Valores dos itens limpos!');
+        // Limpa localStorage e sessionStorage para limpar dados armazenados do app
+        localStorage.removeItem('listaCompras');
+        sessionStorage.clear();
+
+        // Salva os dados zerados sem alertar (já que removemos listaCompras, não terá efeito)
+        salvarDadosSemAlerta();
+
+        alert('Valores dos itens limpos! Cache do app também limpo!');
     }
 });
+
 
 // Carregar os dados do localStorage ao carregar a página
 function carregarDados() {
