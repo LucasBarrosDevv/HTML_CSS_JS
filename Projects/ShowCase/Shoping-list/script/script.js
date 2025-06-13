@@ -7,12 +7,10 @@ function calcularTotal() {
         total += valor * multiplicador;
     });
     document.getElementById('total').textContent = total.toFixed(2);
-    salvarDados(); // Salva os dados toda vez que o total for calculado
 }
 
-// ... sua função salvarDados() aqui
-
-function salvarDados() {
+// Função para salvar dados no localStorage sem alertar
+function salvarDadosSemAlerta() {
     const itens = [];
     document.querySelectorAll('.item').forEach(item => {
         itens.push({
@@ -23,35 +21,34 @@ function salvarDados() {
         });
     });
     localStorage.setItem('listaCompras', JSON.stringify(itens));
+}
+
+// Função para salvar dados e mostrar alerta
+function salvarDados() {
+    salvarDadosSemAlerta();
     alert('Dados salvos com sucesso!');
 }
 
-// *** INSERIR AQUI o evento do botão salvar manualmente ***
+// Evento do botão Salvar manualmente
 document.getElementById('botao-salvar-dados').addEventListener('click', function() {
     salvarDados();
-    alert('Dados salvos com sucesso!');
 });
+
+// Evento do botão Limpar Dados
 document.getElementById('botao-limpar-dados').addEventListener('click', function() {
     if (confirm('Tem certeza que deseja limpar os valores dos itens?')) {
-        // Para cada item, zera valor, quantidade e desmarca checkbox
         document.querySelectorAll('.item').forEach(item => {
             item.querySelector('.num').value = "";
             item.querySelector('.multiplicador').value = 1;
             item.querySelector('.check').checked = false;
         });
 
-        calcularTotal(); // Atualiza total para zero
-        salvarDados(); // Salva os dados zerados
+        calcularTotal();
+        salvarDadosSemAlerta(); // Salva os dados zerados sem alertar
 
         alert('Valores dos itens limpos!');
     }
 });
-
-
-
-// ... restante do seu script (carregarDados, calcularTotal, duplicarUltimoItem, etc)
-
-
 
 // Carregar os dados do localStorage ao carregar a página
 function carregarDados() {
@@ -60,7 +57,6 @@ function carregarDados() {
         const container = document.querySelector("#lista-compras-section fieldset");
         container.innerHTML = ''; // Limpa os itens atuais para recarregar do armazenamento
         dados.forEach(itemDados => {
-            // Cria um novo item
             const item = document.createElement('div');
             item.classList.add('item');
             item.innerHTML = `
@@ -77,12 +73,14 @@ function carregarDados() {
                     </label>
                 </div>
             `;
-            // Adiciona eventos de input para recalcular e salvar ao mudar valores
-            item.querySelectorAll('.num, .multiplicador').forEach(input => {
-                input.addEventListener('input', calcularTotal);
-            });
-            // Evento para salvar ao mudar checkbox
-            item.querySelector('.check').addEventListener('change', salvarDados);
+           item.querySelectorAll('.num, .multiplicador').forEach(input => {
+    input.addEventListener('input', () => {
+        calcularTotal();
+        salvarDadosSemAlerta();
+    });
+});
+
+            item.querySelector('.check').addEventListener('change', salvarDadosSemAlerta);
             container.appendChild(item);
         });
         calcularTotal();
@@ -96,7 +94,7 @@ document.querySelectorAll('.num, .multiplicador').forEach(input => {
 
 // Adiciona evento para salvar ao alterar checkbox (no HTML inicial)
 document.querySelectorAll('.check').forEach(checkbox => {
-    checkbox.addEventListener('change', salvarDados);
+    checkbox.addEventListener('change', salvarDadosSemAlerta);
 });
 
 // Duplicar o último item da lista
@@ -117,25 +115,25 @@ function duplicarUltimoItem() {
     let itemClone = ultimoItem.cloneNode(true);
     itemClone.querySelector('.nome-item').textContent = novoNome;
 
-    // Limpa os valores e adiciona eventos
     itemClone.querySelectorAll('.num, .multiplicador').forEach(input => {
         input.value = "";
         input.addEventListener('input', calcularTotal);
     });
     itemClone.querySelector('.check').checked = false;
-    itemClone.querySelector('.check').addEventListener('change', salvarDados);
+    itemClone.querySelector('.check').addEventListener('change', salvarDadosSemAlerta);
 
     document.querySelector("#lista-compras-section fieldset").appendChild(itemClone);
 
-    salvarDados(); // Salva imediatamente após adicionar novo item
+    salvarDadosSemAlerta();
 }
 
+// Botão duplicar item
 document.getElementById('duplicar-item').addEventListener('click', duplicarUltimoItem);
 
 // Confirmação antes de voltar
 document.getElementById('voltar').addEventListener('click', function (event) {
     event.preventDefault();
-    let confirmar = confirm("Tem certeza de que deseja voltar?");
+    let confirmar = confirm("Tem certeza que deseja voltar?");
     if (confirmar) {
         window.location.href = this.href;
     }
