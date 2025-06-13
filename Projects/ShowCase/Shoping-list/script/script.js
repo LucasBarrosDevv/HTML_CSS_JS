@@ -60,12 +60,12 @@ function carregarDados() {
     }
 }
 
-// Adiciona evento de cálculo ao digitar nos inputs existentes
+// Adiciona evento de cálculo ao digitar nos inputs existentes (no HTML inicial)
 document.querySelectorAll('.num, .multiplicador').forEach(input => {
     input.addEventListener('input', calcularTotal);
 });
 
-// Adiciona evento para salvar ao alterar checkbox
+// Adiciona evento para salvar ao alterar checkbox (no HTML inicial)
 document.querySelectorAll('.check').forEach(checkbox => {
     checkbox.addEventListener('change', salvarDados);
 });
