@@ -10,7 +10,8 @@ function calcularTotal() {
     salvarDados(); // Salva os dados toda vez que o total for calculado
 }
 
-// Salvar os dados dos itens no localStorage
+// ... sua função salvarDados() aqui
+
 function salvarDados() {
     const itens = [];
     document.querySelectorAll('.item').forEach(item => {
@@ -23,6 +24,16 @@ function salvarDados() {
     });
     localStorage.setItem('listaCompras', JSON.stringify(itens));
 }
+
+// *** INSERIR AQUI o evento do botão salvar manualmente ***
+document.getElementById('botao-salvar-dados').addEventListener('click', function() {
+    salvarDados();
+    alert('Dados salvos com sucesso!');
+});
+
+// ... restante do seu script (carregarDados, calcularTotal, duplicarUltimoItem, etc)
+
+
 
 // Carregar os dados do localStorage ao carregar a página
 function carregarDados() {
