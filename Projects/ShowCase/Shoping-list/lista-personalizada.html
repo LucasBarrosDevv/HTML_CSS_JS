@@ -18,7 +18,7 @@
 <body>
     <!-- Cabeçalho -->
     <header>
-        <h1>Lista de Compras</h1>
+        <h1>Te Amo Mãe</h1>
         <img src="https://static.vecteezy.com/system/resources/previews/019/787/045/non_2x/shopping-cart-icon-shopping-basket-on-transparent-background-free-png.png"
             alt="icone">
     </header>
@@ -424,6 +424,18 @@
                 window.location.href = this.href;
             }
         });
+
+        function salvarDados() {
+    let itens = [];
+    document.querySelectorAll('.item').forEach(item => {
+        let nome = item.querySelector('.nome-item').textContent;
+        let valor = item.querySelector('.num').value;
+        let quantidade = item.querySelector('.multiplicador').value;
+        itens.push({ nome, valor, quantidade });
+    });
+    localStorage.setItem('listaCompras', JSON.stringify(itens));
+}
+
     </script>
 </body>
 
