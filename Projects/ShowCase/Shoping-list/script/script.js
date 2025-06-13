@@ -23,6 +23,7 @@ function salvarDados() {
         });
     });
     localStorage.setItem('listaCompras', JSON.stringify(itens));
+    alert('Dados salvos com sucesso!');
 }
 
 // *** INSERIR AQUI o evento do botão salvar manualmente ***
@@ -30,6 +31,23 @@ document.getElementById('botao-salvar-dados').addEventListener('click', function
     salvarDados();
     alert('Dados salvos com sucesso!');
 });
+document.getElementById('botao-limpar-dados').addEventListener('click', function() {
+    if (confirm('Tem certeza que deseja limpar os valores dos itens?')) {
+        // Para cada item, zera valor, quantidade e desmarca checkbox
+        document.querySelectorAll('.item').forEach(item => {
+            item.querySelector('.num').value = "";
+            item.querySelector('.multiplicador').value = 1;
+            item.querySelector('.check').checked = false;
+        });
+
+        calcularTotal(); // Atualiza total para zero
+        salvarDados(); // Salva os dados zerados
+
+        alert('Valores dos itens limpos!');
+    }
+});
+
+
 
 // ... restante do seu script (carregarDados, calcularTotal, duplicarUltimoItem, etc)
 
