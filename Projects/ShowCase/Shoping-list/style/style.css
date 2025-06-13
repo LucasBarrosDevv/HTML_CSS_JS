@@ -266,7 +266,7 @@ span {
     position: relative;
 }
 .num {
-  color: green; /* cor do texto digitado */
+  color: rgb(52, 248, 52); /* cor do texto digitado */
   border: 1px solid #ccc;
 }
 .item {
@@ -276,6 +276,8 @@ span {
     margin-left: 25px;
     font-size: 1.2em;
     font-weight: 600;
+    text-indent: -25px;
+    padding-left: 25px;
 }
 #botao-salvar-dados, #botao-limpar-dados {
   padding: 12px 24px;
