@@ -61,7 +61,7 @@ btnSim.addEventListener("click", (e) => {
   // Redireciona após 2.5 segundos
   setTimeout(() => {
     window.location.href = linkSim.href;
-  }, 2500);
+  }, 2000);
 });
 
 

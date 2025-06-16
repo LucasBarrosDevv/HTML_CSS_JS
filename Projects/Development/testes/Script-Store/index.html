@@ -1,89 +1,178 @@
 <!DOCTYPE html>
-<html lang="PT-BR">
+<html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Script Store</title>
-    <style>
-        @font-face {
-        font-family: 'Source Code Pro';
-        src: url('fonts/SourceCodePro-Regular.ttf') format('truetype');
-        font-weight: 400;
-        font-style: normal;
-        }
-        body {
-            font-family: 'Source Code Pro', monospace;
-            background-color: black;
-            color: white;
-        }
-        header {
-            
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Script Store</title>
 
-        #titulo-principal {
-            text-align: center;
-            font-size: 2.5em;
-        }
-        #script {
-            color: rgb(0, 149, 255);
-            font-size: 1.4em;
-            
-        }
-        #store {
-            color: orange;
-            margin-left: 150px;
-        }
-        .cod-container {
-            
-        }
-        .lado-a-lado {
-            display: flex;
-            align-items: center;
-           
-        }
-        .img-cod {
-            width: 150px;
-             image-rendering: crisp-edges;
-                image-rendering: pixelated;
-        }
-        .p-1 {
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Inter&display=swap');
 
-        }
-        .p-2 {
-            
-        }
-    </style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      border: none;
+    }
+
+    header {
+      background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.6)), url('https://i.pinimg.com/736x/e0/5b/34/e05b341d9940ede7328c2690d42d5195.jpg');
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      font-family: Arial, Helvetica, sans-serif;
+      height: 50vh;
+      color: white;
+    }
+
+    header h1 {
+      font-family: "Libre Baskerville", serif;
+      margin: 0;
+      padding-top: 5vh;
+      text-align: center;
+      font-size: 2.8em;
+    }
+
+    header button {
+      display: block;
+      background-color: black;
+      margin: 15vh auto auto auto;
+      padding: 5px 30px;
+      border-radius: 7px;
+      border: 2px solid rgb(0, 238, 255);
+    }
+
+    header button a {
+      color: white;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.5em;
+    }
+
+    main {
+      background-color: #001429;
+      height: 3000px;
+    }
+
+    figure {
+      margin: 0;
+      padding-top: 20px;
+    }
+
+    figure img {
+      display: block;
+      margin: auto;
+      width: 200px;
+      margin-bottom: 50px;
+    }
+
+    #vantagens {
+      font-family: "Inter", sans-serif;
+      color: white;
+      font-weight: bold;
+      font-size: 1.5em;
+      text-align: center;
+      line-height: 1.8;
+      padding: 0 10vw;
+      margin: 5vh auto 10vh auto;
+    }
+
+    .carrossel {
+      background-color: #001F3D;  
+      overflow: hidden;
+      width: 100%;
+      padding: 50px 0;
+    }
+
+    .carrossel-inner {
+      display: flex;
+      transition: transform 0.5s ease;
+      gap: 20px;
+      padding: 0 5vw;
+    }
+
+    .produto {
+      background-color: #001F3D;
+      flex: 0 0 60vw;
+      height: 350px;
+      border-radius: 10px;
+      transition: all 0.4s ease;
+      box-shadow: 1px 1px 11px 9px #00000061;
+    }
+
+    .produto.active {
+      flex: 0 0 70vw;
+      height: 400px;
+      box-shadow: 0 0 25px #00f0ff;
+      z-index: 2;
+    }
+
+    .produto:not(.active) {
+      opacity: 0.5;
+      transform: scale(0.9);
+    }
+  </style>
 </head>
 <body>
-   <header>
-    <h1 id="titulo-principal">
-        <span id="script">Script</span>
-        <br>
-        <span id="store">Store</span></h1>
-   </header>
-   <main>
-       <section id="gratuitos">
-        <h2>Cascata Binária</h2>
-        <div class="cod-container">
 
-            <figure class="lado-a-lado">
-                <img class="img-cod"class="img-cod" src="img/rain-binary.png" alt="">
+<header>
+  <h1>
+    <span style="color: rgb(0, 238, 255); margin-right: 60px;">Script</span><br>
+    <span style="color: rgb(255, 102, 0); margin-left: 60px;">Store</span>
+  </h1>
+  <button><a href="">Dock</a></button>
+</header>
 
-                 <p class="p-1"> Sequências infinitas de 0s e 1s caindo em cascata</p>
+<main>
+  <figure>
+    <img src="img/logo.png" alt="">
+  </figure>
 
-            </figure>
+  <div>
+    <p id="vantagens">
+      Economize tempo e impressione seus amigos com <span style="color: rgb(0, 238, 255);">Scripts</span> <span style="color: rgb(255, 102, 0)">Prontos</span>, organizados e fáceis de usar no seu site ou aplicação.
+    </p>
+  </div>
 
-            <p class="p-2">Esse código é simples, leve e direto ao ponto — mas carrega aquele visual que todo fã de tecnologia reconhece de longe. Perfeito para quem gosta de transformar telas comuns em ambientes digitais cinematográficos.
-                Se você quer dar um toque sombrio e tecnológico para suas apresentações ou conteúdos, essa chuva de código binário é o efeito certo.</p>
-                
-                <p>ideal para:</p>
-                <p> Efeitos visuais de impacto para projetos, eventos ou apresentações;</p>
-                <p>Personalização de telas em estilo hacker aesthetic;</p>
-                <p>Inserir esse efeito em jogos, sites ou animações.</p>
-               
-        </div>
-       
-       </section>
-   </main>
+  <section class="carrossel">
+    <div class="carrossel-inner" id="carrosselInner">
+      <div class="produto">
+        <iframe src="" frameborder="0"></iframe>
+      </div>
+      <div class="produto"></div>
+      <div class="produto"></div>
+    </div>
+  </section>
+</main>
+
+<script>
+  const carrosselInner = document.getElementById("carrosselInner");
+  const produtos = carrosselInner.children;
+  let currentIndex = 0;
+  const totalSlides = produtos.length;
+
+  function updateSlide() {
+    for (let i = 0; i < totalSlides; i++) {
+      produtos[i].classList.remove("active");
+    }
+    produtos[currentIndex].classList.add("active");
+
+    // calcular deslocamento: item ocupa 65vw (60vw + 5vw gap aprox)
+    const offset = (currentIndex * -65) + 5;
+    carrosselInner.style.transform = `translateX(${offset}vw)`;
+  }
+
+  function nextSlide() {
+    currentIndex++;
+    if (currentIndex >= totalSlides) currentIndex = 0;
+    updateSlide();
+  }
+
+  // Troca slide automático a cada 4 segundos
+  setInterval(nextSlide, 4000);
+
+  // Inicia com o primeiro ativo
+  updateSlide();
+</script>
+
 </body>
 </html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Esfera com Partículas Ancoradas</title>
+  <style>
+    * { margin: 0; padding: 0; }
+    body, html { background: #000; overflow: hidden; }
+    canvas { display: block; }
+  </style>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+
+<script>
+  const canvas = document.getElementById("canvas");
+  const ctx = canvas.getContext("2d");
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const particles = [];
+  const numParticles = 500;
+  const radius = 200;
+
+  // Distribuir partículas fixas na superfície da esfera
+  for (let i = 0; i < numParticles; i++) {
+    let theta = Math.random() * Math.PI * 2;
+    let phi = Math.acos(2 * Math.random() - 1);
+
+    let x3D = radius * Math.sin(phi) * Math.cos(theta);
+    let y3D = radius * Math.sin(phi) * Math.sin(theta);
+    let z3D = radius * Math.cos(phi);
+
+    particles.push({ x3D, y3D, z3D });
+  }
+
+  function draw() {
+    ctx.fillStyle = "black";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    let centerX = canvas.width / 2;
+    let centerY = canvas.height / 2;
+
+    for (let p of particles) {
+      // Projeção em 2D
+      let scale = 500 / (500 + p.z3D);
+      let x2D = centerX + p.x3D * scale;
+      let y2D = centerY + p.y3D * scale;
+
+      // Tamanho das partículas
+      let size = 8 * scale;
+
+      // Cor conforme profundidade
+      ctx.beginPath();
+      ctx.arc(x2D, y2D, size, 0, Math.PI * 2);
+      ctx.fillStyle = `rgb(${180 + p.z3D/3}, ${100 + p.z3D/5}, 255)`;
+      ctx.fill();
+    }
+  }
+
+  draw();
+</script>
+</body>
+</html>
