@@ -77,42 +77,36 @@
         line-height: 1.8;
         padding: 0 10vw;
         margin: 5vh auto 10vh auto;
-      }
-
+      }   
       #container-facilidades {
-        display: flex;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
         flex-direction: column;
         align-items: center;
         gap: 20px;
-      }
-
+      }  
       .facilidades {
-        background-color: #000a14;
         display: flex;
         flex-direction: column;
         align-items: center;
         color: white;
-        width: 250px;
+        width: 180px;
+        
+        
         border-radius: 10px;
-        box-shadow: -6px 5px 20px 2px #150c5f52;
+        
       }
-
       .facilidades > figure > img {
         width: 100px;
         opacity: 0.8;
-        transition: transform 1.8s ease;
       }
-
-      .rotate {
-        transform: rotate(360deg);
-      }
-
       .facilidades > figure > figcaption {
         margin: 20px;
         text-align: center;
         font-size: 1.3em;
         font-weight: bolder;
-        color: #a4f600;
+        color: #A4F600;
         opacity: 0.8;
       }
     </style>
@@ -143,46 +137,29 @@
       <section id="container-facilidades">
         <div class="facilidades">
           <figure>
-            <img src="img/copie-cole.png" alt="" />
+            <img  src="img/copie-cole.png" alt="">
             <figcaption class="name-vantagens">Copie e Cole</figcaption>
           </figure>
         </div>
         <div class="facilidades">
           <figure>
-            <img
-              src="img/monitorar-tablet-e-smartohone.png"
-              alt=""
-              style="margin-left: 30px"
-            />
+            <img  src="img/monitorar-tablet-e-smartohone.png" alt="" style="margin-left: 30px;">
             <figcaption class="name-vantagens">Design Responsivo</figcaption>
           </figure>
         </div>
         <div class="facilidades">
           <figure>
-            <img src="img/Guia.png" alt="" style="margin-left: 20px" />
+            <img  src="img/Guia.png" alt="" style="margin-left: 20px;">
             <figcaption class="name-vantagens">Guia Completo</figcaption>
+          </figure>
+        </div>
+        <div class="facilidades">
+          <figure>
+            <img  src="img/bate-papo-online.png" alt="" style="margin-left: 40px;">
+            <figcaption class="name-vantagens">Suporte no WhatsApp</figcaption>
           </figure>
         </div>
       </section>
     </main>
-
-    <script>
-      // Cria o IntersectionObserver
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("rotate");
-            // Remove o observer depois de girar uma vez
-            observer.unobserve(entry.target);
-          }
-        });
-      });
-
-      // Pega todas as imagens e aplica o observer nelas
-      const icones = document.querySelectorAll("#container-facilidades img");
-      icones.forEach((icone) => {
-        observer.observe(icone);
-      });
-    </script>
   </body>
 </html>
