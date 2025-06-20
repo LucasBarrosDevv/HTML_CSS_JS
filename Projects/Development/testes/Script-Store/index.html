@@ -10,6 +10,7 @@
 
       body,
       html {
+        background-color: black;
         margin: 0;
         padding: 0;
         border: none;
@@ -76,24 +77,26 @@
         line-height: 1.8;
         padding: 0 10vw;
         margin: 5vh auto 10vh auto;
-      }
-
-      .container-responsivo {
+      }   
+      #container-facilidades {
         display: flex;
-        justify-content: center;
+        flex-direction: column;
         align-items: center;
-      }
-      #container-vantgens {
+        gap: 20px;
+      }  
+      .facilidades {
+        background-color: #000A14;
         display: flex;
-        justify-content: center;
-        gap: 10px;
-      }
-
-      .img-vantagens {
-        width: 100px;
-      }
-      .name-vantagens {
+        flex-direction: column;
+        align-items: center;
         color: white;
+        width: 350px;
+      }
+      .facilidades > figure > figcaption {
+        margin: 20px;
+        text-align: center;
+        font-size: 1.8em;
+        font-weight: bolder;
       }
     </style>
   </head>
@@ -112,7 +115,6 @@
       <figure>
         <img id="icon-html" src="img/logo.png" alt="" />
       </figure>
-
       <div>
         <p id="vantagens">
           Economize tempo e impressione seus amigos com
@@ -121,19 +123,25 @@
           fáceis de usar no seu site ou aplicação.
         </p>
       </div>
-      <section id="container-vantgens">
-        <figure>
-          <img class="img-vantagens" src="img/copie-cole.png" alt="">
-          <figcaption class="name-vantagens">Copie e Cole</figcaption>
-        </figure>
-        <figure>
-          <img class="img-vantagens" src="img/monitorar-tablet-e-smartohone.png" alt="">
-          <figcaption class="name-vantagens">Design Responsivo</figcaption>
-        </figure>
-        <figure>
-          <img class="img-vantagens" src="img/Guia.png" alt="">
-          <figcaption class="name-vantagens">Guia Completo</figcaption>
-        </figure>
+      <section id="container-facilidades">
+        <div class="facilidades">
+          <figure>
+            <img  src="img/copie-cole.png" alt="">
+            <figcaption class="name-vantagens">Copie e Cole</figcaption>
+          </figure>
+        </div>
+        <div class="facilidades">
+          <figure>
+            <img  src="img/monitorar-tablet-e-smartohone.png" alt="">
+            <figcaption class="name-vantagens">Design Responsivo</figcaption>
+          </figure>
+        </div>
+        <div class="facilidades">
+          <figure>
+            <img  src="img/Guia.png" alt="">
+            <figcaption class="name-vantagens">Guia Completo</figcaption>
+          </figure>
+        </div>
       </section>
     </main>
   </body>
