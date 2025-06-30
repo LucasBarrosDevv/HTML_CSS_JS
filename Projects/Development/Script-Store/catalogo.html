@@ -1,105 +1,227 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Parallax Effect</title>
-    <style>
-        body {
-            background-color: #001429;
-            margin: 0;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Parallax Effect</title>
+  <style>
+    body {
+      background-color: #001429;
+      margin: 0;
+    }
 
-        .titulo-cod {
-            color: white;
-            text-align: center;
-            padding: 30px 0 10px;
-        }
+    .titulo-cod {
+      color: white;
+      padding: 30px 0 10px;
+      font-size: 2em;
+    }
 
-        .bloco {
-            height: 400px;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            padding: 20px;
-        }
+    .bloco {
+      height: 300px;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 10px;
+      position: relative;
+      cursor: pointer;
+    }
 
-        #bloco-1 {
-            background-image:  url('img/Chuva-Binaria.png');
-        }
+    #bloco-1 {background-image: url('img/Chuva-Binaria.png');}
+    #bloco-2 { background-image: url('img/CHuva-Te-Amo.png'); }
+    #bloco-3 { background-image: url('img/particulas.png'); }
+    #bloco-4 { background-image: url('img/climinha-pink.png'); }
+    #bloco-5 { background-image: url('img/climinha-black.png'); }
+    #bloco-6 { background-image: url('img/fire.png'); }
+    #bloco-7 { background-image: url('img/fire-heart.png'); }
+    #bloco-8 { background-image: url('img/heat-particles.png'); }
 
-        #bloco-2 {
-            background-image: url('img/CHuva-Te-Amo.png');
-        }
+    .container {
+      color: white;
+      border-radius: 10px;
+      padding: 20px;
+    }
 
-        #bloco-3 {
-            background-image: url('img/particulas.png');
-        }
+    .bloco section {
+      background: rgba(0, 0, 0, 0.5);
+      padding: 10px;
+      border-radius: 8px;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      z-index: 5;
+    }
 
-        .container {
-            color: white;
-            border-radius: 10px;
-            padding: 20px;
-        }
+    .bloco section a {
+      text-decoration: none;
+      color: #fff;
+      padding: 10px 20px;
+      border: 1px solid white;
+      border-radius: 5px;
+      transition: background 0.3s, color 0.3s;
+      display: inline-block;
+      cursor: pointer;
+    }
 
-        .bloco section {
-            background: rgba(0, 0, 0, 0.5);
-            padding: 10px;
-            border-radius: 8px;
-            text-align: center;
-        }
+    .bloco section a:hover {
+      background: white;
+      color: #001429;
+    }
 
-        .bloco section a {
-            text-decoration: none;
-            color: #fff;
-            padding: 10px 20px;
-            margin: 0 5px;
-            border: 1px solid white;
-            border-radius: 5px;
-            transition: background 0.3s, color 0.3s;
-            display: inline-block;
-        }
+    /* Parágrafo oculto centralizado */
+    .bloco p {
+      display: none;
+      position: absolute;
+      color: white;
+      font-size: 1.5em;
+      text-align: center;
+      background: rgba(0, 0, 0, 0.8);
+      border-radius: 10px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 10;
+      padding: 10px 20px;
+      max-width: 90%;
+      cursor: default;
+    }
 
-        .bloco section a:hover {
-            background: white;
-            color: #001429;
-        }
-    </style>
+    /* Quando ativo */
+    .bloco.ativo {
+      background-color: rgba(0, 0, 0, 0.7);
+      background-blend-mode: darken;
+    }
+  </style>
 </head>
 <body>
 
-    <section class="container">
-        <h1 class="titulo-cod">Chuva Binária</h1>
-        <div class="bloco" id="bloco-1">
-            <section>
-                <a href="#">Baixar</a>
-                <a href="#">Descrição</a>
-                <a href="#">Visualizar</a>
-            </section>
-        </div>
+  <section class="container">
+    <h1 class="titulo-cod">Chuva Binária</h1>
+    <div class="bloco" id="bloco-1">
+      <section>
+        <a href="#">Baixar</a>
+        <a href="#" class="descricao-btn">Descrição</a>
+        <a href="#">Visualizar</a>
+      </section>
+      <p>Efeito hacker animado com números binários caindo em tela preta. Ideal para projetos tech.</p>
+    </div>
 
-        <h1 class="titulo-cod">Chuva de Amor</h1>
-        <div class="bloco" id="bloco-2">
-            <section>
-                <a href="#">Baixar</a>
-                <a href="#">Descrição</a>
-                <a href="#">Visualizar</a>
-            </section>
-        </div>
+    <h1 class="titulo-cod">Chuva de Amor</h1>
+    <div class="bloco" id="bloco-2">
+      <section>
+        <a href="#">Baixar</a>
+        <a href="#" class="descricao-btn">Descrição</a>
+        <a href="#">Visualizar</a>
+      </section>
+      <p>Uma chuva de amor, ideal para projetos românticos</p>
+    </div>
 
-        <h1 class="titulo-cod">Partículas</h1>
-        <div class="bloco" id="bloco-3">
-            <section>
-                <a href="#">Baixar</a>
-                <a href="#">Descrição</a>
-                <a href="#">Visualizar</a>
-            </section>
-        </div>
-    </section>
+    <h1 class="titulo-cod">Partículas</h1>
+    <div class="bloco" id="bloco-3">
+      <section>
+        <a href="#">Baixar</a>
+        <a href="#" class="descricao-btn">Descrição</a>
+        <a href="#">Visualizar</a>
+      </section>
+      <p>Particulas ficam flutuando sobre a tela, ideal para fundos de projetos minimalistas</p>
+    </div>
+
+    <h1 class="titulo-cod">Climinha Check - Pink</h1>
+    <div class="bloco" id="bloco-4">
+      <section>
+        <a href="#">Baixar</a>
+        <a href="#" class="descricao-btn">Descrição</a>
+        <a href="#">Visualizar</a>
+      </section>
+      <p>Um aplicativo que confirma se hoje tem... e não da opção de recusar, e se clicar em sim redireciona direto para o WhatsApp </p>
+    </div>
+
+    <h1 class="titulo-cod">Climinha Check - Black</h1>
+    <div class="bloco" id="bloco-5">
+      <section>
+        <a href="#">Baixar</a>
+        <a href="#" class="descricao-btn">Descrição</a>
+        <a href="#">Visualizar</a>
+      </section>
+      <p>Um aplicativo que confirma se hoje tem... e não da opção de recusar, e se clicar em sim redireciona direto para o WhatsApp</p>
+    </div>
+
+    <h1 class="titulo-cod">Fire</h1>
+    <div class="bloco" id="bloco-6">
+      <section>
+        <a href="#">Baixar</a>
+        <a href="#" class="descricao-btn">Descrição</a>
+        <a href="#">Visualizar</a>
+      </section>
+      <p>Um fundo simples de que simula fogo</p>
+    </div>
+
+    <h1 class="titulo-cod">Fire Heart</h1>
+    <div class="bloco" id="bloco-7">
+      <section>
+        <a href="#">Baixar</a>
+        <a href="#" class="descricao-btn">Descrição</a>
+        <a href="#">Visualizar</a>
+      </section>
+      <p>Um coração animado pegando fogo</p>
+    </div>
+
+    <h1 class="titulo-cod">Particles - Heart</h1>
+    <div class="bloco" id="bloco-8">
+      <section>
+        <a href="#">Baixar</a>
+        <a href="#" class="descricao-btn">Descrição</a>
+        <a href="#">Visualizar</a>
+      </section>
+      <p>Particulas formam um coração</p>
+    </div>
+  </section>
+
+  <script>
+    // Seleciona todos os botões "Descrição"
+    const descricaoBtns = document.querySelectorAll('.descricao-btn');
+
+    descricaoBtns.forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation(); // para não disparar o evento no bloco
+
+        // O bloco pai da section é a div.bloco
+        const bloco = btn.closest('.bloco');
+        const paragrafo = bloco.querySelector('p');
+        const botoes = bloco.querySelector('section');
+
+        // Toggle ativo
+        bloco.classList.toggle('ativo');
+
+        if (paragrafo.style.display === 'block') {
+          paragrafo.style.display = 'none';
+          botoes.style.display = 'flex';
+        } else {
+          paragrafo.style.display = 'block';
+          botoes.style.display = 'none';
+        }
+      });
+    });
+
+    // Adiciona evento para fechar a descrição ao clicar no próprio bloco
+    const blocos = document.querySelectorAll('.bloco');
+
+    blocos.forEach(bloco => {
+      bloco.addEventListener('click', function() {
+        const paragrafo = bloco.querySelector('p');
+        const botoes = bloco.querySelector('section');
+        if (paragrafo.style.display === 'block') {
+          paragrafo.style.display = 'none';
+          botoes.style.display = 'flex';
+          bloco.classList.remove('ativo');
+        }
+      });
+    });
+  </script>
 
 </body>
 </html>
