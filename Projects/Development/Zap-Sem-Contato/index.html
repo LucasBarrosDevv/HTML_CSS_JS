@@ -176,24 +176,21 @@
 });
 
 
+function redirectToWhatsApp() {
+  const phoneInputValue = document.getElementById("phone-number").value;
+  const phoneNumber = phoneInputValue.replace(/\D/g, "");
 
-    function redirectToWhatsApp() {
-      const phoneInputValue = document.getElementById("phone-number").value;
-      const phoneNumber = phoneInputValue.replace(/\D/g, "");
+  if (phoneNumber.length !== 11) {
+    alert("Número inválido. Verifique e tente novamente.");
+    return;
+  }
 
-      if (phoneNumber.length !== 11) {
-        alert("Número inválido. Verifique e tente novamente.");
-        return;
-      }
+  const url = `https://wa.me/55${phoneNumber}`;
+  window.location.href = url;  // abre na mesma aba
+}
 
-      spinner.style.display = "block";
 
-      setTimeout(() => {
-        const url = `https://wa.me/55${phoneNumber}`;
-        window.open(url, "_blank");
-        spinner.style.display = "none";
-      }, 1000);
-    }
+
   </script>
 </body>
 </html>
