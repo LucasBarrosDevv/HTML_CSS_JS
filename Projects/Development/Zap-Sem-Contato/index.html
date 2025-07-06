@@ -131,27 +131,51 @@
     const phoneInput = document.getElementById("phone-number");
     const spinner = document.getElementById("spinner");
 
-    phoneInput.addEventListener("input", function(e) {
-      let input = e.target.value.replace(/\D/g, "");
-      if (input.length > 11) input = input.substring(0, 11);
+ phoneInput.addEventListener("input", function(e) {
+  const input = e.target;
+  let cursorPosition = input.selectionStart;
+  const oldValue = input.value;
 
-      let formatted = "";
+  // Remove tudo que não for número
+  let numbers = oldValue.replace(/\D/g, "").substring(0, 11);
 
-      if (input.length > 0) {
-        formatted += "(" + input.substring(0, 2);
-      }
-      if (input.length >= 3) {
-        formatted += ") " + input.substring(2, 3);
-      }
-      if (input.length >= 4) {
-        formatted += " " + input.substring(3, 7);
-      }
-      if (input.length >= 8) {
-        formatted += "-" + input.substring(7, 11);
-      }
+  // Formata o número passo a passo
+  let formatted = "";
+  if (numbers.length > 0) {
+    formatted += "(" + numbers.substring(0, 2);
+  }
+  if (numbers.length >= 3) {
+    formatted += ") " + numbers.substring(2, 3);
+  }
+  if (numbers.length >= 4) {
+    formatted += " " + numbers.substring(3, 7);
+  }
+  if (numbers.length >= 8) {
+    formatted += "-" + numbers.substring(7, 11);
+  }
 
-      e.target.value = formatted;
-    });
+  // Define o novo valor formatado
+  input.value = formatted;
+
+  // Ajusta a posição do cursor para não pular ou travar
+  // Contabiliza quantos caracteres especiais tem até a posição anterior
+  const specialCharsBeforeCursor = (oldValue.slice(0, cursorPosition).match(/[()\s-]/g) || []).length;
+  cursorPosition = cursorPosition - specialCharsBeforeCursor;
+
+  let newCursorPosition = cursorPosition;
+
+  // Ajusta cursor conforme a formatação (pula os caracteres adicionados)
+  if (cursorPosition > 0) newCursorPosition++;       // para '('
+  if (cursorPosition > 2) newCursorPosition += 2;    // para ') '
+  if (cursorPosition > 3) newCursorPosition++;       // para espaço
+  if (cursorPosition > 7) newCursorPosition++;       // para '-'
+
+  if (newCursorPosition > formatted.length) newCursorPosition = formatted.length;
+
+  input.setSelectionRange(newCursorPosition, newCursorPosition);
+});
+
+
 
     function redirectToWhatsApp() {
       const phoneInputValue = document.getElementById("phone-number").value;
