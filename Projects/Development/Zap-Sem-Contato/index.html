@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="apple-touch-icon" sizes="180x180" href="whats.png" />
+  <title>WhatsApp Direct</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: linear-gradient(270deg, #25D366, #128C7E, #075E54);
+      background-size: 600% 600%;
+      animation: gradientMove 10s ease infinite;
+      font-family: 'Roboto', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      color: #fff;
+      padding: 20px;
+      overflow: hidden;
+    }
+
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .container {
+      text-align: center;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 25px;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      width: 100%;
+      max-width: 320px;
+      animation: fadeInUp 1.2s ease forwards;
+      opacity: 0;
+      transform: translateY(50px);
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    h1 {
+      margin-bottom: 12px;
+      font-size: 26px;
+    }
+
+    p {
+      margin-bottom: 18px;
+      font-size: 15px;
+      color: #eee;
+    }
+
+    input {
+      padding: 14px;
+      width: 100%;
+      border: none;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      font-size: 17px;
+      transition: box-shadow 0.3s, transform 0.2s;
+    }
+
+    input:focus {
+      outline: none;
+      box-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
+      transform: scale(1.02);
+    }
+
+    button {
+      padding: 14px;
+      width: 100%;
+      background-color: #0f845d;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 17px;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    button:hover {
+      background-color: #10a573;
+      transform: scale(1.03);
+    }
+
+    button:active {
+      transform: scale(0.97);
+    }
+
+    .spinner {
+      border: 4px solid rgba(255, 255, 255, 0.2);
+      border-top: 4px solid #fff;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      animation: spin 1s linear infinite;
+      margin: 20px auto 0;
+      display: none;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>WhatsApp Direct</h1>
+    <p>Digite o número com DDD</p>
+    <input type="text" id="phone-number" placeholder="(99) 9 9999-9999" maxlength="16" />
+    <button onclick="redirectToWhatsApp()">Abrir no WhatsApp</button>
+    <div class="spinner" id="spinner"></div>
+  </div>
+
+  <script>
+    const phoneInput = document.getElementById("phone-number");
+    const spinner = document.getElementById("spinner");
+
+    phoneInput.addEventListener("input", function(e) {
+      let input = e.target.value.replace(/\D/g, "");
+      if (input.length > 11) input = input.substring(0, 11);
+
+      let formatted = "";
+
+      if (input.length > 0) {
+        formatted += "(" + input.substring(0, 2);
+      }
+      if (input.length >= 3) {
+        formatted += ") " + input.substring(2, 3);
+      }
+      if (input.length >= 4) {
+        formatted += " " + input.substring(3, 7);
+      }
+      if (input.length >= 8) {
+        formatted += "-" + input.substring(7, 11);
+      }
+
+      e.target.value = formatted;
+    });
+
+    function redirectToWhatsApp() {
+      const phoneInputValue = document.getElementById("phone-number").value;
+      const phoneNumber = phoneInputValue.replace(/\D/g, "");
+
+      if (phoneNumber.length !== 11) {
+        alert("Número inválido. Verifique e tente novamente.");
+        return;
+      }
+
+      spinner.style.display = "block";
+
+      setTimeout(() => {
+        const url = `https://wa.me/55${phoneNumber}`;
+        window.open(url, "_blank");
+        spinner.style.display = "none";
+      }, 1000);
+    }
+  </script>
+</body>
+</html>

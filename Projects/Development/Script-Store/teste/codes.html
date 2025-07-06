@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browse Codes - CodeCraft</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-code"></i>
+                <span>CodeCraft</span>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="index.html#about" class="nav-link">About</a>
+                <a href="codes.html" class="nav-link active">Browse Codes</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+            <div class="nav-toggle" id="nav-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Browse Code Library</h1>
+            <p>Discover our collection of premium and free code projects</p>
+        </div>
+    </section>
+
+    <!-- Filter Section -->
+    <section class="filters">
+        <div class="container">
+            <div class="filter-tabs">
+                <button class="filter-btn active" data-filter="all">All Codes</button>
+                <button class="filter-btn" data-filter="free">Free Codes</button>
+                <button class="filter-btn" data-filter="premium">Premium Codes</button>
+                <button class="filter-btn" data-filter="components">Components</button>
+                <button class="filter-btn" data-filter="templates">Templates</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Code Grid -->
+    <section class="codes-section">
+        <div class="container">
+            <div class="codes-grid" id="codes-grid">
+                <!-- Free Codes -->
+                <div class="code-card" data-category="free components">
+                    <div class="code-preview">
+                        <div class="preview-container">
+                            <div class="animated-button-preview">
+                                <button class="sample-btn">Hover Me!</button>
+                            </div>
+                        </div>
+                        <div class="preview-overlay">
+                            <button class="preview-btn" onclick="openPreview('animated-button')">
+                                <i class="fas fa-eye"></i>
+                                Live Preview
+                            </button>
+                        </div>
+                    </div>
+                    <div class="code-info">
+                        <div class="code-header">
+                            <h3>Animated Button Collection</h3>
+                            <span class="code-badge free">Free</span>
+                        </div>
+                        <p>A collection of 10 beautiful animated buttons with hover effects and smooth transitions.</p>
+                        <div class="code-tech">
+                            <span class="tech-tag">HTML</span>
+                            <span class="tech-tag">CSS</span>
+                            <span class="tech-tag">JavaScript</span>
+                        </div>
+                        <div class="code-actions">
+                            <button class="btn btn-primary" onclick="downloadCode('animated-buttons')">
+                                <i class="fas fa-download"></i>
+                                Download Free
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="code-card" data-category="free components">
+                    <div class="code-preview">
+                        <div class="preview-container">
+                            <div class="card-preview">
+                                <div class="sample-card">
+                                    <div class="card-image"></div>
+                                    <div class="card-content">
+                                        <h4>Sample Card</h4>
+                                        <p>Beautiful card design</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="preview-overlay">
+                            <button class="preview-btn" onclick="openPreview('responsive-cards')">
+                                <i class="fas fa-eye"></i>
+                                Live Preview
+                            </button>
+                        </div>
+                    </div>
+                    <div class="code-info">
+                        <div class="code-header">
+                            <h3>Responsive Card Components</h3>
+                            <span class="code-badge free">Free</span>
+                        </div>
+                        <p>Modern card components with responsive design and subtle animations.</p>
+                        <div class="code-tech">
+                            <span class="tech-tag">HTML</span>
+                            <span class="tech-tag">CSS</span>
+                        </div>
+                        <div class="code-actions">
+                            <button class="btn btn-primary" onclick="downloadCode('responsive-cards')">
+                                <i class="fas fa-download"></i>
+                                Download Free
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="code-card" data-category="free components">
+                    <div class="code-preview">
+                        <div class="preview-container">
+                            <div class="navbar-preview">
+                                <div class="sample-navbar">
+                                    <div class="nav-brand">Logo</div>
+                                    <div class="nav-links">
+                                        <span>Home</span>
+                                        <span>About</span>
+                                        <span>Contact</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="preview-overlay">
+                            <button class="preview-btn" onclick="openPreview('navigation-menu')">
+                                <i class="fas fa-eye"></i>
+                                Live Preview
+                            </button>
+                        </div>
+                    </div>
+                    <div class="code-info">
+                        <div class="code-header">
+                            <h3>Mobile Navigation Menu</h3>
+                            <span class="code-badge free">Free</span>
+                        </div>
+                        <p>Responsive navigation menu with hamburger toggle and smooth animations.</p>
+                        <div class="code-tech">
+                            <span class="tech-tag">HTML</span>
+                            <span class="tech-tag">CSS</span>
+                            <span class="tech-tag">JavaScript</span>
+                        </div>
+                        <div class="code-actions">
+                            <button class="btn btn-primary" onclick="downloadCode('navigation-menu')">
+                                <i class="fas fa-download"></i>
+                                Download Free
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Premium Codes -->
+                <div class="code-card" data-category="premium templates">
+                    <div class="code-preview">
+                        <div class="preview-container">
+                            <div class="dashboard-preview">
+                                <div class="sample-dashboard">
+                                    <div class="dashboard-sidebar"></div>
+                                    <div class="dashboard-main">
+                                        <div class="dashboard-header"></div>
+                                        <div class="dashboard-content">
+                                            <div class="dashboard-card"></div>
+                                            <div class="dashboard-card"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="preview-overlay">
+                            <button class="preview-btn" onclick="openPreview('admin-dashboard')">
+                                <i class="fas fa-eye"></i>
+                                Live Preview
+                            </button>
+                        </div>
+                    </div>
+                    <div class="code-info">
+                        <div class="code-header">
+                            <h3>Complete Admin Dashboard</h3>
+                            <span class="code-badge premium">Premium</span>
+                        </div>
+                        <p>Full-featured admin dashboard with charts, tables, user management, and responsive design.</p>
+                        <div class="code-tech">
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">TypeScript</span>
+                            <span class="tech-tag">Chart.js</span>
+                        </div>
+                        <div class="code-actions">
+                            <button class="btn btn-secondary" onclick="contactWhatsApp('admin-dashboard')">
+                                <i class="fab fa-whatsapp"></i>
+                                Contact for Price
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="code-card" data-category="premium templates">
+                    <div class="code-preview">
+                        <div class="preview-container">
+                            <div class="ecommerce-preview">
+                                <div class="sample-ecommerce">
+                                    <div class="ecom-header"></div>
+                                    <div class="ecom-products">
+                                        <div class="ecom-product"></div>
+                                        <div class="ecom-product"></div>
+                                        <div class="ecom-product"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="preview-overlay">
+                            <button class="preview-btn" onclick="openPreview('ecommerce-store')">
+                                <i class="fas fa-eye"></i>
+                                Live Preview
+                            </button>
+                        </div>
+                    </div>
+                    <div class="code-info">
+                        <div class="code-header">
+                            <h3>E-commerce Store Template</h3>
+                            <span class="code-badge premium">Premium</span>
+                        </div>
+                        <p>Complete e-commerce solution with shopping cart, payment integration, and admin panel.</p>
+                        <div class="code-tech">
+                            <span class="tech-tag">Next.js</span>
+                            <span class="tech-tag">Stripe</span>
+                            <span class="tech-tag">MongoDB</span>
+                        </div>
+                        <div class="code-actions">
+                            <button class="btn btn-secondary" onclick="contactWhatsApp('ecommerce-store')">
+                                <i class="fab fa-whatsapp"></i>
+                                Contact for Price
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="code-card" data-category="premium components">
+                    <div class="code-preview">
+                        <div class="preview-container">
+                            <div class="form-preview">
+                                <div class="sample-form">
+                                    <div class="form-field"></div>
+                                    <div class="form-field"></div>
+                                    <div class="form-field"></div>
+                                    <div class="form-button"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="preview-overlay">
+                            <button class="preview-btn" onclick="openPreview('advanced-forms')">
+                                <i class="fas fa-eye"></i>
+                                Live Preview
+                            </button>
+                        </div>
+                    </div>
+                    <div class="code-info">
+                        <div class="code-header">
+                            <h3>Advanced Form Components</h3>
+                            <span class="code-badge premium">Premium</span>
+                        </div>
+                        <p>Professional form components with validation, multi-step forms, and file uploads.</p>
+                        <div class="code-tech">
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">Formik</span>
+                            <span class="tech-tag">Yup</span>
+                        </div>
+                        <div class="code-actions">
+                            <button class="btn btn-secondary" onclick="contactWhatsApp('advanced-forms')">
+                                <i class="fab fa-whatsapp"></i>
+                                Contact for Price
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Preview Modal -->
+    <div id="preview-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Code Preview</h3>
+                <button class="modal-close" onclick="closePreview()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <iframe id="preview-frame" src="" frameborder="0"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <i class="fas fa-code"></i>
+                        <span>CodeCraft</span>
+                    </div>
+                    <p>Premium ready-made code projects for developers who value quality and efficiency.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="codes.html">Browse Codes</a></li>
+                        <li><a href="index.html#about">About</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Categories</h3>
+                    <ul>
+                        <li><a href="#free">Free Codes</a></li>
+                        <li><a href="#premium">Premium Codes</a></li>
+                        <li><a href="#components">Components</a></li>
+                        <li><a href="#templates">Templates</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Connect</h3>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 CodeCraft. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
