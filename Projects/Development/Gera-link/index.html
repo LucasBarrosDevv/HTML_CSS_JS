@@ -12,14 +12,15 @@
       background-color: #121212;
       color: #e0e0e0;
       font-family: Arial, sans-serif;
+      overflow-x: hidden;
     }
 
     #iframePreview {
       position: fixed;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
+      width: 100vw;
+      height: 100vh;
       border: none;
       z-index: 0;
       background: #121212;
@@ -32,22 +33,27 @@
       left: 50%;
       transform: translate(-50%, -50%);
       max-width: 500px;
+      width: 90%;
       background: rgba(30, 30, 30, 0.95);
       padding: 25px;
       border-radius: 12px;
       box-shadow: 0 0 20px rgba(0,0,0,0.5);
       z-index: 1;
+      box-sizing: border-box;
     }
 
     h1 {
       text-align: center;
       margin-bottom: 20px;
       color: #ffffff;
+      font-size: 24px;
     }
 
     label {
       font-weight: bold;
       color: #cccccc;
+      display: block;
+      margin-bottom: 6px;
     }
 
     .link-input {
@@ -56,6 +62,7 @@
       gap: 5px;
       margin-bottom: 26px;
       flex-wrap: wrap;
+      word-break: break-word;
     }
 
     #prefixoLink {
@@ -73,15 +80,16 @@
       color: #fff;
       border-radius: 6px;
       font-size: 14px;
+      min-width: 0;
     }
 
-    /* Resultado abaixo da container */
     #resultado {
       position: fixed;
-      top: calc(50% + 200px);
+      bottom: 20px;
       left: 50%;
       transform: translateX(-50%);
       max-width: 500px;
+      width: 90%;
       background: rgba(30, 30, 30, 0.95);
       padding: 15px;
       border-radius: 10px;
@@ -90,6 +98,7 @@
       opacity: 0;
       transition: opacity 0.6s ease;
       z-index: 2;
+      word-break: break-word;
     }
 
     #resultado.show {
@@ -97,15 +106,15 @@
     }
 
     #linkGerado {
-      word-break: break-all;
-      display: inline-block;
+      word-break: break-word;
+      display: block;
       margin-top: 8px;
       color: #64b5f6;
       font-size: 14px;
     }
 
     #copyBtn {
-      margin-left: 10px;
+      margin-top: 10px;
       padding: 6px 10px;
       background: #44444471;
       color: #bbb;
@@ -113,7 +122,6 @@
       border-radius: 6px;
       cursor: pointer;
       font-size: 12px;
-      margin-top: 10px;
     }
 
     #copyBtn:hover {
@@ -127,177 +135,186 @@
       color: #bbbbbb;
     }
 
-    /* Últimos acessos também fixo abaixo */
-    #ultimosPaths {
+    /* Botão flutuante */
+    #toggleHistorico {
       position: fixed;
-      top: calc(50% + 300px);
-      left: 50%;
-      transform: translateX(-50%);
-      max-width: 500px;
-      background: rgba(20, 20, 20, 0.95);
-      padding: 12px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.4);
+      top: 10px;
+      right: 10px;
+      z-index: 5;
+      padding: 8px 12px;
+      background: #1e1e1e;
+      border: 1px solid #333;
+      border-radius: 6px;
+      color: #ccc;
       font-size: 12px;
-      color: #999;
-      display: none;
-      opacity: 0;
-      transition: opacity 0.8s ease;
-      z-index: 2;
-
-      margin-top: 20px;
+      cursor: pointer;
     }
 
-    #ultimosPaths.show {
-      display: block;
-      opacity: 1;
+    #toggleHistorico:hover {
+      background: #333;
+      color: #fff;
+    }
+
+    /* Notificação de histórico */
+    #ultimosPaths {
+      position: fixed;
+      top: 50px;
+      left: 0;
+      width: 100%;
+      background: rgba(20, 20, 20, 0.98);
+      padding: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+      display: none;
+      z-index: 4;
+      overflow-x: auto;
+      white-space: nowrap;
     }
 
     #ultimosPaths button {
       background: #1e1e1e;
       border: 1px solid #333;
-      color: #777;
-      margin: 2px;
-      padding: 4px 8px;
-      border-radius: 4px;
+      color: #ccc;
+      padding: 6px 10px;
+      border-radius: 5px;
       cursor: pointer;
       font-size: 11px;
+      margin-right: 6px;
+      flex-shrink: 0;
     }
+
     #ultimosPaths button:hover {
-      background: #2a2a2a;
-      color: #cccccce1;
+      background: #333;
+      color: #fff;
+    }
+
+    @media (max-width: 480px) {
+      h1 { font-size: 20px; }
+      #pathInput { font-size: 13px; padding: 8px; }
+      #copyBtn { font-size: 11px; padding: 5px 8px; }
+      #prefixoLink { font-size: 13px; }
+      #toggleHistorico { font-size: 11px; padding: 6px 10px; }
     }
   </style>
 </head>
 <body>
 
-  <iframe id="iframePreview"></iframe>
+<iframe id="iframePreview"></iframe>
 
-  <div class="container">
-    <h1>Visualizador GitHub Pages</h1>
-    <label for="pathInput">Insira o caminho:</label>
-    <div class="link-input">
-      <span id="prefixoLink">https://lucasbarrosdevv.github.io/HTML_CSS_JS/</span>
-      <input type="text" id="pathInput" placeholder="pasta/pagina.html">
-    </div>
-    <div id="status"></div>
+<button id="toggleHistorico">Histórico</button>
+<div id="ultimosPaths"></div>
+
+<div class="container">
+  <h1>Visualizador GitHub Pages</h1>
+  <label for="pathInput">Insira o caminho:</label>
+  <div class="link-input">
+    <span id="prefixoLink">https://lucasbarrosdevv.github.io/HTML_CSS_JS/</span>
+    <input type="text" id="pathInput" placeholder="pasta/pagina.html">
   </div>
+  <div id="status"></div>
+</div>
 
-  <!-- Resultado abaixo -->
-  <div id="resultado">
-    <a href="#" target="_blank" id="linkGerado">---</a>
-    <button id="copyBtn" onclick="copiarLink()">Copiar</button>
-  </div>
+<div id="resultado">
+  <a href="#" target="_blank" id="linkGerado">---</a>
+  <button id="copyBtn" onclick="copiarLink()">Copiar</button>
+</div>
 
-  <!-- Últimos acessos abaixo -->
-  <div id="ultimosPaths"></div>
+<script>
+const pathInput = document.getElementById("pathInput");
+const prefixoLink = document.getElementById("prefixoLink");
+const iframe = document.getElementById("iframePreview");
+const linkElemento = document.getElementById("linkGerado");
+const resultado = document.getElementById("resultado");
+const statusDiv = document.getElementById("status");
+const ultimosPathsDiv = document.getElementById("ultimosPaths");
+const toggleBtn = document.getElementById("toggleHistorico");
 
-  <script>
-    const pathInput = document.getElementById("pathInput");
-    const prefixoLink = document.getElementById("prefixoLink");
-    const iframe = document.getElementById("iframePreview");
-    const linkElemento = document.getElementById("linkGerado");
-    const resultado = document.getElementById("resultado");
-    const statusDiv = document.getElementById("status");
-    const ultimosPathsDiv = document.getElementById("ultimosPaths");
+const linkBase = "https://lucasbarrosdevv.github.io/HTML_CSS_JS/";
+const maxHistorico = 10;
+let ultimosTimeout;
 
-    const linkBase = "https://lucasbarrosdevv.github.io/HTML_CSS_JS/";
-    const maxHistorico = 5;
+function atualizarHistorico(path) {
+  let historico = JSON.parse(localStorage.getItem("historicoPaths")) || [];
+  historico = historico.filter(item => item !== path);
+  historico.unshift(path);
+  if (historico.length > maxHistorico) historico.pop();
+  localStorage.setItem("historicoPaths", JSON.stringify(historico));
+  mostrarHistorico();
+}
 
-    let ultimosTimeout;
+function mostrarHistorico() {
+  let historico = JSON.parse(localStorage.getItem("historicoPaths")) || [];
+  ultimosPathsDiv.innerHTML = "";
+  if (historico.length === 0) return;
 
-    function atualizarHistorico(path) {
-      let historico = JSON.parse(localStorage.getItem("historicoPaths")) || [];
-      historico = historico.filter(item => item !== path);
-      historico.unshift(path);
-      if (historico.length > maxHistorico) historico.pop();
-      localStorage.setItem("historicoPaths", JSON.stringify(historico));
-      mostrarHistorico();
-    }
+  historico.forEach(item => {
+    const parts = item.split('/');
+    let penultimo = parts.length >= 2 ? parts[parts.length - 2] : "(sem pasta)";
+    let ultimo = parts.length >= 1 ? parts[parts.length - 1] : "(index)";
+    if (ultimo === "") ultimo = "(index)";
+    const textoBotao = `${penultimo}/${ultimo}`;
+    const btn = document.createElement("button");
+    btn.textContent = textoBotao;
+    btn.title = item;
+    btn.onclick = () => {
+      pathInput.value = item;
+      pathInput.dispatchEvent(new Event("input"));
+    };
+    ultimosPathsDiv.appendChild(btn);
+  });
+}
 
-    function mostrarHistorico() {
-      let historico = JSON.parse(localStorage.getItem("historicoPaths")) || [];
-      if (historico.length === 0) {
-        ultimosPathsDiv.innerHTML = "";
-        return;
+pathInput.addEventListener("input", () => {
+  let path = pathInput.value.trim();
+  path = path.replace(/\s+/g, "/").split("/").filter(p => p).join("/");
+
+  let linkFinal = linkBase + path;
+  resultado.style.display = "none";
+  resultado.classList.remove("show");
+  iframe.style.display = "none";
+
+  if (path === "") {
+    prefixoLink.style.color = "#aaaaaa";
+    statusDiv.textContent = "";
+    return;
+  }
+
+  statusDiv.textContent = "Verificando...";
+
+  fetch(linkFinal, { method: 'HEAD' })
+    .then(response => {
+      if (response.ok) {
+        prefixoLink.style.color = "#4CAF50";
+        statusDiv.textContent = "Página encontrada!";
+        linkElemento.href = linkFinal;
+        linkElemento.textContent = linkFinal;
+        resultado.style.display = "block";
+        iframe.src = linkFinal;
+        iframe.style.display = "block";
+        resultado.classList.add("show");
+        atualizarHistorico(path);
+      } else {
+        prefixoLink.style.color = "#f44336";
+        statusDiv.textContent = "Página não encontrada.";
       }
-      ultimosPathsDiv.innerHTML = "<div style='margin-bottom:4px;'>Últimos acessos:</div>";
-      historico.forEach(item => {
-        const parts = item.split('/');
-        let penultimo = parts.length >= 2 ? parts[parts.length - 2] : "(sem pasta)";
-        let ultimo = parts.length >= 1 ? parts[parts.length - 1] : "(arquivo)";
-        if (ultimo === "") ultimo = "(index)";
-        const textoBotao = `${penultimo}/${ultimo}`;
-        const btn = document.createElement("button");
-        btn.textContent = textoBotao;
-        btn.title = item;
-        btn.onclick = () => {
-          pathInput.value = item;
-          pathInput.dispatchEvent(new Event("input"));
-        };
-        ultimosPathsDiv.appendChild(btn);
-      });
-    }
-
-    pathInput.addEventListener("input", () => {
-      let path = pathInput.value.trim();
-      path = path.replace(/\s+/g, "/").split("/").filter(p => p).join("/");
-
-      let linkFinal = linkBase + path;
-      resultado.style.display = "none";
-      resultado.classList.remove("show");
-      ultimosPathsDiv.classList.remove("show");
-      ultimosPathsDiv.style.display = "none";
-      clearTimeout(ultimosTimeout);
-
-      if (path === "") {
-        prefixoLink.style.color = "#aaaaaa";
-        iframe.style.display = "none";
-        statusDiv.textContent = "";
-        return;
-      }
-
-      statusDiv.textContent = "Verificando...";
-
-      fetch(linkFinal, { method: 'HEAD' })
-        .then(response => {
-          if (response.ok) {
-            prefixoLink.style.color = "#4CAF50";
-            statusDiv.textContent = "Página encontrada!";
-            linkElemento.href = linkFinal;
-            linkElemento.textContent = linkFinal;
-            resultado.style.display = "block";
-            iframe.src = linkFinal;
-            iframe.style.display = "block";
-            resultado.classList.add("show");
-            atualizarHistorico(path);
-            ultimosTimeout = setTimeout(() => {
-              ultimosPathsDiv.style.display = "block";
-              ultimosPathsDiv.classList.add("show");
-            }, 7000);
-          } else {
-            prefixoLink.style.color = "#f44336";
-            statusDiv.textContent = "Página não encontrada.";
-            iframe.style.display = "none";
-          }
-        })
-        .catch(() => {
-          prefixoLink.style.color = "#f44336";
-          statusDiv.textContent = "Página não encontrada.";
-          iframe.style.display = "none";
-        });
+    })
+    .catch(() => {
+      prefixoLink.style.color = "#f44336";
+      statusDiv.textContent = "Página não encontrada.";
     });
+});
 
-    function copiarLink() {
-      const link = linkElemento.textContent;
-      navigator.clipboard.writeText(link).then(() => {
-        alert("Link copiado!");
-      }).catch(() => {
-        alert("Não foi possível copiar.");
-      });
-    }
+function copiarLink() {
+  const link = linkElemento.textContent;
+  navigator.clipboard.writeText(link).then(() => {
+    alert("Link copiado!");
+  });
+}
 
-    mostrarHistorico();
-  </script>
+toggleBtn.addEventListener("click", () => {
+  ultimosPathsDiv.style.display = ultimosPathsDiv.style.display === "block" ? "none" : "block";
+});
+
+mostrarHistorico();
+</script>
 </body>
 </html>
