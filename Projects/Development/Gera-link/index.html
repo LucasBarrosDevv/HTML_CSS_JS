@@ -3,24 +3,40 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Gerador de Links GitHub - Dark</title>
-  <link rel="apple-touch-icon" sizes="180x180" href="icone-lik.jpeg" />
+  <title>Visualizador GitHub Pages - Dark</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #121212;
+    html, body {
       margin: 0;
-      padding: 20px;
+      padding: 0;
+      height: 100%;
+      background-color: #121212;
       color: #e0e0e0;
+      font-family: Arial, sans-serif;
+    }
+
+    #iframePreview {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+      z-index: 0;
+      background: #121212;
+      display: none;
     }
 
     .container {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       max-width: 500px;
-      margin: 50px auto;
-      background: #1e1e1e;
+      background: rgba(30, 30, 30, 0.95);
       padding: 25px;
       border-radius: 12px;
       box-shadow: 0 0 20px rgba(0,0,0,0.5);
+      z-index: 1;
     }
 
     h1 {
@@ -34,38 +50,50 @@
       color: #cccccc;
     }
 
-    textarea {
-      width: 100%;
-      height: 100px;
-      margin-top: 8px;
-      margin-bottom: 16px;
+    .link-input {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-bottom: 26px;
+      flex-wrap: wrap;
+    }
+
+    #prefixoLink {
+      font-size: 14px;
+      color: #aaaaaa;
+      transition: color 0.3s;
+      word-break: break-word;
+    }
+
+    #pathInput {
+      flex: 1;
       padding: 10px;
       border: 1px solid #444;
       background-color: #2a2a2a;
       color: #fff;
       border-radius: 6px;
-      resize: vertical;
-      font-size: 16px;
+      font-size: 14px;
     }
 
-    button {
-      display: block;
-      width: 100%;
-      padding: 12px;
-      background: #2196f3;
-      color: #fff;
-      border: none;
-      border-radius: 6px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background: #1976d2;
-    }
-
+    /* Resultado abaixo da container */
     #resultado {
-      margin-top: 20px;
+      position: fixed;
+      top: calc(50% + 200px);
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 500px;
+      background: rgba(30, 30, 30, 0.95);
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.4);
+      display: none;
+      opacity: 0;
+      transition: opacity 0.6s ease;
+      z-index: 2;
+    }
+
+    #resultado.show {
+      opacity: 1;
     }
 
     #linkGerado {
@@ -73,123 +101,204 @@
       display: inline-block;
       margin-top: 8px;
       color: #64b5f6;
+      font-size: 14px;
     }
 
     #copyBtn {
-      margin-top: 10px;
-      padding: 8px 16px;
-      background: #4CAF50;
-      color: white;
+      margin-left: 10px;
+      padding: 6px 10px;
+      background: #44444471;
+      color: #bbb;
       border: none;
       border-radius: 6px;
       cursor: pointer;
+      font-size: 12px;
+      margin-top: 10px;
     }
 
     #copyBtn:hover {
-      background: #388e3c;
-    }
-
-    #preview {
-      margin-top: 20px;
-      display: none;
-    }
-
-    iframe {
-      width: 100%;
-      height: 300px;
-      border: 1px solid #444;
-      border-radius: 8px;
-      background-color: #2a2a2a;
+      background: #555;
+      color: #fff;
     }
 
     #status {
       margin-top: 10px;
-      font-size: 14px;
+      font-size: 13px;
       color: #bbbbbb;
+    }
+
+    /* Últimos acessos também fixo abaixo */
+    #ultimosPaths {
+      position: fixed;
+      top: calc(50% + 300px);
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 500px;
+      background: rgba(20, 20, 20, 0.95);
+      padding: 12px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.4);
+      font-size: 12px;
+      color: #999;
+      display: none;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+      z-index: 2;
+
+      margin-top: 20px;
+    }
+
+    #ultimosPaths.show {
+      display: block;
+      opacity: 1;
+    }
+
+    #ultimosPaths button {
+      background: #1e1e1e;
+      border: 1px solid #333;
+      color: #777;
+      margin: 2px;
+      padding: 4px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 11px;
+    }
+
+    #ultimosPaths button:hover {
+      background: #2a2a2a;
+      color: #ccc;
     }
   </style>
 </head>
 <body>
 
+  <iframe id="iframePreview"></iframe>
+
   <div class="container">
-    <h1>Gerador de Links do GitHub</h1>
-
+    <h1>Visualizador GitHub Pages</h1>
     <label for="pathInput">Insira o caminho:</label>
-    <textarea id="pathInput" placeholder="https://lucasbarrosdevv.github.io/HTML_CSS_JS/"></textarea>
-
-    <button onclick="gerarLink()">Gerar Link e Ver Prévia</button>
-
-    <div id="resultado" style="display:none;">
-      <p>Link Gerado:</p>
-      <a href="#" target="_blank" id="linkGerado">---</a>
-      <button id="copyBtn" onclick="copiarLink()">Copiar Link</button>
-      <div id="status"></div>
+    <div class="link-input">
+      <span id="prefixoLink">https://lucasbarrosdevv.github.io/HTML_CSS_JS/</span>
+      <input type="text" id="pathInput" placeholder="pasta/pagina.html">
     </div>
-
-    <div id="preview">
-      <p>Pré-visualização:</p>
-      <iframe id="iframePreview"></iframe>
-    </div>
+    <div id="status"></div>
   </div>
 
+  <!-- Resultado abaixo -->
+  <div id="resultado">
+    <a href="#" target="_blank" id="linkGerado">---</a>
+    <button id="copyBtn" onclick="copiarLink()">Copiar</button>
+  </div>
+
+  <!-- Últimos acessos abaixo -->
+  <div id="ultimosPaths"></div>
+
   <script>
-   function gerarLink() {
-  const input = document.getElementById("pathInput").value.trim();
-  const linkBase = "https://lucasbarrosdevv.github.io/HTML_CSS_JS/";
+    const pathInput = document.getElementById("pathInput");
+    const prefixoLink = document.getElementById("prefixoLink");
+    const iframe = document.getElementById("iframePreview");
+    const linkElemento = document.getElementById("linkGerado");
+    const resultado = document.getElementById("resultado");
+    const statusDiv = document.getElementById("status");
+    const ultimosPathsDiv = document.getElementById("ultimosPaths");
 
-  if (input === "") {
-    alert("Por favor, insira um caminho.");
-    return;
-  }
+    const linkBase = "https://lucasbarrosdevv.github.io/HTML_CSS_JS/";
+    const maxHistorico = 5;
 
-  let pathCorrigido = input.replace(/https:\/\/lucasbarrosdevv\.github\.io\/HTML_CSS_JS\//g, "");
-  pathCorrigido = pathCorrigido.replace(/\s+/g, "/");
-  pathCorrigido = pathCorrigido.split("/").filter(p => p).join("/");
+    let ultimosTimeout;
 
-  // Verifica se termina com 'index.html', se não, adiciona barra no final
-  let linkFinal = linkBase + pathCorrigido;
-  if (!pathCorrigido.endsWith("index.html")) {
-    // Se já tiver barra no final, não adiciona
-    if (linkFinal.charAt(linkFinal.length - 1) !== "/") {
-      linkFinal += "/";
+    function atualizarHistorico(path) {
+      let historico = JSON.parse(localStorage.getItem("historicoPaths")) || [];
+      historico = historico.filter(item => item !== path);
+      historico.unshift(path);
+      if (historico.length > maxHistorico) historico.pop();
+      localStorage.setItem("historicoPaths", JSON.stringify(historico));
+      mostrarHistorico();
     }
-  }
 
-  const linkElemento = document.getElementById("linkGerado");
-  linkElemento.href = linkFinal;
-  linkElemento.textContent = linkFinal;
-
-  document.getElementById("resultado").style.display = "block";
-
-  const iframe = document.getElementById("iframePreview");
-  const previewDiv = document.getElementById("preview");
-  const statusDiv = document.getElementById("status");
-
-  previewDiv.style.display = "none";
-  statusDiv.textContent = "Verificando link...";
-
-  iframe.src = linkFinal;
-
-  iframe.onload = function() {
-    statusDiv.textContent = "Link encontrado!";
-    previewDiv.style.display = "block";
-  };
-
-  iframe.onerror = function() {
-    statusDiv.textContent = "Página não encontrada ou inacessível.";
-    previewDiv.style.display = "none";
-  };
-}
-
-
-    function copiarLink() {
-      const link = document.getElementById("linkGerado").textContent;
-      navigator.clipboard.writeText(link).then(() => {
-        alert("Link copiado para a área de transferência!");
-      }).catch(err => {
-        alert("Não foi possível copiar o link.");
+    function mostrarHistorico() {
+      let historico = JSON.parse(localStorage.getItem("historicoPaths")) || [];
+      if (historico.length === 0) {
+        ultimosPathsDiv.innerHTML = "";
+        return;
+      }
+      ultimosPathsDiv.innerHTML = "<div style='margin-bottom:4px;'>Últimos acessos:</div>";
+      historico.forEach(item => {
+        const parts = item.split('/');
+        let penultimo = parts.length >= 2 ? parts[parts.length - 2] : "(sem pasta)";
+        let ultimo = parts.length >= 1 ? parts[parts.length - 1] : "(arquivo)";
+        if (ultimo === "") ultimo = "(index)";
+        const textoBotao = `${penultimo}/${ultimo}`;
+        const btn = document.createElement("button");
+        btn.textContent = textoBotao;
+        btn.title = item;
+        btn.onclick = () => {
+          pathInput.value = item;
+          pathInput.dispatchEvent(new Event("input"));
+        };
+        ultimosPathsDiv.appendChild(btn);
       });
     }
+
+    pathInput.addEventListener("input", () => {
+      let path = pathInput.value.trim();
+      path = path.replace(/\s+/g, "/").split("/").filter(p => p).join("/");
+
+      let linkFinal = linkBase + path;
+      resultado.style.display = "none";
+      resultado.classList.remove("show");
+      ultimosPathsDiv.classList.remove("show");
+      ultimosPathsDiv.style.display = "none";
+      clearTimeout(ultimosTimeout);
+
+      if (path === "") {
+        prefixoLink.style.color = "#aaaaaa";
+        iframe.style.display = "none";
+        statusDiv.textContent = "";
+        return;
+      }
+
+      statusDiv.textContent = "Verificando...";
+
+      fetch(linkFinal, { method: 'HEAD' })
+        .then(response => {
+          if (response.ok) {
+            prefixoLink.style.color = "#4CAF50";
+            statusDiv.textContent = "Página encontrada!";
+            linkElemento.href = linkFinal;
+            linkElemento.textContent = linkFinal;
+            resultado.style.display = "block";
+            iframe.src = linkFinal;
+            iframe.style.display = "block";
+            resultado.classList.add("show");
+            atualizarHistorico(path);
+            ultimosTimeout = setTimeout(() => {
+              ultimosPathsDiv.style.display = "block";
+              ultimosPathsDiv.classList.add("show");
+            }, 7000);
+          } else {
+            prefixoLink.style.color = "#f44336";
+            statusDiv.textContent = "Página não encontrada.";
+            iframe.style.display = "none";
+          }
+        })
+        .catch(() => {
+          prefixoLink.style.color = "#f44336";
+          statusDiv.textContent = "Página não encontrada.";
+          iframe.style.display = "none";
+        });
+    });
+
+    function copiarLink() {
+      const link = linkElemento.textContent;
+      navigator.clipboard.writeText(link).then(() => {
+        alert("Link copiado!");
+      }).catch(() => {
+        alert("Não foi possível copiar.");
+      });
+    }
+
+    mostrarHistorico();
   </script>
 </body>
 </html>
