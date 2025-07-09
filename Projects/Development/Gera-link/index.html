@@ -233,7 +233,6 @@ const toggleBtn = document.getElementById("toggleHistorico");
 
 const linkBase = "https://lucasbarrosdevv.github.io/HTML_CSS_JS/";
 const maxHistorico = 10;
-let ultimosTimeout;
 
 function atualizarHistorico(path) {
   let historico = JSON.parse(localStorage.getItem("historicoPaths")) || [];
@@ -266,6 +265,18 @@ function mostrarHistorico() {
   });
 }
 
+function verificarLink(link, callback) {
+  fetch(link, { method: 'HEAD' })
+    .then(response => {
+      if (response.ok) {
+        callback(true, link);
+      } else {
+        callback(false, link);
+      }
+    })
+    .catch(() => callback(false, link));
+}
+
 pathInput.addEventListener("input", () => {
   let path = pathInput.value.trim();
   path = path.replace(/\s+/g, "/").split("/").filter(p => p).join("/");
@@ -283,27 +294,42 @@ pathInput.addEventListener("input", () => {
 
   statusDiv.textContent = "Verificando...";
 
-  fetch(linkFinal, { method: 'HEAD' })
-    .then(response => {
-      if (response.ok) {
-        prefixoLink.style.color = "#4CAF50";
-        statusDiv.textContent = "Página encontrada!";
-        linkElemento.href = linkFinal;
-        linkElemento.textContent = linkFinal;
-        resultado.style.display = "block";
-        iframe.src = linkFinal;
-        iframe.style.display = "block";
-        resultado.classList.add("show");
-        atualizarHistorico(path);
+  verificarLink(linkFinal, (encontrado, linkUsado) => {
+    if (encontrado) {
+      prefixoLink.style.color = "#4CAF50";
+      statusDiv.textContent = "Página encontrada!";
+      linkElemento.href = linkUsado;
+      linkElemento.textContent = linkUsado;
+      resultado.style.display = "block";
+      iframe.src = linkUsado;
+      iframe.style.display = "block";
+      resultado.classList.add("show");
+      atualizarHistorico(path);
+    } else {
+      if (!path.endsWith(".html")) {
+        let linkComHtml = linkBase + path + ".html";
+        verificarLink(linkComHtml, (encontrado2, linkUsado2) => {
+          if (encontrado2) {
+            prefixoLink.style.color = "#4CAF50";
+            statusDiv.textContent = "Página encontrada!";
+            linkElemento.href = linkUsado2;
+            linkElemento.textContent = linkUsado2;
+            resultado.style.display = "block";
+            iframe.src = linkUsado2;
+            iframe.style.display = "block";
+            resultado.classList.add("show");
+            atualizarHistorico(path + ".html");
+          } else {
+            prefixoLink.style.color = "#f44336";
+            statusDiv.textContent = "Página não encontrada.";
+          }
+        });
       } else {
         prefixoLink.style.color = "#f44336";
         statusDiv.textContent = "Página não encontrada.";
       }
-    })
-    .catch(() => {
-      prefixoLink.style.color = "#f44336";
-      statusDiv.textContent = "Página não encontrada.";
-    });
+    }
+  });
 });
 
 function copiarLink() {
@@ -318,6 +344,7 @@ toggleBtn.addEventListener("click", () => {
 });
 
 mostrarHistorico();
+
 </script>
 </body>
 </html>
