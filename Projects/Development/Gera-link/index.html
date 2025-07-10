@@ -253,10 +253,18 @@ function mostrarHistorico() {
 }
 
 function verificarLink(link, callback) {
-  iframe.onload = () => callback(true, link);
-  iframe.onerror = () => callback(false, link);
-  iframe.src = link;
+  fetch(link, { method: 'HEAD' })
+    .then(response => {
+      if (response.ok) {
+        iframe.src = link;
+        callback(true, link);
+      } else {
+        callback(false, link);
+      }
+    })
+    .catch(() => callback(false, link));
 }
+
 
 pathInput.addEventListener("input", () => {
   let path = pathInput.value.trim();
