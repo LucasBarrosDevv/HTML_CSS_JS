@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Minha Recuperação</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #101820;
+      color: #ffffff;
+      padding: 20px;
+    }
+
+    h1, h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #ffffff;
+    }
+
+    .contador {
+      background: #18232e;
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+      margin-bottom: 30px;
+      border: 1px solid #4FC3F7;
+    }
+
+    .contador span {
+      font-size: 2.8rem;
+      color: #4FC3F7;
+      display: block;
+      margin-top: 10px;
+    }
+
+    .contador p {
+      color: #cfd8dc;
+      margin-top: 5px;
+    }
+
+    .linha-do-tempo {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .evento {
+      background: #162028;
+      padding: 15px;
+      border-left: 5px solid #81D4FA;
+      border-radius: 8px;
+      animation: fadeInUp 0.6s ease forwards;
+      opacity: 0;
+    }
+
+    .evento h3 {
+      margin-bottom: 5px;
+      color: #4FC3F7;
+    }
+
+    .evento p {
+      font-size: 0.95rem;
+      color: #e0f7fa;
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+    }
+
+    @media(min-width: 600px) {
+      .linha-do-tempo {
+        max-width: 500px;
+        margin: 0 auto;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>📅 Minha Recuperação</h1>
+
+  <div class="contador">
+    <h2>Dias desde o acidente</h2>
+    <span id="diasContador">0</span>
+    <p>(16 de maio de 2025)</p>
+  </div>
+
+  <h2>Linha do Tempo</h2>
+
+  <div class="linha-do-tempo">
+    <div class="evento">
+      <h3>16/05/2025</h3>
+      <p>Acidente e início da recuperação</p>
+    </div>
+    <div class="evento">
+      <h3>01/07/2025</h3>
+      <p>Recebi alta médica após 45 dias</p>
+    </div>
+    <div class="evento">
+      <h3>02/07/2025</h3>
+      <p>Comecei a tentar andar</p>
+    </div>
+    <div class="evento">
+      <h3>03/07/2025</h3>
+      <p>Primeiros passos sem muleta</p>
+    </div>
+    <div class="evento">
+      <h3>06/07/2025</h3>
+      <p>Atividades de casa e manobrei a moto</p>
+    </div>
+    <div class="evento">
+      <h3>08/07/2025</h3>
+      <p>Abandonei as muletas definitivamente</p>
+    </div>
+  </div>
+
+  <script>
+    function atualizarContador() {
+      const dataAcidente = new Date("2025-05-16");
+      const hoje = new Date();
+
+      const diffTime = hoje - dataAcidente;
+      const diffDias = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+      document.getElementById("diasContador").textContent = diffDias;
+    }
+
+    atualizarContador();
+    setInterval(atualizarContador, 60000); 
+  </script>
+
+</body>
+</html>
