@@ -6,6 +6,7 @@
   <title>Visualizador GitHub Pages - Dark</title>
   <style>
     html, body {
+      
       margin: 0;
       padding: 0;
       height: 100%;
@@ -20,7 +21,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      z-index: 3; /* atualizado */
+      z-index: 0;
       opacity: 1;
       pointer-events: auto;
       transition: opacity 0.5s;
@@ -199,6 +200,8 @@
   <div class="link-input">
     <span id="prefixoLink">https://lucasbarrosdevv.github.io/HTML_CSS_JS/</span>
     <input type="text" id="pathInput" placeholder="pasta/pagina.html">
+    <button id="btnColar" title="Colar do clipboard" style="background: transparent; border: none; color: #666; cursor: pointer; font-size: 18px; padding: 0 6px;">📋</button>
+
   </div>
   <div id="status"></div>
 </div>
@@ -251,20 +254,11 @@ function mostrarHistorico() {
   });
 }
 
-function mostrarIframe(link) {
-  iframe.style.top = "0";
-  iframe.style.left = "0";
-  iframe.style.width = "100%";
-  iframe.style.height = "100%";
-  iframe.src = link;
-  document.body.classList.add("iframe-active");
-}
-
 function verificarLink(link, callback) {
   fetch(link, { method: 'HEAD' })
     .then(response => {
       if (response.ok) {
-        mostrarIframe(link);
+        iframe.src = link;
         callback(true, link);
       } else {
         callback(false, link);
@@ -272,6 +266,7 @@ function verificarLink(link, callback) {
     })
     .catch(() => callback(false, link));
 }
+
 
 pathInput.addEventListener("input", () => {
   let path = pathInput.value.trim();
@@ -292,6 +287,7 @@ pathInput.addEventListener("input", () => {
 
   verificarLink(linkFinal, (encontrado, linkUsado) => {
     if (encontrado) {
+      document.body.classList.add("iframe-active");
       prefixoLink.style.color = "#4CAF50";
       statusDiv.textContent = "Página encontrada!";
       linkElemento.href = linkUsado;
@@ -304,6 +300,7 @@ pathInput.addEventListener("input", () => {
         let linkComHtml = linkBase + path + ".html";
         verificarLink(linkComHtml, (encontrado2, linkUsado2) => {
           if (encontrado2) {
+            document.body.classList.add("iframe-active");
             prefixoLink.style.color = "#4CAF50";
             statusDiv.textContent = "Página encontrada!";
             linkElemento.href = linkUsado2;
@@ -338,7 +335,24 @@ toggleBtn.addEventListener("click", () => {
 });
 
 mostrarHistorico();
-</script>
 
+const btnColar = document.getElementById("btnColar");
+
+btnColar.addEventListener("click", async () => {
+  try {
+    const textoClipboard = await navigator.clipboard.readText();
+    if (textoClipboard) {
+      pathInput.value = textoClipboard.trim();
+      pathInput.dispatchEvent(new Event("input"));
+    } else {
+      alert("Área de transferência está vazia.");
+    }
+  } catch (err) {
+    alert("Não foi possível acessar a área de transferência.");
+    console.error(err);
+  }
+});
+
+</script>
 </body>
 </html>
