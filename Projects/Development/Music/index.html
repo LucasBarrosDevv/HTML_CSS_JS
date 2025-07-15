@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>YouTube sem anúncios</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #f0f4f8;
+    margin: 20px;
+    text-align: center;
+  }
+  input[type="text"] {
+    width: 80%;
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+  }
+  button {
+    padding: 10px 25px;
+    font-size: 1rem;
+    background: #0066ff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  button:hover {
+    background: #0051cc;
+  }
+  video {
+    margin-top: 20px;
+    max-width: 90%;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+  .error {
+    color: red;
+    margin-top: 15px;
+  }
+</style>
+</head>
+<body>
+
+<h1>Reproduza YouTube sem anúncios</h1>
+
+<input id="ytLink" type="text" placeholder="Cole o link do YouTube aqui" />
+<br />
+<button onclick="playVideo()">Tocar Vídeo</button>
+
+<div id="playerContainer"></div>
+<div id="error" class="error"></div>
+
+<script>
+async function playVideo() {
+  const urlInput = document.getElementById('ytLink');
+  const playerContainer = document.getElementById('playerContainer');
+  const errorDiv = document.getElementById('error');
+  errorDiv.textContent = '';
+  playerContainer.innerHTML = '';
+
+  const url = urlInput.value.trim();
+  if (!url) {
+    errorDiv.textContent = 'Por favor, cole um link válido do YouTube.';
+    return;
+  }
+
+  try {
+    const response = await fetch('http://127.0.0.1:5000/get_video', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ url })
+    });
+
+    if (!response.ok) {
+      throw new Error('Erro ao consultar o backend');
+    }
+
+    const data = await response.json();
+
+    if (data.stream_url) {
+      // Criar um elemento video para reproduzir
+      const videoEl = document.createElement('video');
+      videoEl.src = data.stream_url;
+      videoEl.controls = true;
+      videoEl.autoplay = true;
+      playerContainer.appendChild(videoEl);
+    } else {
+      errorDiv.textContent = 'Não foi possível obter a URL do vídeo.';
+    }
+  } catch (err) {
+    errorDiv.textContent = 'Erro: ' + err.message;
+  }
+}
+</script>
+
+</body>
+</html>
