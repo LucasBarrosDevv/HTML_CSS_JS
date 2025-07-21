@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Script Store - Códigos Prontos para Seu Projeto, Sem Esforço!</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            /* Cores principais */
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #3b82f6;
+            --secondary: #10b981;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #94a3b8;
+            --gray-dark: #64748b;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --success: #10b981;
+            
+            /* Espaçamentos */
+            --space-xs: 0.5rem;
+            --space-sm: 1rem;
+            --space-md: 1.5rem;
+            --space-lg: 2rem;
+            --space-xl: 3rem;
+            
+            /* Bordas */
+            --border-radius: 0.5rem;
+            --border-radius-lg: 1rem;
+            
+            /* Sombras */
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            
+            /* Transições */
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: var(--light);
+            overflow-x: hidden;
+        }
+        
+        /* Animação de entrada */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Header */
+        header {
+            background-color: white;
+            box-shadow: var(--shadow);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--space-sm) var(--space-lg);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+        }
+        
+        .logo i {
+            font-size: 1.8rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: var(--space-md);
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .cta-button {
+            background-color: var(--primary);
+            color: white;
+            padding: var(--space-xs) var(--space-sm);
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .cta-button:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: var(--space-xl) var(--space-lg);
+            text-align: center;
+            margin-top: 80px;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSg0NSkiPjxyZWN0IHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjA1KSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNwYXR0ZXJuKSIvPjwvc3ZnPg==');
+            opacity: 0.5;
+            z-index: 0;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+            animation: fadeIn 0.8s ease-out 0.2s both;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: var(--space-md);
+            color: var(--dark);
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: var(--space-lg);
+            color: var(--gray-dark);
+        }
+        
+        .main-cta {
+            padding: var(--space-sm) var(--space-md);
+            font-size: 1.1rem;
+            box-shadow: var(--shadow-lg);
+        }
+        
+        /* Benefits Section */
+        .benefits {
+            padding: var(--space-xl) var(--space-lg);
+            background-color: white;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: var(--space-xl);
+            font-size: 2rem;
+            color: var(--dark);
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary);
+            margin: var(--space-sm) auto 0;
+            border-radius: 2px;
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--space-lg);
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .benefit-card {
+            background-color: white;
+            border-radius: var(--border-radius-lg);
+            padding: var(--space-md);
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        .benefit-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .benefit-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: var(--space-sm);
+        }
+        
+        .benefit-card h3 {
+            margin-bottom: var(--space-xs);
+            color: var(--dark);
+        }
+        
+        .benefit-card p {
+            color: var(--gray-dark);
+            font-size: 0.95rem;
+        }
+        
+        /* Featured Code */
+        .featured-code {
+            background-color: var(--primary);
+            color: white;
+            padding: var(--space-md) var(--space-lg);
+            text-align: center;
+            margin-bottom: var(--space-xl);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .featured-code::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(0,0,0,0.1) 0%, rgba(255,255,255,0.2) 100%);
+            z-index: 0;
+        }
+        
+        .featured-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .featured-content h2 {
+            margin-bottom: var(--space-sm);
+            font-size: 1.8rem;
+        }
+        
+        .featured-content p {
+            margin-bottom: var(--space-md);
+            opacity: 0.9;
+        }
+        
+        .featured-cta {
+            background-color: white;
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .featured-cta:hover {
+            background-color: #e2e8f0;
+        }
+        
+        /* Code Grid */
+        .code-grid-section {
+            padding: var(--space-xl) var(--space-lg);
+            background-color: #f1f5f9;
+        }
+        
+        .code-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: var(--space-lg);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .code-card {
+            background-color: white;
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        .code-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .code-preview {
+            height: 200px;
+            width: 100%;
+            border-bottom: 1px solid #e2e8f0;
+            position: relative;
+        }
+        
+        .code-preview iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .code-badge {
+            position: absolute;
+            top: var(--space-sm);
+            right: var(--space-sm);
+            background-color: var(--primary);
+            color: white;
+            padding: 0.25rem var(--space-sm);
+            border-radius: var(--border-radius);
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .free-badge {
+            background-color: var(--success);
+        }
+        
+        .paid-badge {
+            background-color: var(--warning);
+        }
+        
+        .code-details {
+            padding: var(--space-md);
+        }
+        
+        .code-details h3 {
+            margin-bottom: var(--space-xs);
+            color: var(--dark);
+        }
+        
+        .code-details p {
+            color: var(--gray-dark);
+            font-size: 0.95rem;
+            margin-bottom: var(--space-sm);
+        }
+        
+        .code-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: var(--space-sm);
+        }
+        
+        .code-actions {
+            display: flex;
+            gap: var(--space-sm);
+        }
+        
+        .secondary-button {
+            background-color: white;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            padding: var(--space-xs) var(--space-sm);
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-block;
+            flex: 1;
+            text-align: center;
+        }
+        
+        .secondary-button:hover {
+            background-color: #f8fafc;
+        }
+        
+        .download-button {
+            background-color: var(--success);
+            color: white;
+            flex: 1;
+        }
+        
+        .download-button:hover {
+            background-color: #0d9c6b;
+        }
+        
+        .whatsapp-button {
+            background-color: #25D366;
+            color: white;
+            flex: 1;
+        }
+        
+        .whatsapp-button:hover {
+            background-color: #1da851;
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .modal.show {
+            display: flex;
+            opacity: 1;
+        }
+        
+        .modal-content {
+            background-color: white;
+            border-radius: var(--border-radius-lg);
+            width: 90%;
+            max-width: 500px;
+            padding: var(--space-lg);
+            position: relative;
+            transform: translateY(-20px);
+            transition: transform 0.3s ease;
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .modal.show .modal-content {
+            transform: translateY(0);
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: var(--space-sm);
+            right: var(--space-sm);
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray);
+            background: none;
+            border: none;
+        }
+        
+        .modal h3 {
+            margin-bottom: var(--space-sm);
+        }
+        
+        .modal p {
+            margin-bottom: var(--space-md);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: var(--space-xl) var(--space-lg);
+            text-align: center;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--space-xl);
+            text-align: left;
+        }
+        
+        .footer-column h3 {
+            color: white;
+            margin-bottom: var(--space-md);
+            font-size: 1.2rem;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column li {
+            margin-bottom: var(--space-xs);
+        }
+        
+        .footer-column a {
+            color: var(--gray);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-column a:hover {
+            color: white;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: var(--space-sm);
+            margin-top: var(--space-md);
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: var(--transition);
+        }
+        
+        .social-links a:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            margin-top: var(--space-xl);
+            padding-top: var(--space-md);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .code-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Animações adicionais */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        /* Efeito de hover nos cards de código */
+        .code-card {
+            perspective: 1000px;
+        }
+        
+        .code-card-inner {
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        
+        .code-card:hover .code-card-inner {
+            transform: rotateY(5deg) rotateX(5deg);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <i class="fas fa-code"></i>
+                <span>Script Store</span>
+            </div>
+            <div class="nav-links">
+                <a href="#benefits">Benefícios</a>
+                <a href="#codes">Códigos</a>
+                <a href="#contact">Contato</a>
+                <a href="#" class="cta-button">Explorar Códigos</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Códigos Prontos para Seu Projeto, Sem Esforço!</h1>
+            <p>Baixe ou personalize scripts em minutos e acelere seu desenvolvimento. Economize horas de trabalho com nossos códigos 100% funcionais e documentados.</p>
+            <a href="#codes" class="cta-button main-cta pulse">Explorar Códigos</a>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="benefits" id="benefits">
+        <h2 class="section-title">Por que escolher nossos códigos?</h2>
+        <div class="benefits-grid">
+            <div class="benefit-card">
+                <div class="benefit-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <h3>Economize horas</h3>
+                <p>Não perca tempo reinventando a roda. Nossos códigos prontos economizam horas de desenvolvimento.</p>
+            </div>
+            <div class="benefit-card">
+                <div class="benefit-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h3>100% funcional</h3>
+                <p>Todos os códigos são testados, otimizados e prontos para implementação imediata.</p>
+            </div>
+            <div class="benefit-card">
+                <div class="benefit-icon">
+                    <i class="fas fa-book"></i>
+                </div>
+                <h3>Documentação completa</h3>
+                <p>Documentação detalhada para facilitar a implementação e customização.</p>
+            </div>
+            <div class="benefit-card">
+                <div class="benefit-icon">
+                    <i class="fas fa-headset"></i>
+                </div>
+                <h3>Suporte técnico</h3>
+                <p>Suporte especializado para ajudar na implementação e customização dos códigos.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Code -->
+    <section class="featured-code">
+        <div class="featured-content">
+            <h2>Código em Destaque: "Coração Digital"</h2>
+            <p>Um efeito visual impressionante com partículas que formam um coração e chuva de mensagens de amor. Perfeito para páginas românticas ou especiais.</p>
+            <a href="#codes" class="cta-button featured-cta">Ver Detalhes</a>
+        </div>
+    </section>
+
+    <!-- Code Grid Section -->
+    <section class="code-grid-section" id="codes">
+        <h2 class="section-title">Nossos Códigos</h2>
+        <div class="code-grid">
+            <!-- Código Gratuito 1 -->
+            <div class="code-card">
+                <div class="code-card-inner">
+                    <div class="code-preview">
+                        <iframe src="https://gorgeous-creponne-f39db5.netlify.app/" frameborder="0"></iframe>
+                        <span class="code-badge free-badge">GRATUITO</span>
+                    </div>
+                    <div class="code-details">
+                        <h3>Fundo de Partículas</h3>
+                        <p>Fundo preto com partículas brancas se movendo aleatoriamente, criando um efeito moderno e elegante.</p>
+                        <div class="code-actions">
+                            <a href="#" class="secondary-button">Ver Detalhes</a>
+                            <button class="cta-button download-button" data-code="Fundo de Partículas" data-file="fundo-particulas.zip">Baixar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Código Gratuito 2 -->
+            <div class="code-card">
+                <div class="code-card-inner">
+                    <div class="code-preview">
+                        <iframe src="https://splendorous-travesseiro-85bc1e.netlify.app/" frameborder="0"></iframe>
+                        <span class="code-badge free-badge">GRATUITO</span>
+                    </div>
+                    <div class="code-details">
+                        <h3>Cascata de Amor</h3>
+                        <p>Uma cascata infinita de mensagens "Te Amo" descendo pela tela, perfeito para declarações românticas.</p>
+                        <div class="code-actions">
+                            <a href="#" class="secondary-button">Ver Detalhes</a>
+                            <button class="cta-button download-button" data-code="Cascata de Amor" data-file="cascata-amor.zip">Baixar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Código Gratuito 3 -->
+            <div class="code-card">
+                <div class="code-card-inner">
+                    <div class="code-preview">
+                        <iframe src="https://thriving-sprinkles-8ca95c.netlify.app/" frameborder="0"></iframe>
+                        <span class="code-badge free-badge">GRATUITO</span>
+                    </div>
+                    <div class="code-details">
+                        <h3>Efeito de Fogo</h3>
+                        <p>Um fundo dinâmico que imita o movimento do fogo, adicionando dramaticidade a qualquer página.</p>
+                        <div class="code-actions">
+                            <a href="#" class="secondary-button">Ver Detalhes</a>
+                            <button class="cta-button download-button" data-code="Efeito de Fogo" data-file="efeito-fogo.zip">Baixar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Código Pago 1 -->
+            <div class="code-card">
+                <div class="code-card-inner">
+                    <div class="code-preview">
+                        <iframe src="https://zesty-kulfi-84a885.netlify.app/" frameborder="0"></iframe>
+                        <span class="code-badge paid-badge">R$ 49,90</span>
+                    </div>
+                    <div class="code-details">
+                        <h3>Coração Digital</h3>
+                        <p>Cartão virtual com partículas que formam um coração e chuva de "Te Amo". Perfeito para declarações.</p>
+                        <div class="code-price">R$ 49,90</div>
+                        <div class="code-actions">
+                            <a href="#" class="secondary-button">Ver Detalhes</a>
+                            <a href="https://wa.me/5511999999999?text=Olá,%20gostaria%20de%20adquirir%20o%20código%20'Coração%20Digital'" class="cta-button whatsapp-button">Comprar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Código Pago 2 -->
+            <div class="code-card">
+                <div class="code-card-inner">
+                    <div class="code-preview">
+                        <iframe src="https://grand-rugelach-3d48fa.netlify.app/" frameborder="0"></iframe>
+                        <span class="code-badge paid-badge">R$ 79,90</span>
+                    </div>
+                    <div class="code-details">
+                        <h3>Aniversário Especial</h3>
+                        <p>Cartão de aniversário completo com frases, músicas, contagem regressiva e carrossel de fotos.</p>
+                        <div class="code-price">R$ 79,90</div>
+                        <div class="code-actions">
+                            <a href="#" class="secondary-button">Ver Detalhes</a>
+                            <a href="https://wa.me/5511999999999?text=Olá,%20gostaria%20de%20adquirir%20o%20código%20'Aniversário%20Especial'" class="cta-button whatsapp-button">Comprar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Código Pago 3 -->
+            <div class="code-card">
+                <div class="code-card-inner">
+                    <div class="code-preview">
+                        <iframe src="https://clinquant-haupia-129a79.netlify.app/" frameborder="0"></iframe>
+                        <span class="code-badge paid-badge">R$ 59,90</span>
+                    </div>
+                    <div class="code-details">
+                        <h3>Cascata Binária</h3>
+                        <p>Efeito de cascata binária no estilo hacker, ideal para sites de tecnologia ou efeitos especiais.</p>
+                        <div class="code-price">R$ 59,90</div>
+                        <div class="code-actions">
+                            <a href="#" class="secondary-button">Ver Detalhes</a>
+                            <a href="https://wa.me/5511999999999?text=Olá,%20gostaria%20de%20adquirir%20o%20código%20'Cascata%20Binária'" class="cta-button whatsapp-button">Comprar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal de Download -->
+    <div class="modal" id="downloadModal">
+        <div class="modal-content">
+            <button class="close-modal">&times;</button>
+            <h3>Download do Código <span id="modalCodeName"></span></h3>
+            <p>Seu download começará automaticamente em alguns segundos. O arquivo está compactado no formato ZIP e contém:</p>
+            <ul>
+                <li>Código fonte completo</li>
+                <li>Documentação detalhada</li>
+                <li>Exemplos de uso</li>
+            </ul>
+            <p><strong>Importante:</strong> Você precisará extrair os arquivos do ZIP antes de usar.</p>
+            <div class="code-actions" style="margin-top: 20px;">
+                <a href="#" class="cta-button" id="manualDownload">Baixar Agora</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Script Store</h3>
+                <p>A melhor loja de códigos-fonte prontos para desenvolvedores que valorizam seu tempo e querem resultados rápidos.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Links Rápidos</h3>
+                <ul>
+                    <li><a href="#benefits">Benefícios</a></li>
+                    <li><a href="#codes">Nossos Códigos</a></li>
+                    <li><a href="#">Termos de Uso</a></li>
+                    <li><a href="#">Política de Privacidade</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contato</h3>
+                <ul>
+                    <li><i class="fas fa-envelope"></i> contato@scriptstore.com</li>
+                    <li><i class="fas fa-phone"></i> (11) 99999-9999</li>
+                    <li><i class="fas fa-map-marker-alt"></i> São Paulo, Brasil</li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2023 Script Store. Todos os direitos reservados. Desenvolvido por DeepSeek Chat.
+        </div>
+    </footer>
+
+    <script>
+        // Animação de scroll suave
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Modal de download
+        const downloadButtons = document.querySelectorAll('.download-button');
+        const downloadModal = document.getElementById('downloadModal');
+        const modalCodeName = document.getElementById('modalCodeName');
+        const manualDownload = document.getElementById('manualDownload');
+        const closeModal = document.querySelector('.close-modal');
+        
+        downloadButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const codeName = this.getAttribute('data-code');
+                const fileName = this.getAttribute('data-file');
+                
+                modalCodeName.textContent = codeName;
+                manualDownload.setAttribute('download', fileName);
+                manualDownload.setAttribute('href', fileName);
+                
+                downloadModal.classList.add('show');
+                
+                // Simular download automático (na implementação real, seria um link real)
+                setTimeout(() => {
+                    // window.location.href = fileName; // Descomente para download real
+                }, 3000);
+            });
+        });
+        
+        closeModal.addEventListener('click', () => {
+            downloadModal.classList.remove('show');
+        });
+        
+        window.addEventListener('click', (e) => {
+            if (e.target === downloadModal) {
+                downloadModal.classList.remove('show');
+            }
+        });
+        
+        // Efeito de digitação no título
+        const heroTitle = document.querySelector('.hero h1');
+        const originalText = heroTitle.textContent;
+        heroTitle.textContent = '';
+        
+        let i = 0;
+        const typingEffect = setInterval(() => {
+            if (i < originalText.length) {
+                heroTitle.textContent += originalText.charAt(i);
+                i++;
+            } else {
+                clearInterval(typingEffect);
+            }
+        }, 50);
+        
+        // Animação ao rolar a página
+        const animateOnScroll = () => {
+            const elements = document.querySelectorAll('.benefit-card, .code-card');
+            const windowHeight = window.innerHeight;
+            
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                if (elementPosition < windowHeight - 100) {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }
+            });
+        };
+        
+        // Inicializar elementos com opacidade 0 para animação
+        document.querySelectorAll('.benefit-card, .code-card').forEach(element => {
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(20px)';
+            element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        });
+        
+        window.addEventListener('scroll', animateOnScroll);
+        window.addEventListener('load', animateOnScroll);
+    </script>
+</body>
+</html>

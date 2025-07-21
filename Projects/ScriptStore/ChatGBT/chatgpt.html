@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Script Store - por ChatGPT</title>
+  <style>
+    :root {
+      --cor-primaria: #2a2a72;
+      --cor-secundaria: #009ffd;
+      --cor-terciaria: #e1e8ed;
+      --cor-fundo: #f9fbfd;
+      --cor-texto: #1a1a1a;
+      --cor-sucesso: #28a745;
+      --cor-atencao: #ffc107;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: var(--cor-fundo);
+      color: var(--cor-texto);
+      line-height: 1.6;
+    }
+
+    header {
+      background: linear-gradient(to right, var(--cor-primaria), var(--cor-secundaria));
+      color: white;
+      padding: 2rem 1rem;
+      text-align: center;
+      animation: fadeInDown 1s ease-in-out;
+    }
+
+    header h1 {
+      font-size: 2rem;
+    }
+
+    header p {
+      font-size: 1.2rem;
+      margin-top: 0.5rem;
+    }
+
+    .cta {
+      background: var(--cor-secundaria);
+      color: white;
+      padding: 1rem 2rem;
+      margin: 2rem auto;
+      display: inline-block;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+
+    .cta:hover {
+      background: #007acc;
+    }
+
+    .beneficios {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.5rem;
+      padding: 2rem 1rem;
+    }
+
+    .beneficio {
+      flex: 1 1 200px;
+      background: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      text-align: center;
+      animation: fadeInUp 1s ease-in-out;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      padding: 2rem;
+    }
+
+    .card {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      overflow: hidden;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    .card iframe {
+      width: 100%;
+      height: 200px;
+      border: none;
+    }
+
+    .card-content {
+      padding: 1rem;
+    }
+
+    .card h3 {
+      margin-bottom: 0.5rem;
+    }
+
+    .card p {
+      margin-bottom: 1rem;
+    }
+
+    .card .btns {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .card a {
+      flex: 1;
+      text-align: center;
+      text-decoration: none;
+      padding: 0.5rem;
+      border-radius: 6px;
+      font-weight: bold;
+    }
+
+    .baixar {
+      background: var(--cor-sucesso);
+      color: white;
+    }
+
+    .whatsapp {
+      background: #25d366;
+      color: white;
+    }
+
+    @keyframes fadeInDown {
+      from { transform: translateY(-20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes fadeInUp {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    footer {
+      background: var(--cor-primaria);
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      margin-top: 2rem;
+    }
+
+    .nota-download {
+      font-size: 0.9rem;
+      color: var(--cor-atencao);
+      margin-top: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Códigos Prontos para Seu Projeto, Sem Esforço!</h1>
+    <p>Baixe ou personalize scripts em minutos e acelere seu desenvolvimento</p>
+    <a href="#codigos" class="cta">Explorar Códigos</a>
+  </header>
+
+  <section class="beneficios">
+    <div class="beneficio">
+      <h3>⚡ Economize horas de desenvolvimento</h3>
+    </div>
+    <div class="beneficio">
+      <h3>✅ 100% funcional e documentado</h3>
+    </div>
+    <div class="beneficio">
+      <h3>💬 Suporte técnico incluso</h3>
+    </div>
+  </section>
+
+  <section id="codigos" class="cards">
+    <!-- Gratuitos -->
+    <div class="card">
+      <iframe src="https://gorgeous-creponne-f39db5.netlify.app/"></iframe>
+      <div class="card-content">
+        <h3>Partículas Neutras</h3>
+        <p>Fundo preto com partículas brancas animadas</p>
+        <div class="btns">
+          <a class="baixar" href="https://gorgeous-creponne-f39db5.netlify.app/" download>Baixar</a>
+        </div>
+        <p class="nota-download">Arquivo .zip - Extraia após o download</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <iframe src="https://splendorous-travesseiro-85bc1e.netlify.app/"></iframe>
+      <div class="card-content">
+        <h3>Cascata TeAmo</h3>
+        <p>Cascata infinita de “TeAmo” com fundo animado</p>
+        <div class="btns">
+          <a class="baixar" href="https://splendorous-travesseiro-85bc1e.netlify.app/" download>Baixar</a>
+        </div>
+        <p class="nota-download">Arquivo .zip - Extraia após o download</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <iframe src="https://thriving-sprinkles-8ca95c.netlify.app/"></iframe>
+      <div class="card-content">
+        <h3>Fogo Dinâmico</h3>
+        <p>Fundo com efeito de fogo animado e interativo</p>
+        <div class="btns">
+          <a class="baixar" href="https://thriving-sprinkles-8ca95c.netlify.app/" download>Baixar</a>
+        </div>
+        <p class="nota-download">Arquivo .zip - Extraia após o download</p>
+      </div>
+    </div>
+
+    <!-- Pagos -->
+    <div class="card">
+      <iframe src="https://zesty-kulfi-84a885.netlify.app/"></iframe>
+      <div class="card-content">
+        <h3>Coração Romântico</h3>
+        <p>Cartão virtual com partículas em formato de coração</p>
+        <p><strong>R$ 19,90</strong></p>
+        <div class="btns">
+          <a class="whatsapp" target="_blank" href="https://wa.me/5500000000000?text=Olá!%20Tenho%20interesse%20no%20código%20Coração%20Romântico">Comprar via WhatsApp</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <iframe src="https://grand-rugelach-3d48fa.netlify.app/"></iframe>
+      <div class="card-content">
+        <h3>Aniversário Interativo</h3>
+        <p>Cartão com músicas, contagem e galeria estilo feed</p>
+        <p><strong>R$ 29,90</strong></p>
+        <div class="btns">
+          <a class="whatsapp" target="_blank" href="https://wa.me/5500000000000?text=Olá!%20Tenho%20interesse%20no%20código%20Aniversário%20Interativo">Comprar via WhatsApp</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <iframe src="https://clinquant-haupia-129a79.netlify.app/"></iframe>
+      <div class="card-content">
+        <h3>Matrix Hacker</h3>
+        <p>Cascata binária ao estilo hacker cinematográfico</p>
+        <p><strong>R$ 14,90</strong></p>
+        <div class="btns">
+          <a class="whatsapp" target="_blank" href="https://wa.me/5500000000000?text=Olá!%20Tenho%20interesse%20no%20código%20Matrix%20Hacker">Comprar via WhatsApp</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Script Store - Desenvolvido por ChatGPT para Lucas</p>
+  </footer>
+</body>
+</html>
