@@ -1,0 +1,254 @@
+/* Codes Section */
+.codes {
+  padding: var(--spacing-2xl) 0;
+}
+
+.codes-category {
+  margin-bottom: var(--spacing-2xl);
+}
+
+.category-title {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--gray-900);
+  margin-bottom: var(--spacing-xl);
+}
+
+.codes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+.code-card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+  transition: var(--transition-normal);
+  position: relative;
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.code-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-xl);
+}
+
+.code-card.premium {
+  border: 2px solid var(--accent-color);
+}
+
+.premium-badge {
+  position: absolute;
+  top: var(--spacing-sm);
+  right: var(--spacing-sm);
+  background: var(--gradient-accent);
+  color: var(--white);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-md);
+  font-size: 0.75rem;
+  font-weight: 600;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.code-preview-container {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+}
+
+.code-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  transition: var(--transition-normal);
+}
+
+.preview-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+  opacity: 0;
+  transition: var(--transition-normal);
+}
+
+.code-preview-container:hover .preview-overlay {
+  opacity: 1;
+}
+
+.preview-overlay i {
+  font-size: 2rem;
+  margin-bottom: var(--spacing-xs);
+}
+
+.code-info {
+  padding: var(--spacing-md);
+}
+
+.code-name {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--gray-900);
+  margin-bottom: var(--spacing-xs);
+}
+
+.code-description {
+  color: var(--gray-600);
+  margin-bottom: var(--spacing-sm);
+  line-height: 1.5;
+}
+
+.code-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+  margin-bottom: var(--spacing-md);
+}
+
+/* Tags temáticas com cores específicas */
+.tag {
+  padding: 0.25rem var(--spacing-xs);
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--white);
+  text-transform: capitalize;
+  animation: pulseTag 2s infinite;
+}
+
+
+
+/* Cores específicas por conteúdo */
+.tag.Animação {
+  background: #facc15; /* amarelo */
+  color: #000;
+}
+
+.tag.Background {
+  background: black; /* azul claro */
+}
+
+.tag.Romântico {
+  background:  #f43f5e; /* vermelho-rosa */
+}
+
+.tag.Cascata {
+  background: #7c3aed; /* roxo médio */
+}
+
+.tag.Fogo {
+  background: linear-gradient(45deg, #ef4444, #f97316); /* vermelho-laranja */
+}
+
+.tag.Dinâmico {
+  background: #38bdf8; /* quase preto */
+  border: 1px solid #38bdf8; /* destaque azul claro */
+}
+
+
+
+.tag.Interativo {
+  background: #34d399; /* verde claro */
+  color: #000;
+}
+
+.tag.Aniversário {
+  background: #fbbf24; /* amarelo ouro */
+  color: #000;
+}
+
+.tag.Música {
+  background: #6366f1; /* roxo azulado (igual ao primary) */
+  color: #fff;
+}
+
+.tag.Carrossel {
+  background: #0d9488; /* verde azulado escuro */
+  color: #fff;
+}
+
+.tag.Matrix {
+  background: #059669; /* verde matrix */
+  color: #fff;
+}
+
+.tag.Hacker {
+  background: #111827; /* preto profundo */
+  color: #38bdf8; /* azul neon */
+}
+
+.tag.Binário {
+  background: #10b981; /* verde binário */
+  color: #000;
+}
+
+
+
+.code-price {
+  margin-bottom: var(--spacing-md);
+}
+
+.price {
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+
+.free-price {
+  color: var(--secondary-color);
+}
+
+.premium-price {
+  color: var(--accent-color);
+}
+
+.download-btn,
+.whatsapp-btn {
+  width: 100%;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: none;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-normal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xs);
+  text-decoration: none;
+}
+
+.download-btn {
+  background: var(--gradient-secondary);
+  color: var(--white);
+}
+
+.download-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.whatsapp-btn {
+  background: #25d366;
+  color: var(--white);
+}
+
+.whatsapp-btn:hover {
+  background: #128c7e;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
