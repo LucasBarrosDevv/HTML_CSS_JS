@@ -6,24 +6,12 @@
   <title>Script Store - Hero</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
   <style>
-   body {
+body {
   font-family: Arial, Helvetica, sans-serif;
   background: black;
   margin: 0;
   padding: 0;
-}
-
-.header-tittle {
-  font-size: 3.5em;
-  font-weight: bolder;
-}
-
-#script {
-  color: #00eaff;
-}
-
-#store {
-  color: #ff5e01;
+  overflow-x: hidden;
 }
 
 /* HERO SECTION */
@@ -31,25 +19,44 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  padding: 3rem 1rem;
+  justify-content: space-between;
+  height: 100dvh;
+  padding: 1rem;
   max-width: 480px;
   margin: 0 auto;
   animation: fadeInUp 1s ease-out;
   box-sizing: border-box;
- 
+  gap: 1rem;
 }
 
-.hero-content,
-.hero-visual {
-  width: 100%;
-  margin-bottom: 2rem;
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  color: #fff200;
+  font-size: 0.8em;
+  justify-content: center;
+  text-align: center;
 }
 
 .hero-content {
-  animation: slideInLeft 1s ease-out;
   text-align: center;
+  animation: slideInLeft 1s ease-out;
+  width: 100%;
+}
+
+.hero-title {
+  
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: white;
+  line-height: 1.2;
+  margin-bottom: 100px;
+}
+
+.highlight {
+  color: #00eaff;
 }
 
 .hero-visual {
@@ -57,9 +64,10 @@
   justify-content: center;
   align-items: center;
   animation: float 3s ease-in-out infinite;
+  max-height: 180px;
+  width: 100%;
 }
 
-/* CODE SLIDER */
 .code-slider-container {
   width: 100%;
   overflow: hidden;
@@ -70,12 +78,12 @@
 
 .code-slider {
   display: flex;
-  width: 300%;
+  width: 300vw;
   animation: slide 12s infinite;
 }
 
 .code-preview {
-  flex: 0 0 100%;
+  flex: 0 0 100vw;
   padding: 1rem;
   color: #ccc;
   font-family: "Courier New", monospace;
@@ -114,37 +122,6 @@
   margin-bottom: 0.3rem;
 }
 
-/* TEXTOS */
-.hero-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-weight: 600;
-  color: #fff200;
-  margin-bottom: 1rem;
-  font-size: 1rem;
-  justify-content: center;
-}
-
-.hero-title {
-  font-size: 2.2rem;
-  font-weight: 900;
-  color:white;
-  line-height: 1.2;
-  margin-bottom: 1rem;
-}
-
-.highlight {
-  color: #00eaff;
-}
-
-.hero-subtitle {
-  font-size: 1.1rem;
-  color: #555;
-  margin-bottom: 2rem;
-}
-
-/* BOTÃO */
 .cta-button {
   display: inline-flex;
   align-items: center;
@@ -152,14 +129,15 @@
   gap: 0.5rem;
   background-color: #00eaff;
   color: black;
-  padding: 0.75rem 1.5rem;
+  padding: 0.6rem 1rem;
   border-radius: 9999px;
   font-weight: 700;
-  font-size: 1.1rem;
+  font-size: 1rem;
   text-decoration: none;
   transition: background-color 0.3s ease;
   width: 100%;
-  max-width: 300px;
+  max-width: 260px;
+  margin-top: 100px;
 }
 
 .cta-button:hover {
@@ -175,8 +153,8 @@
 
 @keyframes slide {
   0%, 33.33% { transform: translateX(0); }
-  44.44%, 77.77% { transform: translateX(-100%); }
-  88.88%, 100% { transform: translateX(-200%); }
+  44.44%, 77.77% { transform: translateX(-100vw); }
+  88.88%, 100% { transform: translateX(-200vw); }
 }
 
 @keyframes fadeInUp {
@@ -210,11 +188,20 @@
   display: block;
 }
 
+
+
   </style>
 </head>
 <body>
- 
+  
   <section class="hero">
+     
+    <div class="hero-content" >
+      <h1 class="hero-title">
+        Códigos Prontos para Seu Projeto,
+        <span class="highlight">Sem Esforço!</span>
+      </h1>
+      </div>
     <div class="hero-visual">
       <div class="code-slider-container">
         <div class="code-slider">
@@ -262,22 +249,18 @@
     </div>
 
     <div class="hero-content">
-      <div class="hero-badge">
-        <i class="fas fa-star"></i>
-        <span>Código da Semana em Destaque</span>
-      </div>
-      <h1 class="hero-title">
-        Códigos Prontos para Seu Projeto,
-        <span class="highlight">Sem Esforço!</span>
-      </h1>
-      <p class="hero-subtitle">
-        Baixe ou personalize scripts em minutos e acelere seu desenvolvimento com códigos 100% funcionais e documentados
-      </p>
+     
+     
+
       <a href="#codes" class="cta-button">
         <i class="fas fa-rocket"></i>
         Explorar Códigos
       </a>
     </div>
+    <div class="hero-badge">
+        <i class="fas fa-star"></i>
+        <span>Código da Semana em Destaque</span>
+      </div>
   </section>
   <script>
     document.addEventListener("DOMContentLoaded", () => {
