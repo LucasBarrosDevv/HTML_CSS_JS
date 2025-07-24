@@ -6,6 +6,7 @@
   <title>Cards Expandíveis</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
+    /* Reset básico */
     body {
       background-color: black;
       font-family: sans-serif;
@@ -23,32 +24,22 @@
       gap: 2rem;
     }
 
+    /* Card base */
     .code-card {
       background: #fff;
       border-radius: 0.75rem;
       overflow: hidden;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       border: 1px solid #04EEF7;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       transition: all 0.3s ease;
     }
 
     .code-card.premium {
       border: 2px solid #FF590D;
+      margin-top: 50px;
     }
 
-    .premium-badge {
-      background: linear-gradient(90deg, #04EEF7, #FF590D);
-      color: white;
-      padding: 0.25rem 0.75rem;
-      font-size: 0.75rem;
-      font-weight: bold;
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      border-radius: 0.5rem;
-      z-index: 1;
-    }
-
+    /* Preview */
     .code-preview-container {
       position: relative;
       height: 200px;
@@ -79,6 +70,7 @@
       opacity: 1;
     }
 
+    /* Informações do card */
     .code-info {
       padding: 1.25rem;
     }
@@ -103,9 +95,10 @@
       border-radius: 0.3rem;
       font-size: 0.75rem;
     }
-    #animação {background-color: yellow;}
-    #background {background-color: black; color: white;}
-    #fogo {background-color: orangered; color: white;}
+
+    #animação { background-color: yellow; }
+    #background { background-color: black; color: white; }
+    #fogo { background-color: orangered; color: white; }
 
     .code-price {
       font-size: 1.2rem;
@@ -171,78 +164,142 @@
     }
   </style>
 </head>
+
 <body>
-
   <section class="codes">
-    <div class="codes-grid">
-      <!-- Particulas -->
-      <div class="code-card free">
-        <div class="code-preview-container">
-          <iframe src="https://gorgeous-creponne-f39db5.netlify.app/" class="code-iframe"></iframe>
-          <div class="preview-overlay">
-            <i class="fas fa-eye"></i>
-            <span>Preview Interativo</span>
-          </div>
-        </div>
-        <div class="code-info">
-          <h4 class="code-name">Partículas</h4>
-          <div class="code-tags">
-            <span id="animação" class="tag">Animação</span>
-            <span id="background" class="tag">Background</span>
-          </div>
-          <div class="code-price">FREE</div>
 
-          <div class="code-extra-info">
-            <p class="code-description">
-              Fundo preto com partículas brancas se movendo aleatoriamente. Perfeito para backgrounds dinâmicos.
-            </p>
-            <button class="download-btn" onclick="downloadCode('Particulas', 'https://gorgeous-creponne-f39db5.netlify.app/')">
-              <i class="fas fa-download"></i> Baixar Código
-            </button>
-          </div>
-
-          <button class="toggle-btn" onclick="toggleCard(this)">Ver mais</button>
-        </div>
-      </div>
-
-      <div class="code-card free">
-  <div class="code-preview-container">
-    <iframe
-      src="https://thriving-sprinkles-8ca95c.netlify.app/"
-      class="code-iframe"
-    ></iframe>
-    <div class="preview-overlay">
-      <i class="fas fa-eye"></i>
-      <span>Preview Interativo</span>
-    </div>
-  </div>
-  <div class="code-info">
-    <h4 class="code-name">Fire Dynamic</h4>
-    <div class="code-tags">
-      <span class="tag" id="fogo">Fogo</span>
-      <span id="background" class="tag">Background</span>
-    </div>
-    <div class="code-price">FREE</div>
-
-    <div class="code-extra-info">
-      <p class="code-description">
-        Fundo dinâmico que imita fogo real com animações fluidas e realistas. Ideal para páginas que precisam de impacto visual intenso.
-      </p>
-      <button
-        class="download-btn"
-        onclick="downloadCode('Fire Dynamic', 'https://thriving-sprinkles-8ca95c.netlify.app/')"
-      >
-        <i class="fas fa-download"></i> Baixar Código
-      </button>
-    </div>
-
-    <button class="toggle-btn" onclick="toggleCard(this)">Ver mais</button>
-  </div>
-</div>
-
-
+    <!-- Códigos Gratuitos -->
+    <section class="codes-category">
       
-    </div>
+      <div class="codes-grid">
+
+        <!-- Card: Partículas -->
+        <div class="code-card free">
+          <div class="code-preview-container">
+            <iframe src="https://gorgeous-creponne-f39db5.netlify.app/" class="code-iframe"></iframe>
+            <div class="preview-overlay">
+              <i class="fas fa-eye"></i>
+              <span>Preview Interativo</span>
+            </div>
+          </div>
+          <div class="code-info">
+            <h4 class="code-name">Partículas</h4>
+            <div class="code-tags">
+              <span id="animação" class="tag">Animação</span>
+              <span id="background" class="tag">Background</span>
+            </div>
+            <div class="code-price">FREE</div>
+            <div class="code-extra-info">
+              <p class="code-description">
+                Fundo preto com partículas brancas se movendo aleatoriamente. Perfeito para backgrounds dinâmicos.
+              </p>
+              <button class="download-btn" onclick="downloadCode('Particulas', 'https://gorgeous-creponne-f39db5.netlify.app/')">
+                <i class="fas fa-download"></i> Baixar Código
+              </button>
+            </div>
+            <button class="toggle-btn" onclick="toggleCard(this)">Ver mais</button>
+          </div>
+        </div>
+
+        <!-- Card: Fire Dynamic -->
+        <div class="code-card free">
+          <div class="code-preview-container">
+            <iframe src="https://thriving-sprinkles-8ca95c.netlify.app/" class="code-iframe"></iframe>
+            <div class="preview-overlay">
+              <i class="fas fa-eye"></i>
+              <span>Preview Interativo</span>
+            </div>
+          </div>
+          <div class="code-info">
+            <h4 class="code-name">Fire Dynamic</h4>
+            <div class="code-tags">
+              <span id="fogo" class="tag">Fogo</span>
+              <span id="background" class="tag">Background</span>
+            </div>
+            <div class="code-price">FREE</div>
+            <div class="code-extra-info">
+              <p class="code-description">
+                Fundo dinâmico que imita fogo real com animações fluidas e realistas. Ideal para páginas que precisam de impacto visual intenso.
+              </p>
+              <button class="download-btn" onclick="downloadCode('Fire Dynamic', 'https://thriving-sprinkles-8ca95c.netlify.app/')">
+                <i class="fas fa-download"></i> Baixar Código
+              </button>
+            </div>
+            <button class="toggle-btn" onclick="toggleCard(this)">Ver mais</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Códigos Premium -->
+    <section class="codes-category">
+      
+      <div class="codes-grid">
+
+        <!-- Card: Heart Card Pro -->
+        <div class="code-card premium">
+          
+          <div class="code-preview-container">
+            <iframe src="https://zesty-kulfi-84a885.netlify.app/" class="code-iframe"></iframe>
+            <div class="preview-overlay">
+              <i class="fas fa-eye"></i>
+              <span>Preview Interativo</span>
+            </div>
+          </div>
+          <div class="code-info">
+            <h4 class="code-name">Heart Card Pro</h4>
+            <div class="code-tags">
+              <span class="tag" style="background-color: #e60073; color: white;">Romântico</span>
+              <span id="animação" class="tag">Interativo</span>
+            </div>
+            <div class="code-price">R$ 29,90</div>
+            <div class="code-extra-info">
+              <p class="code-description">
+                Cartão virtual com partículas que formam um coração e uma encantadora chuva de "Te Amo". Ideal para ocasiões especiais.
+              </p>
+              <button class="whatsapp-btn" onclick="contactWhatsApp('Heart Card Pro', '29,90')">
+                <i class="fab fa-whatsapp"></i> Comprar via WhatsApp
+              </button>
+            </div>
+            <button class="toggle-btn" onclick="toggleCard(this)">Ver mais</button>
+          </div>
+        </div>
+
+        <!-- Card: Birthday Celebration -->
+        <div class="code-card premium">
+          <div class="premium-badge">
+            <i class="fas fa-star"></i> Premium
+          </div>
+          <div class="code-preview-container">
+            <iframe src="https://grand-rugelach-3d48fa.netlify.app/" class="code-iframe"></iframe>
+            <div class="preview-overlay">
+              <i class="fas fa-eye"></i>
+              <span>Preview Interativo</span>
+            </div>
+          </div>
+          <div class="code-info">
+            <h4 class="code-name">Birthday Celebration</h4>
+            <div class="code-tags">
+              <span class="tag" style="background-color: #ffcc00; color: black;">Aniversário</span>
+              <span class="tag" style="background-color: #8e44ad; color: white;">Música</span>
+              <span class="tag" style="background-color: #3498db; color: white;">Carrossel</span>
+            </div>
+            <div class="code-price">R$ 49,90</div>
+            <div class="code-extra-info">
+              <p class="code-description">
+                Cartão de aniversário com frases personalizadas, música de fundo, contagem animada e carrossel estilo Instagram.
+              </p>
+              <button class="whatsapp-btn" onclick="contactWhatsApp('Birthday Celebration', '49,90')">
+                <i class="fab fa-whatsapp"></i> Comprar via WhatsApp
+              </button>
+            </div>
+            <button class="toggle-btn" onclick="toggleCard(this)">Ver mais</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
   </section>
 
   <script>
@@ -265,12 +322,15 @@
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
-
         button.innerHTML = originalText;
         button.disabled = false;
       }, 1500);
     }
-  </script>
 
+    function contactWhatsApp(codeName, price) {
+      const url = `https://wa.me/5500000000000?text=Olá! Tenho interesse no código "${codeName}" por R$ ${price}`;
+      window.open(url, '_blank');
+    }
+  </script>
 </body>
 </html>
