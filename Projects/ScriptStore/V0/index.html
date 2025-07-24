@@ -26,72 +26,71 @@
     />
   </head>
   <body>
-    <!-- Header -->
-    <header class="header">
-      <nav class="nav" aria-label="Menu principal">
-        <div class="nav-brand">
-          <i class="fas fa-code" aria-hidden="true"></i>
-          <span class="brand-name">Script Store</span>
-        </div>
-
-        <!-- Botão Hamburguer -->
-        <button class="hamburger" aria-label="Abrir menu" aria-expanded="false">
-          <i class="fas fa-bars"></i>
-        </button>
-
-        <!-- Menu principal -->
-        <div class="nav-menu" id="nav-menu">
-          <a href="#codes" class="nav-link">Códigos</a>
-          <a href="#benefits" class="nav-link">Benefícios</a>
-          <a href="#contact" class="nav-link">Contato</a>
-        </div>
-      </nav>
-    </header>
-
-    <!-- Hero Section -->
+    <!-- Hero Section-->
     <section class="hero">
-      <div class="hero-content">
-        <div class="hero-badge">
-          <i class="fas fa-star"></i>
-          <span>Código da Semana em Destaque</span>
+    <div class="hero-visual">
+  <div class="code-slider-container">
+    <div class="code-slider">
+      <!-- HTML Preview -->
+      <div class="code-preview html">
+        <div class="code-header">
+          <div class="code-dots"><span></span><span></span><span></span></div>
         </div>
-        <h1 class="hero-title">
-          Códigos Prontos para Seu Projeto,
-          <span class="highlight">Sem Esforço!</span>
-        </h1>
-        <p class="hero-subtitle">
-          Baixe ou personalize scripts em minutos e acelere seu desenvolvimento
-          com códigos 100% funcionais e documentados
-        </p>
-        <a href="#codes" class="cta-button">
-          <i class="fas fa-rocket"></i>
-          Explorar Códigos
-        </a>
+        <div class="code-content html">
+          <span class="code-line">&lt;<span class="tag">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span>
+          <span class="code-line">  &lt;<span class="tag">h1</span>&gt;Olá Mundo&lt;/<span class="tag">h1</span>&gt;</span>
+          <span class="code-line">&lt;/<span class="tag">div</span>&gt;</span>
+        </div>
       </div>
 
-      <div class="hero-visual">
-        <div class="code-preview">
-          <div class="code-header">
-            <div class="code-dots">
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
-          </div>
-          <div class="code-content">
-            <span class="code-line"
-              ><span class="keyword">function</span>
-              <span class="function">accelerProject</span>() {</span
-            >
-            <span class="code-line">
-              <span class="keyword">return</span>
-              <span class="string">'Pronto pra usar!'</span>;</span
-            >
-            <span class="code-line">}</span>
-          </div>
+      <!-- CSS Preview -->
+      <div class="code-preview css">
+        <div class="code-header">
+          <div class="code-dots"><span></span><span></span><span></span></div>
+        </div>
+        <div class="code-content css">
+          <span class="code-line"><span class="selector">.container</span> {</span>
+          <span class="code-line">  <span class="property">background</span>: <span class="value">#282c34</span>;</span>
+          <span class="code-line">  <span class="property">color</span>: <span class="value">#61dafb</span>;</span>
+          <span class="code-line">}</span>
         </div>
       </div>
-    </section>
+
+      <!-- JS Preview -->
+      <div class="code-preview js">
+        <div class="code-header">
+          <div class="code-dots"><span></span><span></span><span></span></div>
+        </div>
+        <div class="code-content js">
+          <span class="code-line"><span class="keyword">function</span> <span class="function">sayHello</span>() {</span>
+          <span class="code-line">  <span class="keyword">return</span> <span class="string">'Olá Mundo!'</span>;</span>
+          <span class="code-line">}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <div class="hero-content">
+      <div class="hero-badge">
+        <i class="fas fa-star"></i>
+        <span>Código da Semana em Destaque</span>
+      </div>
+      <h1 class="hero-title">
+        Códigos Prontos para Seu Projeto,
+        <span class="highlight">Sem Esforço!</span>
+      </h1>
+      <p class="hero-subtitle">
+        Baixe ou personalize scripts em minutos e acelere seu desenvolvimento com códigos 100% funcionais e documentados
+      </p>
+      <a href="#codes" class="cta-button">
+        <i class="fas fa-rocket"></i>
+        Explorar Códigos
+      </a>
+    </div>
+  </section>
+  
 
     <!-- Benefits Section -->
     <section id="benefits" class="benefits">
