@@ -1,7 +1,14 @@
+body {
+  background-color: black;
+}
+.free-tittle {
+  color: #04EEF7;
+  font-size: 3.5em;
+}
 /* Codes Section */
 .codes {
-  padding: 4rem 0;
-  background: #FFFFFF;
+  
+  
 }
 
 .codes-category {
@@ -32,6 +39,8 @@
   transition: all 0.3s ease;
   position: relative;
   animation: fadeInUp 0.6s ease-out;
+  border: 1px solid #0dff82;
+  height: 100vh;
 }
 
 .code-card:hover {
