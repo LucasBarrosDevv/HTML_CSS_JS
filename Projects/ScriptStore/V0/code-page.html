@@ -9,10 +9,11 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     />
     <link rel="stylesheet" href="styles/styles.css" />
+    <link rel="stylesheet" href="styles/liste-mode.css">
   </head>
 
   <body>
-    <header>
+    <header class="header">
       <div class="menu-toggle" onclick="toggleMenu()">☰ Filtros</div>
       <div class="side-menu" id="sideMenu">
         <div class="tag-list">
@@ -89,6 +90,12 @@
         </div>
       </div>
       <div class="overlay" id="menuOverlay" onclick="toggleMenu()"></div>
+
+     <nav>
+  <span class="seletor-card active">Card</span>
+  <span class="seletor-lista">Lista</span>
+</nav>
+
     </header>
 
     <section class="codes">
@@ -240,9 +247,7 @@
 
     <!-- Card: Birthday Celebration -->
     <div class="code-card premium">
-      <div class="premium-badge">
-        <i class="fas fa-star"></i> Premium
-      </div>
+      
       <div class="code-preview-container">
         <iframe
           data-src="https://grand-rugelach-3d48fa.netlify.app/"
@@ -314,5 +319,6 @@
     </section>
 
     <script src="scripts/script.js"></script>
+    <script src="scripts/liste-mode.js"></script>
   </body>
 </html>
