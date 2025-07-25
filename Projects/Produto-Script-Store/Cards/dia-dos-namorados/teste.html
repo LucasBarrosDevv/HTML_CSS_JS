@@ -37,7 +37,7 @@
     }
 
     .preview-overlay {
-      pointer-events: none; /* deixa o overlay "transparente" para cliques */
+      pointer-events: none;
       position: absolute;
       inset: 0;
       background: rgba(0, 0, 0, 0.7);
@@ -50,7 +50,7 @@
       transition: opacity 0.3s;
     }
 
-    .code-preview-container:hover .preview-overlay {
+    .preview-overlay.active {
       opacity: 1;
     }
 
@@ -168,6 +168,17 @@
       card.classList.toggle("expanded");
       button.textContent = card.classList.contains("expanded") ? "Ver menos" : "Ver mais";
     }
+
+    // Ativa o overlay ao clicar no iframe
+    document.querySelector('.code-iframe').addEventListener('click', function () {
+      const overlay = this.nextElementSibling;
+      overlay.classList.add('active');
+
+      // Remove após 3 segundos (opcional)
+      setTimeout(() => {
+        overlay.classList.remove('active');
+      }, 3000);
+    });
   </script>
 
 </body>

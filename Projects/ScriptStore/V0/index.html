@@ -28,69 +28,100 @@
   <body>
     <!-- Hero Section-->
     <section class="hero">
-    <div class="hero-visual">
-  <div class="code-slider-container">
-    <div class="code-slider">
-      <!-- HTML Preview -->
-      <div class="code-preview html">
-        <div class="code-header">
-          <div class="code-dots"><span></span><span></span><span></span></div>
-        </div>
-        <div class="code-content html">
-          <span class="code-line">&lt;<span class="tag">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span>
-          <span class="code-line">  &lt;<span class="tag">h1</span>&gt;Olá Mundo&lt;/<span class="tag">h1</span>&gt;</span>
-          <span class="code-line">&lt;/<span class="tag">div</span>&gt;</span>
+      <div class="hero-visual">
+        <div class="code-slider-container">
+          <div class="code-slider">
+            <!-- HTML Preview -->
+            <div class="code-preview html">
+              <div class="code-header">
+                <div class="code-dots">
+                  <span></span><span></span><span></span>
+                </div>
+              </div>
+              <div class="code-content html">
+                <span class="code-line"
+                  >&lt;<span class="tag">div</span>
+                  <span class="attr">class</span>=<span class="string"
+                    >"container"</span
+                  >&gt;</span
+                >
+                <span class="code-line">
+                  &lt;<span class="tag">h1</span>&gt;Olá Mundo&lt;/<span
+                    class="tag"
+                    >h1</span
+                  >&gt;</span
+                >
+                <span class="code-line"
+                  >&lt;/<span class="tag">div</span>&gt;</span
+                >
+              </div>
+            </div>
+
+            <!-- CSS Preview -->
+            <div class="code-preview css">
+              <div class="code-header">
+                <div class="code-dots">
+                  <span></span><span></span><span></span>
+                </div>
+              </div>
+              <div class="code-content css">
+                <span class="code-line"
+                  ><span class="selector">.container</span> {</span
+                >
+                <span class="code-line">
+                  <span class="property">background</span>:
+                  <span class="value">#282c34</span>;</span
+                >
+                <span class="code-line">
+                  <span class="property">color</span>:
+                  <span class="value">#61dafb</span>;</span
+                >
+                <span class="code-line">}</span>
+              </div>
+            </div>
+
+            <!-- JS Preview -->
+            <div class="code-preview js">
+              <div class="code-header">
+                <div class="code-dots">
+                  <span></span><span></span><span></span>
+                </div>
+              </div>
+              <div class="code-content js">
+                <span class="code-line"
+                  ><span class="keyword">function</span>
+                  <span class="function">sayHello</span>() {</span
+                >
+                <span class="code-line">
+                  <span class="keyword">return</span>
+                  <span class="string">'Olá Mundo!'</span>;</span
+                >
+                <span class="code-line">}</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- CSS Preview -->
-      <div class="code-preview css">
-        <div class="code-header">
-          <div class="code-dots"><span></span><span></span><span></span></div>
+      <div class="hero-content">
+        <div class="hero-badge">
+          <i class="fas fa-star"></i>
+          <span>Código da Semana em Destaque</span>
         </div>
-        <div class="code-content css">
-          <span class="code-line"><span class="selector">.container</span> {</span>
-          <span class="code-line">  <span class="property">background</span>: <span class="value">#282c34</span>;</span>
-          <span class="code-line">  <span class="property">color</span>: <span class="value">#61dafb</span>;</span>
-          <span class="code-line">}</span>
-        </div>
+        <h1 class="hero-title">
+          Códigos Prontos para Seu Projeto,
+          <span class="highlight">Sem Esforço!</span>
+        </h1>
+        <p class="hero-subtitle">
+          Baixe ou personalize scripts em minutos e acelere seu desenvolvimento
+          com códigos 100% funcionais e documentados
+        </p>
+        <a href="#codes" class="cta-button">
+          <i class="fas fa-rocket"></i>
+          Explorar Códigos
+        </a>
       </div>
-
-      <!-- JS Preview -->
-      <div class="code-preview js">
-        <div class="code-header">
-          <div class="code-dots"><span></span><span></span><span></span></div>
-        </div>
-        <div class="code-content js">
-          <span class="code-line"><span class="keyword">function</span> <span class="function">sayHello</span>() {</span>
-          <span class="code-line">  <span class="keyword">return</span> <span class="string">'Olá Mundo!'</span>;</span>
-          <span class="code-line">}</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-    <div class="hero-content">
-      <div class="hero-badge">
-        <i class="fas fa-star"></i>
-        <span>Código da Semana em Destaque</span>
-      </div>
-      <h1 class="hero-title">
-        Códigos Prontos para Seu Projeto,
-        <span class="highlight">Sem Esforço!</span>
-      </h1>
-      <p class="hero-subtitle">
-        Baixe ou personalize scripts em minutos e acelere seu desenvolvimento com códigos 100% funcionais e documentados
-      </p>
-      <a href="#codes" class="cta-button">
-        <i class="fas fa-rocket"></i>
-        Explorar Códigos
-      </a>
-    </div>
-  </section>
-  
+    </section>
 
     <!-- Benefits Section -->
     <section id="benefits" class="benefits">
@@ -142,248 +173,246 @@
     </section>
 
     <!-- Codes Section -->
-<section id="codes" class="codes">
-  <div class="container">
-    <h2 class="section-title">Nossos Códigos Disponíveis</h2>
+    <section id="codes" class="codes">
+      <div class="container">
+        <h2 class="section-title">Nossos Códigos Disponíveis</h2>
 
-    <!-- Free Codes -->
-    <div class="codes-category">
-      <h3 class="category-title">
-        <i class="fas fa-gift"></i>
-        Códigos Gratuitos
-      </h3>
-      <div class="codes-grid">
-        <div class="code-card free">
-          <div class="code-preview-container">
-            <iframe
-              src="https://gorgeous-creponne-f39db5.netlify.app/"
-              class="code-iframe"
-            ></iframe>
-            <div class="preview-overlay">
-              <i class="fas fa-eye"></i>
-              <span>Preview Interativo</span>
+        <!-- Free Codes -->
+        <div class="codes-category">
+          <h3 class="category-title">
+            <i class="fas fa-gift"></i>
+            Códigos Gratuitos
+          </h3>
+          <div class="codes-grid">
+            <div class="code-card free">
+              <div class="code-preview-container">
+                <iframe
+                  src="https://gorgeous-creponne-f39db5.netlify.app/"
+                  class="code-iframe"
+                ></iframe>
+                <div class="preview-overlay">
+                  <i class="fas fa-eye"></i>
+                  <span>Preview Interativo</span>
+                </div>
+              </div>
+              <div class="code-info">
+                <h4 class="code-name">Particulas</h4>
+                <p class="code-description">
+                  Fundo preto com partículas brancas se movendo aleatoriamente.
+                  Perfeito para backgrounds dinâmicos.
+                </p>
+                <div class="code-tags">
+                  <span class="tag Animação">Animação</span>
+                  <span class="tag Background">Background</span>
+                </div>
+                <div class="code-price">
+                  <span class="price free-price">FREE</span>
+                </div>
+                <button
+                  class="download-btn"
+                  onclick="downloadCode('Particle Storm', 'https://gorgeous-creponne-f39db5.netlify.app/')"
+                >
+                  <i class="fas fa-download"></i>
+                  Baixar Código
+                </button>
+              </div>
             </div>
-          </div>
-          <div class="code-info">
-            <h4 class="code-name">Particulas</h4>
-            <p class="code-description">
-              Fundo preto com partículas brancas se movendo aleatoriamente.
-              Perfeito para backgrounds dinâmicos.
-            </p>
-            <div class="code-tags">
-              <span class="tag Animação">Animação</span>
-              <span class="tag Background">Background</span>
+
+            <div class="code-card free">
+              <div class="code-preview-container">
+                <iframe
+                  src="https://splendorous-travesseiro-85bc1e.netlify.app/"
+                  class="code-iframe"
+                ></iframe>
+                <div class="preview-overlay">
+                  <i class="fas fa-eye"></i>
+                  <span>Preview Interativo</span>
+                </div>
+              </div>
+              <div class="code-info">
+                <h4 class="code-name">Love Cascade</h4>
+                <p class="code-description">
+                  Uma cascata infinita de "Te Amo" criando um efeito romântico e
+                  envolvente.
+                </p>
+                <div class="code-tags">
+                  <span class="tag Romântico">Romântico</span>
+                  <span class="tag Cascata">Cascata</span>
+                </div>
+                <div class="code-price">
+                  <span class="price free-price">FREE</span>
+                </div>
+                <button
+                  class="download-btn"
+                  onclick="downloadCode('Love Cascade', 'https://splendorous-travesseiro-85bc1e.netlify.app/')"
+                >
+                  <i class="fas fa-download"></i>
+                  Baixar Código
+                </button>
+              </div>
             </div>
-            <div class="code-price">
-              <span class="price free-price">FREE</span>
+
+            <div class="code-card free">
+              <div class="code-preview-container">
+                <iframe
+                  src="https://thriving-sprinkles-8ca95c.netlify.app/"
+                  class="code-iframe"
+                ></iframe>
+                <div class="preview-overlay">
+                  <i class="fas fa-eye"></i>
+                  <span>Preview Interativo</span>
+                </div>
+              </div>
+              <div class="code-info">
+                <h4 class="code-name">Fire Dynamic</h4>
+                <p class="code-description">
+                  Fundo dinâmico que imita fogo real com animações fluidas e
+                  realistas.
+                </p>
+                <div class="code-tags">
+                  <span class="tag Fogo">Fogo</span>
+                  <span class="tag Dinâmico">Dinâmico</span>
+                </div>
+                <div class="code-price">
+                  <span class="price free-price">FREE</span>
+                </div>
+                <button
+                  class="download-btn"
+                  onclick="downloadCode('Fire Dynamic', 'https://thriving-sprinkles-8ca95c.netlify.app/')"
+                >
+                  <i class="fas fa-download"></i>
+                  Baixar Código
+                </button>
+              </div>
             </div>
-            <button
-              class="download-btn"
-              onclick="downloadCode('Particle Storm', 'https://gorgeous-creponne-f39db5.netlify.app/')"
-            >
-              <i class="fas fa-download"></i>
-              Baixar Código
-            </button>
           </div>
         </div>
 
-        <div class="code-card free">
-          <div class="code-preview-container">
-            <iframe
-              src="https://splendorous-travesseiro-85bc1e.netlify.app/"
-              class="code-iframe"
-            ></iframe>
-            <div class="preview-overlay">
-              <i class="fas fa-eye"></i>
-              <span>Preview Interativo</span>
+        <!-- Premium Codes -->
+        <div class="codes-category">
+          <h3 class="category-title">
+            <i class="fas fa-crown"></i>
+            Códigos Premium
+          </h3>
+          <div class="codes-grid">
+            <div class="code-card premium">
+              <div class="premium-badge">
+                <i class="fas fa-star"></i>
+                Premium
+              </div>
+              <div class="code-preview-container">
+                <iframe
+                  src="https://zesty-kulfi-84a885.netlify.app/"
+                  class="code-iframe"
+                ></iframe>
+                <div class="preview-overlay">
+                  <i class="fas fa-eye"></i>
+                  <span>Preview Interativo</span>
+                </div>
+              </div>
+              <div class="code-info">
+                <h4 class="code-name">Heart Card Pro</h4>
+                <p class="code-description">
+                  Cartão virtual com partículas que formam um coração e chuva de
+                  "Te Amo". Ideal para ocasiões especiais.
+                </p>
+                <div class="code-tags">
+                  <span class="tag Romântico">Romântico</span>
+                  <span class="tag Interativo">Interativo</span>
+                </div>
+                <div class="code-price">
+                  <span class="price premium-price">R$ 29,90</span>
+                </div>
+                <button
+                  class="whatsapp-btn"
+                  onclick="contactWhatsApp('Heart Card Pro', '29,90')"
+                >
+                  <i class="fab fa-whatsapp"></i>
+                  Comprar via WhatsApp
+                </button>
+              </div>
             </div>
-          </div>
-          <div class="code-info">
-            <h4 class="code-name">Love Cascade</h4>
-            <p class="code-description">
-              Uma cascata infinita de "Te Amo" criando um efeito romântico e
-              envolvente.
-            </p>
-            <div class="code-tags">
-              <span class="tag Romântico">Romântico</span>
-              <span class="tag Cascata">Cascata</span>
-            </div>
-            <div class="code-price">
-              <span class="price free-price">FREE</span>
-            </div>
-            <button
-              class="download-btn"
-              onclick="downloadCode('Love Cascade', 'https://splendorous-travesseiro-85bc1e.netlify.app/')"
-            >
-              <i class="fas fa-download"></i>
-              Baixar Código
-            </button>
-          </div>
-        </div>
 
-        <div class="code-card free">
-          <div class="code-preview-container">
-            <iframe
-              src="https://thriving-sprinkles-8ca95c.netlify.app/"
-              class="code-iframe"
-            ></iframe>
-            <div class="preview-overlay">
-              <i class="fas fa-eye"></i>
-              <span>Preview Interativo</span>
+            <div class="code-card premium">
+              <div class="premium-badge">
+                <i class="fas fa-star"></i>
+                Premium
+              </div>
+              <div class="code-preview-container">
+                <iframe
+                  src="https://grand-rugelach-3d48fa.netlify.app/"
+                  class="code-iframe"
+                ></iframe>
+                <div class="preview-overlay">
+                  <i class="fas fa-eye"></i>
+                  <span>Preview Interativo</span>
+                </div>
+              </div>
+              <div class="code-info">
+                <h4 class="code-name">Birthday Celebration</h4>
+                <p class="code-description">
+                  Cartão de aniversário completo com frases, músicas, contagem
+                  regressiva e carrossel de fotos estilo Instagram.
+                </p>
+                <div class="code-tags">
+                  <span class="tag Aniversário">Aniversário</span>
+                  <span class="tag Música">Música</span>
+                  <span class="tag Carrossel">Carrossel</span>
+                </div>
+                <div class="code-price">
+                  <span class="price premium-price">R$ 49,90</span>
+                </div>
+                <button
+                  class="whatsapp-btn"
+                  onclick="contactWhatsApp('Birthday Celebration', '49,90')"
+                >
+                  <i class="fab fa-whatsapp"></i>
+                  Comprar via WhatsApp
+                </button>
+              </div>
             </div>
-          </div>
-          <div class="code-info">
-            <h4 class="code-name">Fire Dynamic</h4>
-            <p class="code-description">
-              Fundo dinâmico que imita fogo real com animações fluidas e
-              realistas.
-            </p>
-            <div class="code-tags">
-              <span class="tag Fogo">Fogo</span>
-              <span class="tag Dinâmico">Dinâmico</span>
+
+            <div class="code-card premium">
+              <div class="premium-badge">
+                <i class="fas fa-star"></i>
+                Premium
+              </div>
+              <div class="code-preview-container">
+                <iframe
+                  src="https://clinquant-haupia-129a79.netlify.app/"
+                  class="code-iframe"
+                ></iframe>
+                <div class="preview-overlay">
+                  <i class="fas fa-eye"></i>
+                  <span>Preview Interativo</span>
+                </div>
+              </div>
+              <div class="code-info">
+                <h4 class="code-name">Matrix Hacker</h4>
+                <p class="code-description">
+                  Cascata binária estilo Matrix com efeito de hacker
+                  profissional. Perfeito para temas tecnológicos.
+                </p>
+                <div class="code-tags">
+                  <span class="tag Matrix">Matrix</span>
+                  <span class="tag Hacker">Hacker</span>
+                </div>
+                <div class="code-price">
+                  <span class="price premium-price">R$ 39,90</span>
+                </div>
+                <button
+                  class="whatsapp-btn"
+                  onclick="contactWhatsApp('Matrix Hacker', '39,90')"
+                >
+                  <i class="fab fa-whatsapp"></i>
+                  Comprar via WhatsApp
+                </button>
+              </div>
             </div>
-            <div class="code-price">
-              <span class="price free-price">FREE</span>
-            </div>
-            <button
-              class="download-btn"
-              onclick="downloadCode('Fire Dynamic', 'https://thriving-sprinkles-8ca95c.netlify.app/')"
-            >
-              <i class="fas fa-download"></i>
-              Baixar Código
-            </button>
           </div>
         </div>
       </div>
-    </div>
-
-    <!-- Premium Codes -->
-    <div class="codes-category">
-      <h3 class="category-title">
-        <i class="fas fa-crown"></i>
-        Códigos Premium
-      </h3>
-      <div class="codes-grid">
-        <div class="code-card premium">
-          <div class="premium-badge">
-            <i class="fas fa-star"></i>
-            Premium
-          </div>
-          <div class="code-preview-container">
-            <iframe
-              src="https://zesty-kulfi-84a885.netlify.app/"
-              class="code-iframe"
-            ></iframe>
-            <div class="preview-overlay">
-              <i class="fas fa-eye"></i>
-              <span>Preview Interativo</span>
-            </div>
-          </div>
-          <div class="code-info">
-            <h4 class="code-name">Heart Card Pro</h4>
-            <p class="code-description">
-              Cartão virtual com partículas que formam um coração e chuva de
-              "Te Amo". Ideal para ocasiões especiais.
-            </p>
-            <div class="code-tags">
-              
-              <span class="tag Romântico">Romântico</span>
-              <span class="tag Interativo">Interativo</span>
-            </div>
-            <div class="code-price">
-              <span class="price premium-price">R$ 29,90</span>
-            </div>
-            <button
-              class="whatsapp-btn"
-              onclick="contactWhatsApp('Heart Card Pro', '29,90')"
-            >
-              <i class="fab fa-whatsapp"></i>
-              Comprar via WhatsApp
-            </button>
-          </div>
-        </div>
-
-        <div class="code-card premium">
-          <div class="premium-badge">
-            <i class="fas fa-star"></i>
-            Premium
-          </div>
-          <div class="code-preview-container">
-            <iframe
-              src="https://grand-rugelach-3d48fa.netlify.app/"
-              class="code-iframe"
-            ></iframe>
-            <div class="preview-overlay">
-              <i class="fas fa-eye"></i>
-              <span>Preview Interativo</span>
-            </div>
-          </div>
-          <div class="code-info">
-            <h4 class="code-name">Birthday Celebration</h4>
-            <p class="code-description">
-              Cartão de aniversário completo com frases, músicas, contagem
-              regressiva e carrossel de fotos estilo Instagram.
-            </p>
-            <div class="code-tags">
-              <span class="tag Aniversário">Aniversário</span>
-              <span class="tag Música">Música</span>
-              <span class="tag Carrossel">Carrossel</span>
-            </div>
-            <div class="code-price">
-              <span class="price premium-price">R$ 49,90</span>
-            </div>
-            <button
-              class="whatsapp-btn"
-              onclick="contactWhatsApp('Birthday Celebration', '49,90')"
-            >
-              <i class="fab fa-whatsapp"></i>
-              Comprar via WhatsApp
-            </button>
-          </div>
-        </div>
-
-        <div class="code-card premium">
-          <div class="premium-badge">
-            <i class="fas fa-star"></i>
-            Premium
-          </div>
-          <div class="code-preview-container">
-            <iframe
-              src="https://clinquant-haupia-129a79.netlify.app/"
-              class="code-iframe"
-            ></iframe>
-            <div class="preview-overlay">
-              <i class="fas fa-eye"></i>
-              <span>Preview Interativo</span>
-            </div>
-          </div>
-          <div class="code-info">
-            <h4 class="code-name">Matrix Hacker</h4>
-            <p class="code-description">
-              Cascata binária estilo Matrix com efeito de hacker
-              profissional. Perfeito para temas tecnológicos.
-            </p>
-            <div class="code-tags">
-              <span class="tag Matrix">Matrix</span>
-              <span class="tag Hacker">Hacker</span>
-            </div>
-            <div class="code-price">
-              <span class="price premium-price">R$ 39,90</span>
-            </div>
-            <button
-              class="whatsapp-btn"
-              onclick="contactWhatsApp('Matrix Hacker', '39,90')"
-            >
-              <i class="fab fa-whatsapp"></i>
-              Comprar via WhatsApp
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
+    </section>
 
     <!-- CTA Section -->
     <section class="cta-section">
