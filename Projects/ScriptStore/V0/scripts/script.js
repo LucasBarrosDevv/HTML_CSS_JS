@@ -89,3 +89,23 @@ document.querySelectorAll(".tag-button").forEach((btn) => {
     toggleMenu(); // Fecha o menu após filtrar
   });
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+  const lazyIframes = document.querySelectorAll("iframe[data-src]");
+
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const iframe = entry.target;
+        iframe.src = iframe.dataset.src;
+        iframe.removeAttribute("data-src");
+        obs.unobserve(iframe);
+      }
+    });
+  }, {
+    rootMargin: "200px",
+    threshold: 0.1
+  });
+
+  lazyIframes.forEach(iframe => observer.observe(iframe));
+});
