@@ -91,21 +91,27 @@ document.querySelectorAll(".tag-button").forEach((btn) => {
 });
 
 document.addEventListener("DOMContentLoaded", () => {
-  const lazyIframes = document.querySelectorAll("iframe[data-src]");
+  const iframes = document.querySelectorAll("iframe[data-src]");
 
-  const observer = new IntersectionObserver((entries, obs) => {
+  const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
+      const iframe = entry.target;
+
       if (entry.isIntersecting) {
-        const iframe = entry.target;
-        iframe.src = iframe.dataset.src;
-        iframe.removeAttribute("data-src");
-        obs.unobserve(iframe);
+        // Entrou na viewport → carrega
+        if (!iframe.src) {
+          iframe.src = iframe.dataset.src;
+        }
+      } else {
+        // Saiu da viewport → limpa
+        iframe.removeAttribute("src");
       }
     });
   }, {
-    rootMargin: "200px",
-    threshold: 0.1
+    threshold: 0.1,
+    rootMargin: "200px"
   });
 
-  lazyIframes.forEach(iframe => observer.observe(iframe));
+  iframes.forEach(iframe => observer.observe(iframe));
 });
+
