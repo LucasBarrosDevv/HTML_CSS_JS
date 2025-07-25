@@ -1,0 +1,530 @@
+/* ===================================
+   RESET E CONFIGURAÇÕES BÁSICAS
+   =================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #000;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+  color: #333;
+}
+
+/* ===================================
+   SEÇÃO PRINCIPAL DE CÓDIGOS
+   =================================== */
+
+.codes {
+  padding: 2rem;
+  min-height: 100vh;
+}
+
+/* Cabeçalho das categorias */
+.category-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  padding: 2rem 0;
+}
+
+.category-title {
+  color: #fff;
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.category-description {
+  color: #ccc;
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+/* Grid de códigos */
+.codes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* ===================================
+   CARDS BASE
+   =================================== */
+
+.code-card {
+  background: #fff;
+  border-radius: 1rem;
+  overflow: hidden;
+  border: 2px solid #04eef7;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  transform: translateY(0);
+}
+
+.code-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+/* Cards premium */
+.code-card.premium {
+  border: 2px solid #ff590d;
+  margin-top: 50px;
+}
+
+.code-card.premium:hover {
+  border-color: #ff7a3d;
+}
+
+/* Badge premium */
+.premium-badge {
+  position: absolute;
+  top: -15px;
+  right: 20px;
+  background: linear-gradient(135deg, #ff590d, #ff7a3d);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  z-index: 10;
+  box-shadow: 0 4px 15px rgba(255, 89, 13, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+/* ===================================
+   PREVIEW DOS CÓDIGOS
+   =================================== */
+
+.code-preview-container {
+  position: relative;
+  height: 220px;
+  overflow: hidden;
+  transition: height 0.4s ease;
+  background: #f8f9fa;
+}
+
+.code-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  transition: transform 0.3s ease;
+}
+
+.code-card:hover .code-iframe {
+  transform: scale(1.02);
+}
+
+/* Overlay do preview */
+.preview-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(2px);
+}
+
+.code-preview-container:hover .preview-overlay {
+  opacity: 1;
+}
+
+.preview-overlay i {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.preview-overlay span {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+/* ===================================
+   INFORMAÇÕES DOS CARDS
+   =================================== */
+
+.code-info {
+  padding: 1.5rem;
+}
+
+.code-name {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Tags dos códigos */
+.code-tags {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.2rem;
+}
+
+.tag {
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: transform 0.2s ease;
+}
+
+.tag:hover {
+  transform: scale(1.05);
+}
+
+/* Cores específicas das tags */
+.tag-fire {
+  background-color: #fe4130;
+  color: white;
+}
+.tag-background {
+  background-color: #2c3e50;
+  color: white;
+}
+.tag-particles {
+  background-color: #3498db;
+  color: white;
+}
+.tag-animation {
+  background-color: #f1c40f;
+  color: #2c3e50;
+}
+.tag-hacker {
+  background-color: #00fe00;
+  color: #000;
+}
+.tag-cascade {
+  background-color: #0084ff;
+  color: white;
+}
+.tag-romantic {
+  background-color: #e74c3c;
+  color: white;
+}
+.tag-music {
+  background-color: #9b59b6;
+  color: white;
+}
+.tag-birthday {
+  background-color: #f39c12;
+  color: white;
+}
+.tag-carousel {
+  background-color: #1abc9c;
+  color: white;
+}
+
+/* Preço */
+.code-price {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #04eef7;
+  margin-bottom: 1rem;
+  text-shadow: 0 2px 4px rgba(4, 238, 247, 0.3);
+}
+
+.premium .code-price {
+  color: #ff590d;
+  text-shadow: 0 2px 4px rgba(255, 89, 13, 0.3);
+}
+
+/* ===================================
+   INFORMAÇÕES EXTRAS (EXPANDIDAS)
+   =================================== */
+
+.code-extra-info {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.code-card.expanded .code-extra-info {
+  max-height: 600px;
+  opacity: 1;
+  margin-top: 1.5rem;
+}
+
+.code-description {
+  color: #555;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+/* Lista de recursos */
+.code-features {
+  margin-bottom: 1.5rem;
+}
+
+.code-features ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.code-features li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.code-features i {
+  color: #27ae60;
+  font-size: 0.8rem;
+}
+
+/* ===================================
+   BOTÕES
+   =================================== */
+
+.download-btn,
+.whatsapp-btn,
+.toggle-btn {
+  width: 100%;
+  padding: 0.9rem;
+  border: none;
+  border-radius: 0.7rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 0.7rem;
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  text-decoration: none;
+}
+
+/* Botão de download */
+.download-btn {
+  background: linear-gradient(135deg, #04ebf7, #0891b2);
+  color: white;
+  box-shadow: 0 4px 15px rgba(4, 235, 247, 0.3);
+}
+
+.download-btn:hover {
+  background: linear-gradient(135deg, #0891b2, #04ebf7);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(4, 235, 247, 0.4);
+}
+
+.download-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Botão WhatsApp */
+.whatsapp-btn {
+  background: linear-gradient(135deg, #25d366, #128c7e);
+  color: white;
+  box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+}
+
+.whatsapp-btn:hover {
+  background: linear-gradient(135deg, #128c7e, #25d366);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+}
+
+/* Botão toggle */
+.toggle-btn {
+  background: linear-gradient(135deg, #ecf0f1, #bdc3c7);
+  color: #2c3e50;
+  border: 1px solid #bdc3c7;
+}
+
+.toggle-btn:hover {
+  background: linear-gradient(135deg, #bdc3c7, #ecf0f1);
+  transform: translateY(-1px);
+}
+
+/* ===================================
+   RODAPÉ
+   =================================== */
+
+.footer {
+  background: #1a1a1a;
+  color: #ccc;
+  text-align: center;
+  padding: 2rem;
+  margin-top: 4rem;
+}
+
+.footer-content p {
+  margin: 0.5rem 0;
+}
+
+/* ===================================
+   RESPONSIVIDADE
+   =================================== */
+
+@media (max-width: 768px) {
+  .codes {
+    padding: 1rem;
+  }
+
+  .codes-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .category-title {
+    font-size: 2rem;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .code-card.expanded .code-preview-container {
+    height: 50vh;
+  }
+
+  .code-card.premium {
+    margin-top: 30px;
+  }
+
+  .premium-badge {
+    top: -10px;
+    right: 15px;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .codes {
+    padding: 0.5rem;
+  }
+
+  .category-header {
+    padding: 1rem 0;
+    margin-bottom: 2rem;
+  }
+
+  .category-title {
+    font-size: 1.8rem;
+  }
+
+  .code-info {
+    padding: 1rem;
+  }
+
+  .code-name {
+    font-size: 1.2rem;
+  }
+
+  .code-price {
+    font-size: 1.3rem;
+  }
+
+  .code-tags {
+    gap: 0.3rem;
+  }
+
+  .tag {
+    font-size: 0.7rem;
+    padding: 0.3rem 0.6rem;
+  }
+}
+
+/* ===================================
+   ANIMAÇÕES PERSONALIZADAS
+   =================================== */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.code-card {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.code-card:nth-child(2) {
+  animation-delay: 0.1s;
+}
+.code-card:nth-child(3) {
+  animation-delay: 0.2s;
+}
+.code-card:nth-child(4) {
+  animation-delay: 0.3s;
+}
+.code-card:nth-child(5) {
+  animation-delay: 0.4s;
+}
+
+/* Efeito de loading nos botões */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.fa-spinner {
+  animation: spin 1s linear infinite;
+}
+
+/* ===================================
+   MELHORIAS DE ACESSIBILIDADE
+   =================================== */
+
+.code-card:focus-within {
+  outline: 2px solid #04eef7;
+  outline-offset: 2px;
+}
+
+.premium.code-card:focus-within {
+  outline-color: #ff590d;
+}
+
+button:focus {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+/* Redução de movimento para usuários sensíveis */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

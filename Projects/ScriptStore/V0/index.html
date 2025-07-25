@@ -1,497 +1,278 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>
-      Script Store - Códigos Prontos para Seu Projeto | Powered by v0
-    </title>
-    <meta
-      name="description"
-      content="Baixe ou personalize scripts em minutos e acelere seu desenvolvimento. Códigos 100% funcionais e documentados."
-    />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Script Store - Hero</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+body {
+  background-image: url(https://i.pinimg.com/736x/df/76/64/df76649293f92fa00f11a7bb844e4bec.jpg);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  background-attachment: fixed;
 
-    <link rel="stylesheet" href="styles/style.css" />
-    <link rel="stylesheet" href="styles/tema.css" />
-    <link rel="stylesheet" href="styles/header.css" />
-    <link rel="stylesheet" href="styles/hero.css" />
-    <link rel="stylesheet" href="styles/beneficios.css" />
-    <link rel="stylesheet" href="styles/code.css" />
-    <link rel="stylesheet" href="styles/cta.css" />
-    <link rel="stylesheet" href="styles/footer.css" />
 
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-      rel="stylesheet"
-    />
-  </head>
-  <body>
-    <!-- Hero Section-->
-    <section class="hero">
-      <div class="hero-visual">
-        <div class="code-slider-container">
-          <div class="code-slider">
-            <!-- HTML Preview -->
-            <div class="code-preview html">
-              <div class="code-header">
-                <div class="code-dots">
-                  <span></span><span></span><span></span>
-                </div>
-              </div>
-              <div class="code-content html">
-                <span class="code-line"
-                  >&lt;<span class="tag">div</span>
-                  <span class="attr">class</span>=<span class="string"
-                    >"container"</span
-                  >&gt;</span
-                >
-                <span class="code-line">
-                  &lt;<span class="tag">h1</span>&gt;Olá Mundo&lt;/<span
-                    class="tag"
-                    >h1</span
-                  >&gt;</span
-                >
-                <span class="code-line"
-                  >&lt;/<span class="tag">div</span>&gt;</span
-                >
-              </div>
-            </div>
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
 
-            <!-- CSS Preview -->
-            <div class="code-preview css">
-              <div class="code-header">
-                <div class="code-dots">
-                  <span></span><span></span><span></span>
-                </div>
-              </div>
-              <div class="code-content css">
-                <span class="code-line"
-                  ><span class="selector">.container</span> {</span
-                >
-                <span class="code-line">
-                  <span class="property">background</span>:
-                  <span class="value">#282c34</span>;</span
-                >
-                <span class="code-line">
-                  <span class="property">color</span>:
-                  <span class="value">#61dafb</span>;</span
-                >
-                <span class="code-line">}</span>
-              </div>
-            </div>
+/* HERO SECTION */
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 100dvh;
+  padding: 1rem;
+  max-width: 480px;
+  margin: 0 auto;
+  animation: fadeInUp 1s ease-out;
+  box-sizing: border-box;
+  gap: 1rem;
+}
 
-            <!-- JS Preview -->
-            <div class="code-preview js">
-              <div class="code-header">
-                <div class="code-dots">
-                  <span></span><span></span><span></span>
-                </div>
-              </div>
-              <div class="code-content js">
-                <span class="code-line"
-                  ><span class="keyword">function</span>
-                  <span class="function">sayHello</span>() {</span
-                >
-                <span class="code-line">
-                  <span class="keyword">return</span>
-                  <span class="string">'Olá Mundo!'</span>;</span
-                >
-                <span class="code-line">}</span>
-              </div>
-            </div>
-          </div>
-        </div>
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  color: #fff200;
+  font-size: 0.8em;
+  justify-content: center;
+  text-align: center;
+}
+
+.hero-content {
+  text-align: center;
+  animation: slideInLeft 1s ease-out;
+  width: 100%;
+}
+
+.hero-title {
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: white;
+  line-height: 1.2;
+  margin-bottom: 80px;
+}
+
+.highlight {
+  color: #00eaff;
+}
+
+.hero-visual {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: float 3s ease-in-out infinite;
+  max-height: 120px; /* Slide reduzido */
+  width: 100%;
+}
+
+.code-slider-container {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #000000e7;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+}
+
+.code-slider {
+  display: flex;
+  width: 300vw;
+  animation: slide 12s infinite;
+}
+
+.code-preview {
+  flex: 0 0 100vw;
+  padding: 0.5rem;
+  color: #ccc;
+  font-family: "Courier New", monospace;
+  font-size: 0.75rem; /* Fonte menor */
+  box-sizing: border-box;
+}
+
+.code-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.25rem;
+}
+
+.code-dots {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.code-dots span {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #444;
+}
+
+.code-dots span:nth-child(1) { background: #ff5f57; }
+.code-dots span:nth-child(2) { background: #ffbd2e; }
+.code-dots span:nth-child(3) { background: #28ca42; }
+
+.code-content {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.code-content .code-line {
+  display: block;
+  margin-bottom: 0.2rem;
+}
+
+.cta-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background-color: #00eaff;
+  color: black;
+  padding: 0.6rem 1rem;
+  border-radius: 9999px;
+  font-weight: 700;
+  font-size: 1rem;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+  width: 100%;
+  max-width: 260px;
+  margin-top: 80px;
+}
+
+.cta-button:hover {
+  background-color: #ff5e01;
+  color: #fff;
+}
+
+/* ANIMAÇÕES */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes slide {
+  0%, 33.33% { transform: translateX(0); }
+  44.44%, 77.77% { transform: translateX(-100vw); }
+  88.88%, 100% { transform: translateX(-200vw); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-30px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* SYNTAX HIGHLIGHT */
+.html .tag     { color: #ff79c6; }
+.html .attr    { color: #50fa7b; }
+.html .string  { color: #f1fa8c; }
+
+.css .selector { color: #8be9fd; }
+.css .property { color: #ff79c6; }
+.css .value    { color: #50fa7b; }
+
+.js .keyword   { color: #ff79c6; }
+.js .function  { color: #50fa7b; }
+.js .string    { color: #f1fa8c; }
+
+/* LOGO */
+.logo img {
+  width: 300px;
+  max-width: 100%;
+  margin: 2rem auto;
+  display: block;
+}
+
+
+
+  </style>
+</head>
+<body>
+  
+  <section class="hero">
+     
+    <div class="hero-content" >
+      <h1 class="hero-title">
+        Códigos Prontos para <br> Seu Projeto,
+        <span class="highlight">Sem <br> Esforço!</span>
+      </h1>
       </div>
-
-      <div class="hero-content">
-        <div class="hero-badge">
-          <i class="fas fa-star"></i>
-          <span>Código da Semana em Destaque</span>
-        </div>
-        <h1 class="hero-title">
-          Códigos Prontos para Seu Projeto,
-          <span class="highlight">Sem Esforço!</span>
-        </h1>
-        <p class="hero-subtitle">
-          Baixe ou personalize scripts em minutos e acelere seu desenvolvimento
-          com códigos 100% funcionais e documentados
-        </p>
-        <a href="#codes" class="cta-button">
-          <i class="fas fa-rocket"></i>
-          Explorar Códigos
-        </a>
-      </div>
-    </section>
-
-    <!-- Benefits Section -->
-    <section id="benefits" class="benefits">
-      <div class="container">
-        <h2 class="section-title">Por que escolher nossos códigos?</h2>
-        <div class="benefits-grid">
-          <div class="benefit-card">
-            <div class="benefit-icon">
-              <i class="fas fa-clock"></i>
+    <div class="hero-visual">
+      <div class="code-slider-container">
+        <div class="code-slider">
+          <!-- HTML Preview -->
+          <div class="code-preview html">
+            <div class="code-header">
+              <div class="code-dots"><span></span><span></span><span></span></div>
             </div>
-            <h3>Economize Horas de Desenvolvimento</h3>
-            <p>
-              Códigos prontos e otimizados que reduzem seu tempo de
-              desenvolvimento em até 80%
-            </p>
-          </div>
-          <div class="benefit-card">
-            <div class="benefit-icon">
-              <i class="fas fa-check-circle"></i>
-            </div>
-            <h3>100% Funcional e Documentado</h3>
-            <p>
-              Todos os códigos são testados e vêm com documentação completa para
-              fácil implementação
-            </p>
-          </div>
-          <div class="benefit-card">
-            <div class="benefit-icon">
-              <i class="fas fa-headset"></i>
-            </div>
-            <h3>Suporte Técnico Inclusivo</h3>
-            <p>
-              Suporte completo para implementação e customização dos seus
-              códigos
-            </p>
-          </div>
-          <div class="benefit-card">
-            <div class="benefit-icon">
-              <i class="fas fa-mobile-alt"></i>
-            </div>
-            <h3>Responsivo e Compatível</h3>
-            <p>
-              Códigos otimizados para todos os dispositivos e navegadores
-              modernos
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Codes Section -->
-    <section id="codes" class="codes">
-      <div class="container">
-        <h2 class="section-title">Nossos Códigos Disponíveis</h2>
-
-        <!-- Free Codes -->
-        <div class="codes-category">
-          <h3 class="category-title">
-            <i class="fas fa-gift"></i>
-            Códigos Gratuitos
-          </h3>
-          <div class="codes-grid">
-            <div class="code-card free">
-              <div class="code-preview-container">
-                <iframe
-                  src="https://gorgeous-creponne-f39db5.netlify.app/"
-                  class="code-iframe"
-                ></iframe>
-                <div class="preview-overlay">
-                  <i class="fas fa-eye"></i>
-                  <span>Preview Interativo</span>
-                </div>
-              </div>
-              <div class="code-info">
-                <h4 class="code-name">Particulas</h4>
-                <p class="code-description">
-                  Fundo preto com partículas brancas se movendo aleatoriamente.
-                  Perfeito para backgrounds dinâmicos.
-                </p>
-                <div class="code-tags">
-                  <span class="tag Animação">Animação</span>
-                  <span class="tag Background">Background</span>
-                </div>
-                <div class="code-price">
-                  <span class="price free-price">FREE</span>
-                </div>
-                <button
-                  class="download-btn"
-                  onclick="downloadCode('Particle Storm', 'https://gorgeous-creponne-f39db5.netlify.app/')"
-                >
-                  <i class="fas fa-download"></i>
-                  Baixar Código
-                </button>
-              </div>
-            </div>
-
-            <div class="code-card free">
-              <div class="code-preview-container">
-                <iframe
-                  src="https://splendorous-travesseiro-85bc1e.netlify.app/"
-                  class="code-iframe"
-                ></iframe>
-                <div class="preview-overlay">
-                  <i class="fas fa-eye"></i>
-                  <span>Preview Interativo</span>
-                </div>
-              </div>
-              <div class="code-info">
-                <h4 class="code-name">Love Cascade</h4>
-                <p class="code-description">
-                  Uma cascata infinita de "Te Amo" criando um efeito romântico e
-                  envolvente.
-                </p>
-                <div class="code-tags">
-                  <span class="tag Romântico">Romântico</span>
-                  <span class="tag Cascata">Cascata</span>
-                </div>
-                <div class="code-price">
-                  <span class="price free-price">FREE</span>
-                </div>
-                <button
-                  class="download-btn"
-                  onclick="downloadCode('Love Cascade', 'https://splendorous-travesseiro-85bc1e.netlify.app/')"
-                >
-                  <i class="fas fa-download"></i>
-                  Baixar Código
-                </button>
-              </div>
-            </div>
-
-            <div class="code-card free">
-              <div class="code-preview-container">
-                <iframe
-                  src="https://thriving-sprinkles-8ca95c.netlify.app/"
-                  class="code-iframe"
-                ></iframe>
-                <div class="preview-overlay">
-                  <i class="fas fa-eye"></i>
-                  <span>Preview Interativo</span>
-                </div>
-              </div>
-              <div class="code-info">
-                <h4 class="code-name">Fire Dynamic</h4>
-                <p class="code-description">
-                  Fundo dinâmico que imita fogo real com animações fluidas e
-                  realistas.
-                </p>
-                <div class="code-tags">
-                  <span class="tag Fogo">Fogo</span>
-                  <span class="tag Dinâmico">Dinâmico</span>
-                </div>
-                <div class="code-price">
-                  <span class="price free-price">FREE</span>
-                </div>
-                <button
-                  class="download-btn"
-                  onclick="downloadCode('Fire Dynamic', 'https://thriving-sprinkles-8ca95c.netlify.app/')"
-                >
-                  <i class="fas fa-download"></i>
-                  Baixar Código
-                </button>
-              </div>
+            <div><p>html</p></div>
+            <div class="code-content">
+              <span class="code-line">&lt;<span class="tag">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span>
+              <span class="code-line">  &lt;<span class="tag">h1</span>&gt;Olá Mundo&lt;/<span class="tag">h1</span>&gt;</span>
+              <span class="code-line">&lt;/<span class="tag">div</span>&gt;</span>
             </div>
           </div>
-        </div>
 
-        <!-- Premium Codes -->
-        <div class="codes-category">
-          <h3 class="category-title">
-            <i class="fas fa-crown"></i>
-            Códigos Premium
-          </h3>
-          <div class="codes-grid">
-            <div class="code-card premium">
-              <div class="premium-badge">
-                <i class="fas fa-star"></i>
-                Premium
-              </div>
-              <div class="code-preview-container">
-                <iframe
-                  src="https://zesty-kulfi-84a885.netlify.app/"
-                  class="code-iframe"
-                ></iframe>
-                <div class="preview-overlay">
-                  <i class="fas fa-eye"></i>
-                  <span>Preview Interativo</span>
-                </div>
-              </div>
-              <div class="code-info">
-                <h4 class="code-name">Heart Card Pro</h4>
-                <p class="code-description">
-                  Cartão virtual com partículas que formam um coração e chuva de
-                  "Te Amo". Ideal para ocasiões especiais.
-                </p>
-                <div class="code-tags">
-                  <span class="tag Romântico">Romântico</span>
-                  <span class="tag Interativo">Interativo</span>
-                </div>
-                <div class="code-price">
-                  <span class="price premium-price">R$ 29,90</span>
-                </div>
-                <button
-                  class="whatsapp-btn"
-                  onclick="contactWhatsApp('Heart Card Pro', '29,90')"
-                >
-                  <i class="fab fa-whatsapp"></i>
-                  Comprar via WhatsApp
-                </button>
-              </div>
+          <!-- CSS Preview -->
+          <div class="code-preview css">
+            <div class="code-header">
+              <div class="code-dots"><span></span><span></span><span></span></div>
             </div>
-
-            <div class="code-card premium">
-              <div class="premium-badge">
-                <i class="fas fa-star"></i>
-                Premium
-              </div>
-              <div class="code-preview-container">
-                <iframe
-                  src="https://grand-rugelach-3d48fa.netlify.app/"
-                  class="code-iframe"
-                ></iframe>
-                <div class="preview-overlay">
-                  <i class="fas fa-eye"></i>
-                  <span>Preview Interativo</span>
-                </div>
-              </div>
-              <div class="code-info">
-                <h4 class="code-name">Birthday Celebration</h4>
-                <p class="code-description">
-                  Cartão de aniversário completo com frases, músicas, contagem
-                  regressiva e carrossel de fotos estilo Instagram.
-                </p>
-                <div class="code-tags">
-                  <span class="tag Aniversário">Aniversário</span>
-                  <span class="tag Música">Música</span>
-                  <span class="tag Carrossel">Carrossel</span>
-                </div>
-                <div class="code-price">
-                  <span class="price premium-price">R$ 49,90</span>
-                </div>
-                <button
-                  class="whatsapp-btn"
-                  onclick="contactWhatsApp('Birthday Celebration', '49,90')"
-                >
-                  <i class="fab fa-whatsapp"></i>
-                  Comprar via WhatsApp
-                </button>
-              </div>
-            </div>
-
-            <div class="code-card premium">
-              <div class="premium-badge">
-                <i class="fas fa-star"></i>
-                Premium
-              </div>
-              <div class="code-preview-container">
-                <iframe
-                  src="https://clinquant-haupia-129a79.netlify.app/"
-                  class="code-iframe"
-                ></iframe>
-                <div class="preview-overlay">
-                  <i class="fas fa-eye"></i>
-                  <span>Preview Interativo</span>
-                </div>
-              </div>
-              <div class="code-info">
-                <h4 class="code-name">Matrix Hacker</h4>
-                <p class="code-description">
-                  Cascata binária estilo Matrix com efeito de hacker
-                  profissional. Perfeito para temas tecnológicos.
-                </p>
-                <div class="code-tags">
-                  <span class="tag Matrix">Matrix</span>
-                  <span class="tag Hacker">Hacker</span>
-                </div>
-                <div class="code-price">
-                  <span class="price premium-price">R$ 39,90</span>
-                </div>
-                <button
-                  class="whatsapp-btn"
-                  onclick="contactWhatsApp('Matrix Hacker', '39,90')"
-                >
-                  <i class="fab fa-whatsapp"></i>
-                  Comprar via WhatsApp
-                </button>
-              </div>
+            <div><p>css</p></div>
+            <div class="code-content">
+              <span class="code-line"><span class="selector">.container</span> {</span>
+              <span class="code-line">  <span class="property">background</span>: <span class="value">#282c34</span>;</span>
+              <span class="code-line">  <span class="property">color</span>: <span class="value">#61dafb</span>;</span>
+              <span class="code-line">}</span>
             </div>
           </div>
-        </div>
-      </div>
-    </section>
 
-    <!-- CTA Section -->
-    <section class="cta-section">
-      <div class="container">
-        <div class="cta-content">
-          <h2>Pronto para acelerar seu desenvolvimento?</h2>
-          <p>
-            Junte-se a centenas de desenvolvedores que já economizam tempo com
-            nossos códigos
-          </p>
-          <a href="#codes" class="cta-button">
-            <i class="fas fa-rocket"></i>
-            Começar Agora
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-      <div class="container">
-        <div class="footer-content">
-          <div class="footer-brand">
-            <i class="fas fa-code"></i>
-            <span>Script Store</span>
-            <p>Powered by v0 - Vercel's AI Assistant</p>
+          <!-- JS Preview -->
+          <div class="code-preview js">
+            <div class="code-header">
+              <div class="code-dots"><span></span><span></span><span></span></div>
+            </div>
+            <div><p>js</p></div>
+            <div class="code-content">
+              <span class="code-line"><span class="keyword">function</span> <span class="function">sayHello</span>() {</span>
+              <span class="code-line">  <span class="keyword">return</span> <span class="string">'Olá Mundo!'</span>;</span>
+              <span class="code-line">}</span>
+            </div>
           </div>
-          <div class="footer-links">
-            <h4>Links Úteis</h4>
-            <a href="#codes">Códigos</a>
-            <a href="#benefits">Benefícios</a>
-            <a href="#contact">Contato</a>
-          </div>
-          <div class="footer-contact">
-            <h4>Contato</h4>
-            <p><i class="fab fa-whatsapp"></i> WhatsApp: (11) 99999-9999</p>
-            <p>
-              <i class="fas fa-envelope"></i> Email: contato@scriptstore.com
-            </p>
-          </div>
-        </div>
-        <div class="footer-bottom">
-          <p>&copy; 2024 Script Store. Todos os direitos reservados.</p>
-        </div>
-      </div>
-    </footer>
-
-    <!-- Download Modal -->
-    <div id="downloadModal" class="modal">
-      <div class="modal-content">
-        <span class="close">&times;</span>
-        <div class="modal-header">
-          <i class="fas fa-download"></i>
-          <h3>Download Iniciado!</h3>
-        </div>
-        <div class="modal-body">
-          <p>
-            <strong>Importante:</strong> O arquivo baixado está em formato ZIP.
-          </p>
-          <p>Para usar o código:</p>
-          <ol>
-            <li>Localize o arquivo ZIP em sua pasta de downloads</li>
-            <li>Extraia o conteúdo do arquivo ZIP</li>
-            <li>Abra os arquivos extraídos em seu editor de código</li>
-            <li>Siga a documentação incluída para implementação</li>
-          </ol>
-          <p class="modal-note">
-            <i class="fas fa-info-circle"></i>
-            Precisa de ajuda? Entre em contato conosco!
-          </p>
         </div>
       </div>
     </div>
 
-    <script src="scripts/script.js"></script>
-    <script src="scripts/header.js"></script>
-    <script src="scripts/hero.js"></script>
-    <script src="scripts/code.js"></script>
-    <script src="scripts/script.js"></script>
-    <script src="scripts/script.js"></script>
-  </body>
+    <div class="hero-content">
+     
+      <a href="teste2a.html" class="cta-button">
+        <i class="fas fa-rocket"></i>
+        Explorar Códigos
+      </a>
+    </div>
+    <div class="hero-badge">
+        <i class="fas fa-star"></i>
+        <span>Código da Semana em Destaque</span>
+      </div>
+  </section>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const animatedElements = document.querySelectorAll(".benefit-card, .code-card");
+      animatedElements.forEach((element, index) => {
+        element.style.animationDelay = `${index * 0.1}s`;
+      });
+    });
+  </script>
+</body>
 </html>
