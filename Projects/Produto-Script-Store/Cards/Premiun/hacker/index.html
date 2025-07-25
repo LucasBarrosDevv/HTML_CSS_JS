@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Tela Estilo Hacker</title>
+<style>
+  /* Fundo preto e texto verde */
+  body, html {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: black;
+    height: 100vh;
+  }
+  canvas {
+    display: block;
+    background-color: black;
+  }
+</style>
+</head>
+<body>
+<canvas id="hackerCanvas"></canvas>
+
+<script>
+  const canvas = document.getElementById('hackerCanvas');
+  const ctx = canvas.getContext('2d');
+
+  // Ajusta canvas ao tamanho da tela
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  // Caracteres que vão aparecer (letras, números e símbolos)
+  const chars = '10';
+
+  // Tamanho da fonte
+  const fontSize = 18;
+
+  // Número de colunas baseadas na largura da tela
+  const columns = Math.floor(canvas.width / fontSize);
+
+  // Array com posição y de cada coluna (quantas linhas a gota já caiu)
+  const drops = new Array(columns).fill(1);
+
+  // Cor verde hacker
+  const green = '#00FF00';
+
+  function draw() {
+    // Fundo com leve transparência pra dar efeito de fade
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = green;
+    ctx.font = fontSize + 'px monospace';
+
+    for (let i = 0; i < drops.length; i++) {
+      // Escolhe caractere aleatório
+      const text = chars.charAt(Math.floor(Math.random() * chars.length));
+
+      // Posição x e y
+      const x = i * fontSize;
+      const y = drops[i] * fontSize;
+
+      // Desenha o caractere
+      ctx.fillText(text, x, y);
+
+      // Reseta a gota para o topo quando sair da tela, com chance aleatória
+      if (y > canvas.height && Math.random() > 0.975) {
+        drops[i] = 0;
+      }
+
+      // Move a gota pra baixo
+      drops[i]++;
+    }
+  }
+
+  // Atualiza a tela ~30 vezes por segundo
+  setInterval(draw, 33);
+
+  // Ajusta o canvas quando a janela é redimensionada
+  window.addEventListener('resize', () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  });
+</script>
+</body>
+</html>
