@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cards Expandíveis</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="styles/styles.css" />
+  </head>
+
+  <body>
+    <header>
+      <div class="menu-toggle" onclick="toggleMenu()">☰ Filtros</div>
+      <div class="side-menu" id="sideMenu">
+        <div class="tag-list">
+          <button
+            class="tag-button active"
+            data-tag="all"
+            style="background: #00d1ff; color: #000"
+          >
+            Todos
+          </button>
+          <button
+            class="tag-button"
+            data-tag="Fogo"
+            style="background: #e63946; color: #fff"
+          >
+            Fogo
+          </button>
+          <button
+            class="tag-button"
+            data-tag="Background"
+            style="background: #1d1d1d; color: #fff"
+          >
+            Background
+          </button>
+          <button
+            class="tag-button"
+            data-tag="Particulas"
+            style="background: #7f5af0; color: #fff"
+          >
+            Partículas
+          </button>
+          <button
+            class="tag-button"
+            data-tag="Animacao"
+            style="background: #fbbf24; color: #000"
+          >
+            Animação
+          </button>
+          <button
+            class="tag-button"
+            data-tag="Hacker"
+            style="background: #00ff88; color: #000"
+          >
+            Hacker
+          </button>
+          <button
+            class="tag-button"
+            data-tag="Cascata"
+            style="background: #1fb6ff; color: #000"
+          >
+            Cascata
+          </button>
+          <button
+            class="tag-button"
+            data-tag="Romantico"
+            style="background: #ff3860; color: #fff"
+          >
+            Romântico
+          </button>
+          <button
+            class="tag-button"
+            data-tag="Musica"
+            style="background: #a56eff; color: #fff"
+          >
+            Música
+          </button>
+          <button
+            class="tag-button"
+            data-tag="Aniversario"
+            style="background: #ffe347; color: #000"
+          >
+            Aniversário
+          </button>
+        </div>
+      </div>
+      <div class="overlay" id="menuOverlay" onclick="toggleMenu()"></div>
+    </header>
+
+
+    <script src="scripts/script.js"></script>
+  </body>
+</html>
