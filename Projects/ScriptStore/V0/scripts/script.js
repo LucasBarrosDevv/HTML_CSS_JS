@@ -1,17 +1,15 @@
-// Função para expandir/recolher um card
+// Expande/recolhe card
 function toggleCard(button) {
   const card = button.closest(".code-card");
   card.classList.toggle("expanded");
-  button.textContent = card.classList.contains("expanded")
-    ? "Ver menos"
-    : "Ver mais";
+  button.textContent = card.classList.contains("expanded") ? "Ver menos" : "Ver mais";
 }
 
-// Simula o download de um código com botão de carregamento
-function downloadCode(button, codeName, codeUrl) {
+// Simula download com animação
+function downloadCode(codeName, codeUrl) {
+  const button = event.target;
   const originalText = button.innerHTML;
 
-  // Animação de carregamento
   button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Preparando...';
   button.disabled = true;
 
@@ -23,95 +21,121 @@ function downloadCode(button, codeName, codeUrl) {
     link.click();
     document.body.removeChild(link);
 
-    // Restaura botão
     button.innerHTML = originalText;
     button.disabled = false;
   }, 1500);
 }
 
-// Abre conversa no WhatsApp com mensagem personalizada
+// Abre conversa WhatsApp
 function contactWhatsApp(codeName, price) {
   const url = `https://wa.me/5500000000000?text=Olá! Tenho interesse no código "${codeName}" por R$ ${price}`;
   window.open(url, "_blank");
 }
 
-// Abre/fecha o menu lateral de tags
+// Abre/fecha menu de filtros
 function toggleMenu() {
   const menu = document.getElementById("sideMenu");
   const overlay = document.getElementById("menuOverlay");
-  const isOpen = menu.classList.contains("open");
-
-  if (isOpen) {
-    menu.classList.remove("open");
-    overlay.classList.remove("show");
-  } else {
-    menu.classList.add("open");
-    overlay.classList.add("show");
-  }
+  menu.classList.toggle("open");
+  overlay.classList.toggle("show");
 }
 
-// Atualiza os cards com animação suave ao filtrar por tag
+// Filtra por tag com animação
 document.querySelectorAll(".tag-button").forEach((btn) => {
   btn.addEventListener("click", () => {
-    // Marca o botão como ativo
-    document.querySelectorAll(".tag-button").forEach((b) =>
-      b.classList.remove("active")
-    );
+    document.querySelectorAll(".tag-button").forEach((b) => b.classList.remove("active"));
     btn.classList.add("active");
 
     const tag = btn.dataset.tag;
 
     document.querySelectorAll(".code-card").forEach((card, index) => {
-      const tags = Array.from(card.querySelectorAll(".tag")).map(
-        (el) => el.dataset.tag
-      );
-
+      const tags = Array.from(card.querySelectorAll(".tag")).map((el) => el.dataset.tag);
       const shouldShow = tag === "all" || tags.includes(tag);
 
-      // Remove classes para resetar animação
       card.classList.remove("animating");
 
       if (shouldShow) {
-        // Remove hidden para poder animar
         card.classList.remove("hidden");
-
-        // Adiciona a animação com pequeno delay para criar efeito em cascata
         setTimeout(() => {
           card.classList.add("animating");
         }, index * 100);
       } else {
-        // Remove animação e aplica classe hidden
         card.classList.remove("animating");
         card.classList.add("hidden");
       }
     });
 
-    toggleMenu(); // Fecha o menu após filtrar
+    toggleMenu();
   });
 });
 
+// Lazy load dos iframes
 document.addEventListener("DOMContentLoaded", () => {
   const iframes = document.querySelectorAll("iframe[data-src]");
-
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
+    entries.forEach((entry) => {
       const iframe = entry.target;
-
-      if (entry.isIntersecting) {
-        // Entrou na viewport → carrega
-        if (!iframe.src) {
-          iframe.src = iframe.dataset.src;
-        }
-      } else {
-        // Saiu da viewport → limpa
+      if (entry.isIntersecting && !iframe.src) {
+        iframe.src = iframe.dataset.src;
+      } else if (!entry.isIntersecting) {
         iframe.removeAttribute("src");
       }
     });
   }, {
     threshold: 0.1,
-    rootMargin: "200px"
+    rootMargin: "200px",
   });
 
-  iframes.forEach(iframe => observer.observe(iframe));
+  iframes.forEach((iframe) => observer.observe(iframe));
 });
 
+// Animação da borda deslizante + troca de estilos (Cards <-> Screen)
+document.addEventListener("DOMContentLoaded", () => {
+  const cardsBtn = document.getElementById('cardsViewBtn');
+  const screenBtn = document.getElementById('screenViewBtn');
+  const slider = document.querySelector('.slider-indicator');
+  const codesSection = document.querySelector('.codes');
+  let screenStylesheet = null;
+
+  function updateSliderPosition(target) {
+    document.querySelectorAll('.view-btn').forEach(btn => btn.classList.remove('active'));
+    target.classList.add('active');
+
+    const index = target === screenBtn ? 1 : 0;
+    slider.style.transform = `translateX(${index * 100}%)`;
+  }
+
+  cardsBtn.addEventListener('click', () => {
+    updateSliderPosition(cardsBtn);
+    if (screenStylesheet) {
+      screenStylesheet.remove();
+      screenStylesheet = null;
+    }
+    codesSection.classList.remove('screen-mode');
+  });
+
+  screenBtn.addEventListener('click', () => {
+    updateSliderPosition(screenBtn);
+    if (!screenStylesheet) {
+      screenStylesheet = document.createElement('link');
+      screenStylesheet.rel = 'stylesheet';
+      screenStylesheet.href = 'styles/screen.css';
+      document.head.appendChild(screenStylesheet);
+    }
+    codesSection.classList.add('screen-mode');
+  });
+});
+
+// Reduz o header ao rolar
+document.addEventListener('DOMContentLoaded', () => {
+  const header = document.querySelector('header');
+
+  window.addEventListener('scroll', () => {
+    const currentScrollY = window.scrollY;
+    if (currentScrollY > 60) {
+      header.classList.add('shrink');
+    } else {
+      header.classList.remove('shrink');
+    }
+  });
+});
