@@ -40,13 +40,13 @@
 .codes.screen-mode .code-card::before {
   content: "";
   position: absolute;
-  top: 8px;
+  top: 0px;
   left: 50%;
   transform: translateX(-50%);
-  width: 120px;
-  height: 24px;
-  background: #222;
-  border-radius: 12px;
+  width: 140px;
+  height: 29px;
+  background: #000000;
+  border-radius: 0px 0px 10px 10px;
   z-index: 2;
 }
 
