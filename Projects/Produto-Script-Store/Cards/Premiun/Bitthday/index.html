@@ -5,55 +5,57 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Feliz Aniversário Meu Amor</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+       * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-        body {
-            overflow: hidden;
-            background: linear-gradient(to top, #ffe6f0, #ffffff);
-        }
+body {
+    overflow: hidden;
+    background: linear-gradient(to top, #ffe6f0, #ffffff);
+}
 
-        img {
-            width: 60px;
-            position: absolute;
-            bottom: -60px;
-        }
+img {
+    width: 30px; /* 60px / 2 */
+    position: absolute;
+    bottom: -30px; /* -60px / 2 */
+}
 
-        /* Animação só subindo */
-        @keyframes subir {
-            0% {
-                transform: translateY(0);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-120vh);
-                opacity: 0.5;
-            }
-        }
+/* Animação só subindo */
+@keyframes subir {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-60vh); /* -120vh / 2 */
+        opacity: 0.5;
+    }
+}
 
-        /* Animação subindo e girando */
-        @keyframes subirGirando {
-            0% {
-                transform: translateY(0) rotate(0deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-120vh) rotate(360deg);
-                opacity: 0;
-            }
-        }
-        #feliz-aniversario {
-            width: 300px;
-            position: absolute; 
-            top: 60%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 10; 
-            text-align: center; 
-        }
+/* Animação subindo e girando */
+@keyframes subirGirando {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-60vh) rotate(360deg); /* -120vh / 2 */
+        opacity: 0;
+    }
+}
+
+#feliz-aniversario {
+    width: 150px; /* 300px / 2 */
+    position: absolute;
+    top: 50%;     /* 60% / 2 */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    text-align: center;
+}
+
     </style>
 </head>
 <body>

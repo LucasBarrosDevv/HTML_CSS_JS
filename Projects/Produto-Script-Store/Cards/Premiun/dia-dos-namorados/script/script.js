@@ -7,7 +7,7 @@ function isTouchDevice() {
 let mouse = { 
   x: null, 
   y: null, 
-  radius: isTouchDevice() ? 150 : 100 // Raio maior para touch
+  radius: isTouchDevice() ? 105 : 70 // Raio 30% menor (150/100 * 0.7)
 };
 
 // Animação de texto
@@ -28,7 +28,7 @@ function cycleParagraphs() {
   if (currentIndex < paragraphs.length) {
     showParagraph(currentIndex);
     currentIndex++;
-    setTimeout(cycleParagraphs, 2500);
+    setTimeout(cycleParagraphs, 1750); // 2500 * 0.7 = 1750ms
   } else {
     paragraphs.forEach(p => p.classList.remove("show"));
   }
@@ -66,7 +66,7 @@ function generateParticles() {
   const baseParticles = 800;
   const screenFactor = Math.max(0.2, Math.min(1, width / 600));
   const numParticles = Math.floor(baseParticles * screenFactor);
-  const scale = 12 * screenFactor;
+  const scale = 12 * screenFactor * 0.7; // scale menor 30%
 
   const centerX = width / 2;
   const centerY = height / 2;
@@ -75,7 +75,7 @@ function generateParticles() {
     const t = Math.random() * Math.PI * 2;
     const { x, y } = heartFunction(t, scale);
 
-    const baseRadius = 1.5 * screenFactor + Math.random();
+    const baseRadius = (1.5 * screenFactor + Math.random()) * 0.7; // menor
 
     particles.push({
       x: Math.random() * width,
@@ -83,9 +83,9 @@ function generateParticles() {
       destX: centerX + x,
       destY: centerY + y,
       radius: baseRadius,
-      speed: 0.01 + Math.random() * 0.03,
-      floatVx: (Math.random() - 0.5) * 0.5,
-      floatVy: (Math.random() - 0.5) * 0.5,
+      speed: (0.01 + Math.random() * 0.03) * 0.7,
+      floatVx: (Math.random() - 0.5) * 0.35, // 0.5 * 0.7
+      floatVy: (Math.random() - 0.5) * 0.35,
       floatTime: Math.random() * Math.PI * 2,
       baseRadius: baseRadius,
       friction: 0.95,
@@ -97,7 +97,7 @@ function generateParticles() {
 
 // Variáveis de animação
 let animationProgress = 0;
-const animationDuration = 300;
+const animationDuration = Math.floor(300 * 0.7); // 210
 let explodePhase = false;
 let particlesAlpha = 1;
 let heartAnimationId;
@@ -141,11 +141,11 @@ function animateHeart() {
   if (floatingMode) {
     // Modo flutuação - partículas se movem suavemente
     for (let p of particles) {
-      p.floatTime += 0.02;
+      p.floatTime += 0.014; // 0.02 * 0.7
       
       // Movimento de flutuação base
-      p.x += Math.sin(p.floatTime) * 0.3 + p.floatVx;
-      p.y += Math.cos(p.floatTime * 0.8) * 0.2 + p.floatVy;
+      p.x += Math.sin(p.floatTime) * 0.21 + p.floatVx; // 0.3 * 0.7
+      p.y += Math.cos(p.floatTime * 0.8) * 0.14 + p.floatVy; // 0.2 * 0.7
 
       if (interactionEnabled && mouse.x !== null && mouse.y !== null) {
         const distance = getDistance(p.x, p.y, mouse.x, mouse.y);
@@ -156,8 +156,9 @@ function animateHeart() {
           const directionX = p.x - mouse.x;
           const directionY = p.y - mouse.y;
 
-          p.velocityX += directionX * force * 0.03;
-          p.velocityY += directionY * force * 0.03;
+          // Força reduzida para repelir discretamente
+          p.velocityX += directionX * force * 0.01;
+          p.velocityY += directionY * force * 0.01;
         }
       }
       
@@ -218,8 +219,8 @@ function animateHeart() {
     let particlesVisible = 0;
 
     for (let p of particles) {
-      p.x += p.vx;
-      p.y += p.vy;
+      p.x += p.vx * 0.7; // 30% menor deslocamento explosão
+      p.y += p.vy * 0.7;
 
       if (p.x >= 0 && p.x <= heartCanvas.width && p.y >= 0 && p.y <= heartCanvas.height) {
         heartCtx.beginPath();
@@ -250,9 +251,9 @@ class Explosion {
     this.y = y;
     this.ctx = ctx;
     this.particles = [];
-    this.particleCount = 15 + Math.floor(Math.random() * 10);
+    this.particleCount = Math.floor((15 + Math.random() * 10) * 0.7);
     this.color = '#FF1493';
-    this.lifespan = 60;
+    this.lifespan = Math.floor(60 * 0.7);
     this.currentFrame = 0;
     this.createParticles();
   }
@@ -260,9 +261,9 @@ class Explosion {
   createParticles() {
     for (let i = 0; i < this.particleCount; i++) {
       const angle = Math.random() * Math.PI * 2;
-      const speed = 0.5 + Math.random() * 2;
-      const size = 1 + Math.random() * 2;
-      const life = 30 + Math.random() * 30;
+      const speed = (0.5 + Math.random() * 2) * 0.7;
+      const size = (1 + Math.random() * 2) * 0.7;
+      const life = (30 + Math.random() * 30) * 0.7;
       
       this.particles.push({
         x: this.x,
@@ -315,7 +316,7 @@ function startRainLove() {
   const phrase = "TeAmo";
   const baseFontSize = 18;
   const scaleFactor = Math.max(0.3, Math.min(1, window.innerWidth / 600));
-  const fontSize = baseFontSize * scaleFactor;
+  const fontSize = baseFontSize * scaleFactor * 0.7; // 30% menor
   
   let columns;
   let drops;
@@ -334,12 +335,11 @@ function startRainLove() {
   resizeCanvas();
   const heartColor = '#F52420';
 
-  // Event listener para touch
+  // Event listener para toque/click (explosões)
   canvas.addEventListener('click', function(event) {
     explosions.push(new Explosion(event.clientX, event.clientY, ctx));
   });
 
-  // Event listener para touch
   canvas.addEventListener('touchstart', function(event) {
     event.preventDefault();
     const touch = event.touches[0];
@@ -376,7 +376,7 @@ function startRainLove() {
     }
   }
 
-  setInterval(drawLove, 65);
+  setInterval(drawLove, 45); // 65 * 0.7 = 45
   window.addEventListener('resize', resizeCanvas);
 }
 
@@ -394,14 +394,14 @@ document.getElementById('startButton').addEventListener('click', () => {
   // Mostrar mensagens centrais
   setTimeout(() => {
     showCentralMessages();
-  }, 2000);
+  }, 1400); // 2000 * 0.7 = 1400ms
 
   // Esconder o botão
   const button = document.getElementById('startButton');
   button.classList.add('fade-out');
   setTimeout(() => {
     button.style.display = 'none';
-  }, 800);
+  }, 560); // 800 * 0.7
 
   // Habilitar interação
   interactionEnabled = true;
@@ -414,18 +414,18 @@ document.getElementById('startButton').addEventListener('click', () => {
     
     setTimeout(() => {
       cycleParagraphs();
-    }, 4500);
+    }, 3150); // 4500 * 0.7
 
     setTimeout(() => {
       explodePhase = true;
       for (let p of particles) {
         const angle = Math.random() * 2 * Math.PI;
-        const speed = 2 + Math.random() * 3;
+        const speed = (2 + Math.random() * 3) * 0.7;
         p.vx = Math.cos(angle) * speed;
         p.vy = Math.sin(angle) * speed;
       }
-    }, 13000);
-  }, 13000);
+    }, 9100); // 13000 * 0.7
+  }, 9100); // 13000 * 0.7
 });
 
 // Função para mostrar mensagens centrais
@@ -441,14 +441,14 @@ function showCentralMessages() {
       setTimeout(() => {
         msgs[idx].classList.remove("show");
         idx++;
-        setTimeout(showNext, 2000);
-      }, 2000);
+        setTimeout(showNext, 1400); // 2000 * 0.7
+      }, 1400);
     } else {
       setTimeout(() => {
         centralMessage.style.display = "none";
-      }, 1500);
+      }, 1050); // 1500 * 0.7
     }
   }
 
-  setTimeout(showNext, 1500);
+  setTimeout(showNext, 1050); // 1500 * 0.7
 }

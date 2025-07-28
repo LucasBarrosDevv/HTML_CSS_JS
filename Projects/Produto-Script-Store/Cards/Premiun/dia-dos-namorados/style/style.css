@@ -32,13 +32,13 @@ canvas {
 
 #text-container {
   position: fixed;
-  top: calc(50% + 250px);
+  top: calc(50% + 175px);
   left: 50%;
   transform: translateX(-50%);
   z-index: 10;
   width: 100%;
-  max-width: 400px;
-  height: 80px;
+  max-width: 280px;
+  height: 56px;
   overflow: hidden;
   text-align: center;
 }
@@ -49,9 +49,9 @@ canvas {
   width: 100%;
   bottom: 0;
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY(14px);
   transition: opacity 0.5s ease, transform 0.5s ease;
-  font-size: 2em;
+  font-size: 1.4em;
   color: #fff;
 }
 
@@ -66,10 +66,10 @@ canvas {
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 5;
-  padding: 15px 30px;
-  font-size: 1.2em;
-  border: 2px solid rgba(255, 255, 255, 0.8);
-  border-radius: 8px;
+  padding: 11px 21px;
+  font-size: 0.84em;
+  border: 1.4px solid rgba(255, 255, 255, 0.8);
+  border-radius: 6px;
   background-color: rgba(255, 255, 255, 0.1);
   color: #fff;
   cursor: pointer;
@@ -100,8 +100,8 @@ canvas {
   z-index: 20;
   text-align: center;
   width: 100%;
-  max-width: 600px;
-  height: 100px;
+  max-width: 420px;
+  height: 70px;
   overflow: hidden;
   display: none;
 }
@@ -113,7 +113,7 @@ canvas {
   bottom: 0;
   opacity: 0;
   transition: opacity 1.5s ease;
-  font-size: 1.2em;
+  font-size: 0.84em;
   color: #fff;
   font-weight: bold;
 }
@@ -125,25 +125,25 @@ canvas {
 /* Responsivo */
 @media (max-width: 400px) {
   #startButton {
-    font-size: 1em;
-    padding: 10px 20px;
-    border-width: 1.5px;
+    font-size: 0.7em;
+    padding: 7px 14px;
+    border-width: 1px;
   }
 
   #central-message p {
-    font-size: 1em;
-    padding: 0 10px;
+    font-size: 0.7em;
+    padding: 0 7px;
   }
 
   #text-container {
-    top: calc(50% + 150px);
-    max-width: 90%;
+    top: calc(50% + 105px);
+    max-width: 63%;
     height: auto;
   }
 
   #text-container p {
-    font-size: 1.5em;
-    padding: 0 10px;
+    font-size: 1.05em;
+    padding: 0 7px;
   }
 
   canvas {
@@ -154,15 +154,15 @@ canvas {
 
 @media (max-width: 250px) {
   #startButton {
-    font-size: 0.9em;
-    padding: 6px 14px;
+    font-size: 0.63em;
+    padding: 4px 10px;
   }
 
   #central-message p {
-    font-size: 0.85em;
+    font-size: 0.6em;
   }
 
   #text-container p {
-    font-size: 1.2em;
+    font-size: 0.84em;
   }
 }
