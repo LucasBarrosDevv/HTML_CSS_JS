@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Partículas Flutuando - GitHub Style</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="styles/download.css">
+</head>
+<body>
+  <canvas id="particlesCanvas"></canvas>
+
+  <div class="header">
+    <div class="repo-info">
+      <div class="repo-name">Partículas Flutuando</div>
+      <div class="repo-description"><i>HTML CSS JS</i></div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="code-container">
+      <div class="code-header">
+        <div class="file-name">index.html</div>
+        <div class="code-actions">
+          <button class="btn" id="copyBtn">
+            <i class="far fa-copy"></i> Copy
+          </button>
+          <button class="btn btn-primary" id="downloadBtn">
+            <i class="fas fa-download"></i> Download
+          </button>
+        </div>
+      </div>
+      <div class="code-content">
+        <pre id="codeContent"><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;pt-br&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;title&gt;Partículas Flutuando&lt;/title&gt;
+  &lt;style&gt;
+    @charset &quot;UTF-8&quot;;
+    * {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    html, body {
+      height: 100%;
+      background: #000;
+    }
+
+    canvas {
+      display: block;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;canvas id=&quot;canvas&quot;&gt;&lt;/canvas&gt;
+
+  &lt;script&gt;
+    const canvas = document.getElementById(&quot;canvas&quot;);
+    const ctx = canvas.getContext(&quot;2d&quot;);
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    window.addEventListener(&quot;resize&quot;, () =&gt; {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+
+    const numParticles = 100;
+    const particles = [];
+
+    for (let i = 0; i &lt; numParticles; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        radius: Math.random() * 3 + 1,
+        dx: (Math.random() - 0.5) * 1.5,
+        dy: (Math.random() - 0.5) * 1.5
+      });
+    }
+
+    function drawParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = &quot;white&quot;;
+
+      particles.forEach(p =&gt; {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fill();
+
+        p.x += p.dx;
+        p.y += p.dy;
+
+        if (p.x &lt; 0) p.x = canvas.width;
+        if (p.x &gt; canvas.width) p.x = 0;
+        if (p.y &lt; 0) p.y = canvas.height;
+        if (p.y &gt; canvas.height) p.y = 0;
+      });
+    }
+
+    function animate() {
+      drawParticles();
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">Copied to clipboard!</div>
+
+  <script>
+    // Animação de partículas como fundo
+    const canvas = document.getElementById('particlesCanvas');
+    const ctx = canvas.getContext('2d');
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+
+    const numParticles = 100;
+    const particles = [];
+
+    for (let i = 0; i < numParticles; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        radius: Math.random() * 3 + 1,
+        dx: (Math.random() - 0.5) * 1.5,
+        dy: (Math.random() - 0.5) * 1.5
+      });
+    }
+
+    function drawParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "white";
+
+      particles.forEach(p => {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fill();
+
+        p.x += p.dx;
+        p.y += p.dy;
+
+        if (p.x < 0) p.x = canvas.width;
+        if (p.x > canvas.width) p.x = 0;
+        if (p.y < 0) p.y = canvas.height;
+        if (p.y > canvas.height) p.y = 0;
+      });
+    }
+
+    function animateParticles() {
+      drawParticles();
+      requestAnimationFrame(animateParticles);
+    }
+
+    animateParticles();
+
+    // Copy e Download
+    const copyBtn = document.getElementById('copyBtn');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const toast = document.getElementById('toast');
+    const codeContent = document.getElementById('codeContent').textContent;
+
+    copyBtn.addEventListener('click', () => {
+      navigator.clipboard.writeText(codeContent).then(() => {
+        showToast();
+      });
+    });
+
+    downloadBtn.addEventListener('click', () => {
+      const blob = new Blob([codeContent], { type: 'text/html' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'particles.html';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    });
+
+    function showToast() {
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2000);
+    }
+  </script>
+</body>
+</html>

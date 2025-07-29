@@ -1,30 +1,50 @@
-// Expande/recolhe card
+// Expande/recolhe card manualmente
 function toggleCard(button) {
   const card = button.closest(".code-card");
   card.classList.toggle("expanded");
   button.textContent = card.classList.contains("expanded") ? "Ver menos" : "Ver mais";
 }
 
-// Simula download com animação
-function downloadCode(codeName, codeUrl) {
-  const button = event.target;
-  const originalText = button.innerHTML;
+// Observa se cards expandidos saem da viewport
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    const card = entry.target;
+    
+    // Se o card saiu totalmente da viewport e está expandido
+    if (!entry.isIntersecting && card.classList.contains("expanded")) {
+      card.classList.remove("expanded");
 
-  button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Preparando...';
-  button.disabled = true;
+      // Atualiza botão, se existir
+      const button = card.querySelector(".toggle-button");
+      if (button) button.textContent = "Ver mais";
+    }
+  });
+}, {
+  threshold: 0 // Aciona assim que o card começa a sair da tela
+});
 
-  setTimeout(() => {
-    const link = document.createElement("a");
-    link.href = codeUrl;
-    link.download = `${codeName.replace(/\s+/g, "_")}_Code.zip`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+// Ativa observador nos cards
+document.querySelectorAll(".code-card").forEach(card => {
+  observer.observe(card);
+});
 
-    button.innerHTML = originalText;
-    button.disabled = false;
-  }, 1500);
+
+// Redireciona para página de download
+function downloadCode(codeName) {
+  const pageMap = {
+    "Fire Dynamic": "download-fire.html",
+    "Particulas": "download-particles.html",
+  };
+
+  const page = pageMap[codeName];
+  if (page) {
+    window.open(page, "_blank"); // Abre em nova aba
+  } else {
+    alert("Página de download não encontrada para: " + codeName);
+  }
 }
+
+
 
 // Abre conversa WhatsApp
 function contactWhatsApp(codeName, price) {
@@ -138,4 +158,19 @@ document.addEventListener('DOMContentLoaded', () => {
       header.classList.remove('shrink');
     }
   });
+});
+
+let lastScrollTop = 0;
+const header = document.querySelector('header');
+
+window.addEventListener('scroll', () => {
+  const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+
+  if (currentScroll > lastScrollTop && currentScroll > 50) {
+    header.classList.add('hidden');
+  } else {
+    header.classList.remove('hidden');
+  }
+
+  lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
 });

@@ -3,14 +3,83 @@
 <head>
   <meta charset="UTF-8">
   <title>Partículas Flutuando</title>
-  <link rel="stylesheet" href="style.css">
-  
-  
+  <style>
+    @charset "UTF-8";
+    * {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    html, body {
+      height: 100%;
+      background: #000;
+    }
+
+    canvas {
+      display: block;
+    }
+  </style>
 </head>
 <body>
-
   <canvas id="canvas"></canvas>
-  <script src="script.js"></script>
-  
+
+  <script>
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+
+    // Definindo o tamanho do canvas para ocupar a tela toda
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    // Redimensionamento da tela
+    window.addEventListener("resize", () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+
+    // Criando partículas
+    const numParticles = 100;
+    const particles = [];
+
+    for (let i = 0; i < numParticles; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        radius: Math.random() * 3 + 1,
+        dx: (Math.random() - 0.5) * 1.5,
+        dy: (Math.random() - 0.5) * 1.5
+      });
+    }
+
+    // Desenhar partículas
+    function drawParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "white";
+
+      particles.forEach(p => {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fill();
+
+        p.x += p.dx;
+        p.y += p.dy;
+
+        // Fazer as partículas reaparecerem do outro lado
+        if (p.x < 0) p.x = canvas.width;
+        if (p.x > canvas.width) p.x = 0;
+        if (p.y < 0) p.y = canvas.height;
+        if (p.y > canvas.height) p.y = 0;
+      });
+    }
+
+    // Animação
+    function animate() {
+      drawParticles();
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  </script>
 </body>
 </html>
