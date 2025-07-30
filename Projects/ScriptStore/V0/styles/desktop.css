@@ -288,24 +288,7 @@
     z-index: 1100;
   }
 
-  .side-menu {
-    position: fixed;
-    top: 0;
-    left: -60%;
-    width: 50%;
-    height: 100%;
-    background: #111;
-    padding: 2rem 1rem;
-    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
-    z-index: 1050;
-    transition: left 0.3s ease;
-    margin-top: 50px;
-    overflow-y: auto;
-  }
-
-  .side-menu.open {
-    left: 0;
-  }
+  
 
   .tag-list {
     display: flex;

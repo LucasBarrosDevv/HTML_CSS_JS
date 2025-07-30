@@ -277,24 +277,7 @@ body:not(.lista) nav::after {
   z-index: 1100;
 }
 
-.side-menu {
-  position: fixed;
-  top: 0;
-  left: -60%;
-  width: 50%;
-  height: 100%;
-  background: #111;
-  padding: 2rem 1rem;
-  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
-  z-index: 1050;
-  transition: left 0.3s ease;
-  margin-top: 50px;
-  overflow-y: auto;
-}
 
-.side-menu.open {
-  left: 0;
-}
 
 .tag-list {
   display: flex;
@@ -314,7 +297,7 @@ body:not(.lista) nav::after {
 }
 
 .tag-button.active {
-  outline: 2px solid #fff;
+  outline: 3px solid #04ebf7;
 }
 
 .overlay {
@@ -377,7 +360,7 @@ body:not(.lista) nav::after {
 .view-btn {
   width: calc(50vw - 10px);
   background: transparent;
-  color: white;
+  color: rgb(255, 255, 255);
   font-size: 1.8rem;
   border: none;
   padding: 0.6rem 1rem 0.8rem;

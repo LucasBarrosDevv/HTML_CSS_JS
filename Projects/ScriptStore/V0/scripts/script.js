@@ -54,40 +54,71 @@ function contactWhatsApp(codeName, price) {
 
 // Abre/fecha menu de filtros
 function toggleMenu() {
-  const menu = document.getElementById("sideMenu");
-  const overlay = document.getElementById("menuOverlay");
-  menu.classList.toggle("open");
-  overlay.classList.toggle("show");
+    const sideMenu = document.getElementById('sideMenu');
+    const menuOverlay = document.getElementById('menuOverlay');
+    const menuToggle = document.querySelector('.menu-toggle'); 
+
+    sideMenu.classList.toggle('open');
+    menuOverlay.classList.toggle('show');
+
+    // Adicione a lógica para ocultar/mostrar o menu-toggle
+    if (sideMenu.classList.contains('open')) {
+        menuToggle.style.display = 'none'; 
+    } else {
+        menuToggle.style.display = 'block'; 
+    }
 }
 
-// Filtra por tag com animação
-document.querySelectorAll(".tag-button").forEach((btn) => {
-  btn.addEventListener("click", () => {
-    document.querySelectorAll(".tag-button").forEach((b) => b.classList.remove("active"));
-    btn.classList.add("active");
+// Função de filtragem principal
+function applyFilter(tagToFilter) {
+  document.querySelectorAll(".tag-button").forEach((b) => b.classList.remove("active"));
 
-    const tag = btn.dataset.tag;
+  const correspondingMenuButton = document.querySelector(`.side-menu .tag-button[data-tag="${tagToFilter}"]`);
+  if (correspondingMenuButton) {
+    correspondingMenuButton.classList.add("active");
+  } else if (tagToFilter === "all") {
+    document.querySelector('.side-menu .tag-button[data-tag="all"]').classList.add("active");
+  }
 
-    document.querySelectorAll(".code-card").forEach((card, index) => {
-      const tags = Array.from(card.querySelectorAll(".tag")).map((el) => el.dataset.tag);
-      const shouldShow = tag === "all" || tags.includes(tag);
 
+  document.querySelectorAll(".code-card").forEach((card, index) => {
+    const tags = Array.from(card.querySelectorAll(".tag")).map((el) => el.dataset.tag);
+    const shouldShow = tagToFilter === "all" || tags.includes(tagToFilter);
+
+    card.classList.remove("animating");
+
+    if (shouldShow) {
+      card.classList.remove("hidden");
+      setTimeout(() => {
+        card.classList.add("animating");
+      }, index * 100);
+    } else {
       card.classList.remove("animating");
+      card.classList.add("hidden");
+    }
+  });
 
-      if (shouldShow) {
-        card.classList.remove("hidden");
-        setTimeout(() => {
-          card.classList.add("animating");
-        }, index * 100);
-      } else {
-        card.classList.remove("animating");
-        card.classList.add("hidden");
-      }
-    });
+  toggleMenu(); 
+}
 
-    toggleMenu();
+
+// Filtra por tag com animação (Botoes do menu)
+document.querySelectorAll(".side-menu .tag-button").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const tag = btn.dataset.tag;
+    applyFilter(tag);
   });
 });
+
+// Adiciona evento de clique às tags dentro dos cards
+document.querySelectorAll(".code-card .tag").forEach((tagSpan) => {
+    tagSpan.addEventListener("click", (event) => {
+        event.stopPropagation(); // Impede que o clique no card seja acionado
+        const tag = tagSpan.dataset.tag;
+        applyFilter(tag);
+    });
+});
+
 
 // Lazy load dos iframes
 document.addEventListener("DOMContentLoaded", () => {
@@ -125,26 +156,33 @@ document.addEventListener("DOMContentLoaded", () => {
     slider.style.transform = `translateX(${index * 100}%)`;
   }
 
-  cardsBtn.addEventListener('click', () => {
-    updateSliderPosition(cardsBtn);
-    if (screenStylesheet) {
-      screenStylesheet.remove();
-      screenStylesheet = null;
-    }
-    codesSection.classList.remove('screen-mode');
-  });
+  // Verificar se o screenBtn existe antes de adicionar o event listener
+  if (cardsBtn) {
+    cardsBtn.addEventListener('click', () => {
+      updateSliderPosition(cardsBtn);
+      if (screenStylesheet) {
+        screenStylesheet.remove();
+        screenStylesheet = null;
+      }
+      codesSection.classList.remove('screen-mode');
+    });
+  }
 
-  screenBtn.addEventListener('click', () => {
-    updateSliderPosition(screenBtn);
-    if (!screenStylesheet) {
-      screenStylesheet = document.createElement('link');
-      screenStylesheet.rel = 'stylesheet';
-      screenStylesheet.href = 'styles/screen.css';
-      document.head.appendChild(screenStylesheet);
-    }
-    codesSection.classList.add('screen-mode');
-  });
+  // Verificar se o screenBtn existe antes de adicionar o event listener
+  if (screenBtn) {
+    screenBtn.addEventListener('click', () => {
+      updateSliderPosition(screenBtn);
+      if (!screenStylesheet) {
+        screenStylesheet = document.createElement('link');
+        screenStylesheet.rel = 'stylesheet';
+        screenStylesheet.href = 'styles/screen.css';
+        document.head.appendChild(screenStylesheet);
+      }
+      codesSection.classList.add('screen-mode');
+    });
+  }
 });
+
 
 // Reduz o header ao rolar
 document.addEventListener('DOMContentLoaded', () => {
@@ -174,3 +212,69 @@ window.addEventListener('scroll', () => {
 
   lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
 });
+
+let lastScroll = 0;
+
+window.addEventListener("scroll", () => {
+  const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+  const sideMenu = document.getElementById("sideMenu");
+  const overlay = document.getElementById("menuOverlay");
+
+  if (currentScroll > lastScroll && sideMenu.classList.contains("open")) {
+    // Fecha o menu como se o usuário tivesse clicado
+    sideMenu.classList.remove("open");
+    overlay.classList.remove("show");
+  }
+
+  lastScroll = currentScroll <= 0 ? 0 : currentScroll;
+});
+
+// Função para lidar com o scroll e o menu-toggle
+function handleScrollAndMenuToggle() {
+    const header = document.querySelector('header');
+    const menuToggle = document.querySelector('.menu-toggle');
+    const sideMenu = document.getElementById('sideMenu'); 
+
+    // Lógica para o header encolher (que você já deve ter)
+    if (window.scrollY > 50) { 
+        header.classList.add('shrink');
+        // Se o menu estiver fechado E o header encolheu, o menu-toggle deve aparecer
+        if (!sideMenu.classList.contains('open')) {
+            menuToggle.style.display = 'block';
+            menuToggle.style.opacity = '1'; 
+        }
+    } else {
+        header.classList.remove('shrink');
+        // Se o menu estiver fechado E a página no topo, o menu-toggle deve aparecer
+        if (!sideMenu.classList.contains('open')) {
+            menuToggle.style.display = 'block';
+            menuToggle.style.opacity = '1'; 
+        }
+    }
+
+    // Se o menu lateral estiver aberto, o menu-toggle deve sumir
+    if (sideMenu.classList.contains('open')) {
+        menuToggle.style.display = 'none';
+        menuToggle.style.opacity = '0'; 
+    }
+}
+
+// Modifique sua função toggleMenu para apenas abrir/fechar o menu e overlay
+function toggleMenu() {
+    const sideMenu = document.getElementById('sideMenu');
+    const menuOverlay = document.getElementById('menuOverlay');
+    const menuToggle = document.querySelector('.menu-toggle');
+
+    sideMenu.classList.toggle('open');
+    menuOverlay.classList.toggle('show');
+
+    // Ao abrir/fechar o menu, sempre chame handleScrollAndMenuToggle
+    // para reajustar a visibilidade do botão de filtro
+    handleScrollAndMenuToggle(); 
+}
+
+// Adicione este ouvinte de evento para chamar a função de scroll
+window.addEventListener('scroll', handleScrollAndMenuToggle);
+
+// Chame a função uma vez ao carregar a página para definir o estado inicial
+document.addEventListener('DOMContentLoaded', handleScrollAndMenuToggle);

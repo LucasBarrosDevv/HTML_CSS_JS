@@ -76,17 +76,18 @@
     box-sizing: border-box;
   }
 
- .codes-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: clamp(2rem, 4vw, 6rem); /* ✅ Essa linha agora funciona */
-  justify-content: center;
-  width: 100%;
-  max-width: 1300px;
-  margin: 0 auto;
-}
-
-
+  .codes-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(2rem, 4vw, 6rem); /* ✅ Essa linha agora funciona */
+    justify-content: center;
+    width: 100%;
+    max-width: 1300px;
+    margin: 0 auto;
+    /* Adicionado para permitir que o grid reorganize os itens */
+    align-items: start; /* Alinha os itens do grid ao topo */
+    align-content: start; /* Alinha o conteúdo do grid ao topo */
+  }
 
   .code-card {
     display: flex;
@@ -102,14 +103,17 @@
     width: 100%;
     max-width: 100%;
     margin: 0 auto;
+    /* Removido o margin-top fixo aqui, para que o grid cuide do espaçamento */
+    flex-shrink: 0; /* Adiciona flex-shrink para evitar que o card encolha mais do que o esperado */
   }
 
   .code-card.free,
   .code-card.premium,
   .code-card.premium.destaque-tiktok {
-    height: 580px;
+    height: 580px; /* Mantém a altura fixa */
     width: 600px;
     min-width: 600px;
+    min-height: 580px; /* Garante que não encolha em altura mesmo com pouco conteúdo */
   }
 
   .code-card.premium {
@@ -173,7 +177,8 @@
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start; /* Alinha o conteúdo no topo */
+    align-items: flex-start; /* Alinha o conteúdo à esquerda */
   }
 
   .code-name {
@@ -214,23 +219,30 @@
     color: #ff590d;
   }
 
+  .code-extra-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    max-height: 0; /* Começa com altura 0 quando não expandido */
+    overflow: hidden; /* Oculta o conteúdo que excede */
+    opacity: 0; /* Torna o conteúdo invisível */
+    transition: max-height 0.4s ease-out, opacity 0.4s ease-out, margin-top 0.4s ease-out; /* Adiciona transição para margin-top */
+    margin-top: 0; /* Garante que não há margem quando não expandido */
+    flex-grow: 0; /* Não cresce quando não expandido */
+  }
+
   .code-card.expanded .code-extra-info {
-    max-height: 500px;
-    opacity: 1;
-    margin-top: 1rem;
+    max-height: 500px; /* Altura máxima quando expandido */
+    opacity: 1; /* Visível quando expandido */
+    margin-top: 1rem; /* Margem quando expandido */
+    flex-grow: 1; /* Permite que cresça quando expandido */
   }
 
   .code-description {
     color: #333;
     margin-bottom: 1rem;
     line-height: 1.4;
-  }
-
-  .code-extra-info {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    flex-grow: 1;
+    flex-shrink: 0;
   }
 
   .code-extra-info .botoes {
@@ -238,6 +250,7 @@
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    flex-shrink: 0;
   }
 
   .download-btn,
@@ -290,25 +303,6 @@
     z-index: 1100;
   }
 
-  .side-menu {
-    position: fixed;
-    top: 0;
-    left: -60%;
-    width: 50%;
-    height: 100%;
-    background: #111;
-    padding: 2rem 1rem;
-    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
-    z-index: 1050;
-    transition: left 0.3s ease;
-    margin-top: 50px;
-    overflow-y: auto;
-  }
-
-  .side-menu.open {
-    left: 0;
-  }
-
   .tag-list {
     display: flex;
     flex-direction: column;
@@ -349,25 +343,25 @@
     opacity: 1;
     transform: translateX(0);
     transition: opacity 0.4s ease, transform 0.4s ease;
-    margin-top: 50px;
+    /* Removido o margin-top fixo aqui, pois o grid cuida do espaçamento */
   }
 
   .code-card.hidden {
     opacity: 0;
+    /* Use 'display: none' para remover totalmente do fluxo e evitar que ocupe espaço */
+    display: none;
     transform: translateX(50px);
     pointer-events: none;
-    height: 0;
-    margin: 0 !important;
-    padding: 0 !important;
-    overflow: hidden;
-    transition: all 0.4s ease;
+    /* Removido height, margin e padding para evitar conflitos com display: none */
+    transition: opacity 0.4s ease, transform 0.4s ease;
   }
 
   .code-card.animating {
     opacity: 1;
     transform: translateX(0);
-    height: auto;
-    margin-top: 50px !important;
+    /* Garante que o display volte a ser flex ao animar de volta */
+    display: flex;
+    /* Removido margin-top fixo, pois o gap do grid será suficiente */
     padding: initial;
     pointer-events: auto;
     transition: all 0.4s ease;
