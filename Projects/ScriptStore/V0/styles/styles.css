@@ -38,3 +38,47 @@ header.hidden {
 .side-menu.open {
   left: 0;
 }
+footer {
+  background-color: #111;
+  color: #ccc;
+  padding: 30px 20px;
+  font-size: 14px;
+  margin-top: 80px;
+}
+
+.footer-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-left h2 {
+  font-size: 22px;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+.footer-left a {
+  color: #00e676;
+  text-decoration: none;
+}
+
+.footer-right a {
+  color: #ccc;
+  font-size: 20px;
+  margin: 0 10px;
+  transition: transform 0.3s, color 0.3s;
+}
+
+.footer-right a:hover {
+  color: #00e676;
+  transform: scale(1.2);
+}
+
+@media (min-width: 768px) {
+  .footer-container {
+    flex-direction: row;
+  }
+}

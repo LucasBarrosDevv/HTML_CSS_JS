@@ -1,79 +1,212 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Partículas Flutuando</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Script Store - Hero</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <style>
-    @charset "UTF-8";
-    * {
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-    }
+   /* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-    html, body {
-      height: 100%;
-      background: #000;
-    }
+html {
+  font-size: 100%;
+}
 
-    canvas {
-      display: block;
-    }
+body {
+  font-family: Arial, sans-serif;
+  background-color: black;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+/* HERO */
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem;
+  gap: 2rem;
+  text-align: center;
+}
+
+.hero-logo-title {
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+.logo-script {
+  color: #00d1ff;
+}
+
+.logo-store {
+  color: orange;
+}
+
+.hero-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: white;
+  line-height: 1.3;
+}
+
+.highlight {
+  color: #00eaff;
+  display: block;
+  margin-top: 0.5rem;
+}
+
+/* HERO VISUAL */
+.hero-visual {
+  max-width: 480px;
+  width: 100%;
+  animation: float 3s ease-in-out infinite;
+}
+
+/* CODE SLIDER */
+.code-slider-container {
+  overflow: hidden;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.5);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+}
+
+.code-slider {
+  display: flex;
+  width: 300%;
+  animation: slide 6s infinite ease-in-out;
+}
+
+.code-preview {
+  flex: 0 0 100%;
+  padding: 2rem;
+  font-family: "Courier New", monospace;
+  font-size: 0.9rem;
+  color: #ccc;
+}
+
+.code-dots {
+  display: flex;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+}
+
+.code-dots span {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.code-dots span:nth-child(1) { background: #ff5f57; }
+.code-dots span:nth-child(2) { background: #ffbd2e; }
+.code-dots span:nth-child(3) { background: #28ca42; }
+
+.code-content {
+  font-weight: bold;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* BOTÃO CTA */
+.cta-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background-color: #00eaff;
+  color: black;
+  padding: 0.75rem 1.5rem;
+  border-radius: 999px;
+  font-weight: bold;
+  font-size: 1rem;
+  text-decoration: none;
+  transition: 0.3s ease;
+}
+
+.cta-button:hover {
+  background-color: #ff5e01;
+  color: #fff;
+}
+
+/* ANIMAÇÕES */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes slide {
+  0%, 33.33% { transform: translateX(0); }
+  44.44%, 77.77% { transform: translateX(-100%); }
+  88.88%, 100% { transform: translateX(-200%); }
+}
+
+/* RESPONSIVO */
+@media (max-width: 600px) {
+  .hero-title { font-size: 1.4rem; }
+  .hero-logo-title { font-size: 2.2rem; }
+  .code-preview { font-size: 0.75rem; }
+}
+
   </style>
 </head>
 <body>
-  <canvas id="canvas"></canvas>
+  <main class="hero">
+    <h1 class="hero-logo-title">
+      <span class="logo-script">Script</span>
+      <span class="logo-store">Store</span>
+    </h1>
 
-  <script>
-    const canvas = document.getElementById("canvas");
-    const ctx = canvas.getContext("2d");
+    <div class="hero-visual">
+      <div class="code-slider-container">
+        <div class="code-slider">
+          <!-- HTML -->
+          <div class="code-preview html">
+            <div class="code-dots"><span></span><span></span><span></span></div>
+            <div class="code-content">
+              &lt;div class="container"&gt;<br />
+              &nbsp;&nbsp;&lt;h1&gt;Olá Mundo&lt;/h1&gt;<br />
+              &lt;/div&gt;
+            </div>
+          </div>
+          <!-- CSS -->
+          <div class="code-preview css">
+            <div class="code-dots"><span></span><span></span><span></span></div>
+            <div class="code-content">
+              .container {<br />
+              &nbsp;&nbsp;background: #282c34;<br />
+              &nbsp;&nbsp;color: #61dafb;<br />
+              }
+            </div>
+          </div>
+          <!-- JS -->
+          <div class="code-preview js">
+            <div class="code-dots"><span></span><span></span><span></span></div>
+            <div class="code-content">
+              function sayHello() {<br />
+              &nbsp;&nbsp;return 'Olá Mundo!';<br />
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    <h2 class="hero-title">
+      Códigos Prontos para <br /> Seu Projeto,
+      <span class="highlight">Sem Esforço!</span>
+    </h2>
 
-    window.addEventListener("resize", () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    });
-
-    const numParticles = 100;
-    const particles = [];
-
-    for (let i = 0; i < numParticles; i++) {
-      particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        radius: Math.random() * 3 + 1,
-        dx: (Math.random() - 0.5) * 1.5,
-        dy: (Math.random() - 0.5) * 1.5
-      });
-    }
-
-    function drawParticles() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = "white";
-
-      particles.forEach(p => {
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fill();
-
-        p.x += p.dx;
-        p.y += p.dy;
-
-        if (p.x < 0) p.x = canvas.width;
-        if (p.x > canvas.width) p.x = 0;
-        if (p.y < 0) p.y = canvas.height;
-        if (p.y > canvas.height) p.y = 0;
-      });
-    }
-
-    function animate() {
-      drawParticles();
-      requestAnimationFrame(animate);
-    }
-
-    animate();
-  </script>
+    <a href="code-page.html" class="cta-button">
+      <i class="fas fa-rocket"></i> Explorar Códigos
+    </a>
+  </main>
 </body>
 </html>
