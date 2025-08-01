@@ -1,4 +1,4 @@
-from flask import Flask, render_template, abort
+from flask import Flask, render_template, abort, request
 import os
 
 app = Flask(__name__)
@@ -15,18 +15,18 @@ def preview(name):
     filename = VALID_PREVIEWS.get(name)
     if not filename:
         abort(404)
-
     return render_template("code-pages.html", content_template=f"previews/{filename}")
-
 
 @app.after_request
 def set_csp(response):
-    response.headers['Content-Security-Policy'] = "default-src 'self'; frame-ancestors 'none';"
-    response.headers['X-Frame-Options'] = 'DENY'
+    # Liberar iframe só pro seu front
+    response.headers['Content-Security-Policy'] = "default-src 'self'; frame-ancestors https://script-store.netlify.app;"
+    # X-Frame-Options ALLOW-FROM não é suportado por todos os browsers, mas vamos deixar aqui
+    response.headers['X-Frame-Options'] = 'ALLOW-FROM https://script-store.netlify.app'
     return response
 
-@app.before_request
-def check_referer():
-    referer = request.headers.get('Referer')
-    if referer and "script-store.netlify.app" not in referer:
-        abort(403)
+
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))  # Porta que a Render define
+    app.run(host="0.0.0.0", port=port)
