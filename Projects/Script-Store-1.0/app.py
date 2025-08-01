@@ -16,7 +16,8 @@ def preview(name):
     if not filename:
         abort(404)
 
-    return render_template("iframe_page.html", content_template=f"previews/{filename}")
+    return render_template("code-pages.html", content_template=f"previews/{filename}")
+
 
 @app.after_request
 def set_csp(response):
