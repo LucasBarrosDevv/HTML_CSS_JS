@@ -1,0 +1,84 @@
+/* header-scroll.css */
+header {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  z-index: 1000;
+}
+
+header.hidden {
+  opacity: 0;
+  transform: translateY(-100%);
+  pointer-events: none;
+}
+.side-menu.hidden-menu {
+  transform: translateX(-100%);
+  opacity: 0;
+  pointer-events: none;
+}
+.side-menu {
+  position: fixed;
+  top: 50%;
+  left: -60%;
+  transform: translateY(-50%);
+  max-height: 90vh; /* opcional, pra evitar que passe da tela */
+  background: #111;
+  padding: 20px;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
+  z-index: 1050;
+  transition: left 0.3s ease;
+  overflow-y: auto;
+  border-radius: 10px;
+}
+
+
+.side-menu.open {
+  left: 0;
+}
+footer {
+  background-color: #111;
+  color: #ccc;
+  padding: 30px 20px;
+  font-size: 14px;
+  margin-top: 80px;
+}
+
+.footer-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-left h2 {
+  font-size: 22px;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+.footer-left a {
+  color: #00e676;
+  text-decoration: none;
+}
+
+.footer-right a {
+  color: #ccc;
+  font-size: 20px;
+  margin: 0 10px;
+  transition: transform 0.3s, color 0.3s;
+}
+
+.footer-right a:hover {
+  color: #00e676;
+  transform: scale(1.2);
+}
+
+@media (min-width: 768px) {
+  .footer-container {
+    flex-direction: row;
+  }
+}

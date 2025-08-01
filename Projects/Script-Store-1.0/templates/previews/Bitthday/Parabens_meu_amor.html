@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='aniversario-completo/style/style.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='aniversario-completo/style/responsive.css') }}">
+    <title>Feliz Aniversário</title>
+</head>
+<body>
+    <section id="feliz-aniversario-meu-amor"></section>
+    <header>
+        <p id="ano">Junho / 2025</p>
+        <div id="container">
+            <p id="none" class="itens">30</p>
+            <p id="none2" class="itens">31</p>
+            <p id="data" class="itens">01</p>
+            <p class="itens">02</p>
+            <p class="itens">03</p>
+            <p class="itens">04</p>
+        </div>
+        <div id="container">
+            <p class="itens">05</p>
+            <p class="itens">06</p>
+            <p class="itens">07</p>
+            <p class="itens">08</p>
+            <p class="itens">09</p>
+            <p class="itens">10</p>
+        </div>
+    </header>
+
+    <h1 id="titulo-principal">Feliz Aniversário<br>Meu Amooooor !!</h1>
+
+    <div id="imagem-bolo">
+        <img id="bolo_grande" src="{{ url_for('static', filename='aniversario-completo/imagens/17-anos.png') }}" alt="Bolo de Aniversário" />
+    </div>
+
+    <div id="confetes-container"></div>
+
+    <div id="parabens">
+        <p id="frase-parabens"><strong>Parabéns Meu amor!</strong> <br> Sou muito grato por ter você na minha vida...</p>
+    </div>
+
+    <main id="principal">
+        <section id="insta">
+            <div id="perfil-container">
+                <img id="perfil" src="{{ url_for('static', filename='aniversario-completo/imagem_Luiza/Perfil_luiza.jpg') }}" alt="perfil" />
+                <p>Luiza Ferreira <img id="verificado" src="{{ url_for('static', filename='aniversario-completo/imagens/verificado.png') }}" alt="Verificado"> <br><i>imperatriz</i></p>
+            </div>
+
+            <div class="carrossel">
+                <img class="slides" src="{{ url_for('static', filename='aniversario-completo/imagem_Luiza/ft-01.jpg') }}" alt="Foto 1" />
+                <img class="slides" src="{{ url_for('static', filename='aniversario-completo/imagem_Luiza/ft-05.jpg') }}" alt="Foto 5" />
+                <img class="slides" src="{{ url_for('static', filename='aniversario-completo/imagem_Luiza/ft-12.jpg') }}" alt="Foto 2" />
+            </div>
+
+            <div class="dots">
+                <span class="dot active" onclick="moveToSlide(0)"></span>
+                <span class="dot" onclick="moveToSlide(1)"></span>
+                <span class="dot" onclick="moveToSlide(2)"></span>
+            </div>
+
+            <div id="curtida">
+                <img id="likeIcon" src="{{ url_for('static', filename='aniversario-completo/imagens/coracao.png') }}" alt="Curtir" />
+                <p id="quant_like">1.943</p>
+            </div>
+
+            <div id="comentario">
+                <p id="nome-perfil">
+                    <img id="perfil-lucas" src="{{ url_for('static', filename='aniversario-completo/imagem_Luiza/perfil-Lucas.jpg') }}" alt="" />
+                    <i>Lucas Barros</i>
+                </p>
+                <p id="meu-comentario">De longe a mais linda que já entrou na minha vida ❤️</p>
+                <button class="curtir-btn">curtir <span class="contador">1347</span></button>
+            </div>
+        </section>
+
+        <section id="spotify">
+            <h3 class="h3" id="frase-spotify">Músicas que marcaram quando você entrou na minha vida.</h3>
+            <h3 class="h3"><i><img id="ico-spotify" src="{{ url_for('static', filename='aniversario-completo/imagens/spotify.png') }}" alt="">Previas do Spotify</i></h3>
+            <iframe class="audio" src="https://open.spotify.com/embed/track/1i2kguziI3ZbUZnZMKNhQ2?utm_source=generator&theme=0" width="100%" height="152" frameborder="0" allow="autoplay; clipboard-write; encrypted-media;"></iframe>
+        </section>
+
+        <div class="espaco">
+            <div class="sol"></div>
+            <div class="orbita-terra">
+                <div class="terra">
+                    <div class="orbita-lua">
+                        <div class="lua"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section id="temporizador">
+            <h1>Contagem Regressiva<br>para o nível <strong style="color: gold;">18</strong></h1>
+            <div class="contador">
+                <div class="tempo" id="dias">0<span>Dias</span></div>
+                <div class="tempo" id="horas">0<span>Horas</span></div>
+                <div class="tempo" id="minutos">0<span>Minutos</span></div>
+                <div class="tempo" id="segundos">0<span>Segundos</span></div>
+            </div>
+        </section>
+    </main>
+
+    <script src="{{ url_for('static', filename='aniversario-completo/script/script.js') }}"></script>
+</body>
+</html>
