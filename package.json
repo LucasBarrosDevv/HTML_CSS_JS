@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/LucasBarrosDevv/HTML_CSS_JS#readme",
   "dependencies": {
+    "ejs": "^3.1.10",
     "express": "^5.1.0",
     "ws": "^8.18.3"
   }

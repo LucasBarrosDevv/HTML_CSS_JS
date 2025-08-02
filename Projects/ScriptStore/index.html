@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Script Store</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<style>
+  /* RESET & BASE */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  html {
+    font-size: 100%;
+  }
+  body {
+    background-color: black;
+    font-family: Arial, Helvetica, sans-serif;
+    overflow-x: hidden;
+    transition: background-image 1s ease-in-out; /* Adicionado para a transição suave */
+  }
+  /* BACKGROUNDS RESPONSIVOS */
+  @media (max-width: 500px) {
+    body {
+      background-image: url(https://i.pinimg.com/736x/2c/ae/c1/2caec1b40fac82b458eebbf45817fb6c.jpg);
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: cover;
+      background-attachment: fixed;
+    }
+  }
+  @media (min-width: 501px) and (max-width: 1100px) {
+    body {
+      background-image: url(https://i.pinimg.com/736x/2c/ae/c1/2caec1b40fac82b458eebbf45817fb6c.jpg);
+      background-repeat: no-repeat;
+      background-position: top center;
+      background-size: cover;
+      background-attachment: fixed;
+    }
+  }
+  @media (min-width: 1101px) {
+    body {
+      background-image: url(https://rare-gallery.com/uploads/posts/915550-cyberpunk-throne-cyber-tech-technology-cybergirl.jpg);
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: cover;
+      background-attachment: fixed;
+    }
+  }
+  /* HERO SECTION */
+  .hero {
+    height: 100dvh;
+    padding: 1rem;
+    max-width: 480px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    animation: fadeInUp 1s ease-out;
+  }
+  .hero-logo-title {
+    font-weight: 900;
+    text-align: center;
+    margin-top: 2vh;
+    font-size: 2.6rem;
+  }
+  .logo-script {
+    color: #00d1ff;
+  }
+  .logo-store {
+    color: orange;
+  }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    color: #fff200;
+    font-size: 0.8em;
+    justify-content: center;
+    text-align: center;
+  }
+  .hero-content {
+    text-align: center;
+    animation: slideInLeft 1s ease-out;
+    width: 100%;
+  }
+  .hero-title {
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: white;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+  .highlight {
+    color: #00eaff;
+  }
+  .hero-visual {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: float 3s ease-in-out infinite;
+    width: 100%;
+    margin: 2rem 0;
+  }
+  .code-slider-container {
+    width: 100%;
+    overflow: hidden;
+    border-radius: 12px;
+    background: #0000007d;
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+  }
+  .code-slider {
+    display: flex;
+    width: 300%;
+    animation: slide 4s infinite;
+  }
+  .code-preview {
+    flex: 0 0 100%;
+    padding: 1.5rem;
+    color: #ccc;
+    font-family: "Courier New", monospace;
+    font-size: 0.75rem;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+  }
+  .code-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.25rem;
+  }
+  .code-dots {
+    display: flex;
+    gap: 0.5rem;
+  }
+  .code-dots span {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #444;
+  }
+  .code-dots span:nth-child(1) { background: #ff5f57; }
+  .code-dots span:nth-child(2) { background: #ffbd2e; }
+  .code-dots span:nth-child(3) { background: #28ca42; }
+  .code-content {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-weight: bolder;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .code-line {
+    display: block;
+    margin-bottom: 0.2rem;
+  }
+  .cta-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background-color: #00eaff;
+    color: black;
+    padding: 0.8rem 1.5rem;
+    border-radius: 9999px;
+    font-weight: 700;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    max-width: 260px;
+    margin-bottom: 7vh;
+  }
+  .cta-button:hover {
+    background-color: #ff5e01;
+    color: #fff;
+  }
+  .link {
+    text-decoration: none;
+    color: #fff200;
+    font-size: large;
+  }
+  /* ANIMAÇÕES */
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+  @keyframes slide {
+    0%, 33.33% { transform: translateX(0); }
+    44.44%, 77.77% { transform: translateX(-100%); }
+    88.88%, 100% { transform: translateX(-200%); }
+  }
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes slideInLeft {
+    from { opacity: 0; transform: translateX(-30px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  /* SYNTAX HIGHLIGHT */
+  .html .tag { color: #ff79c6; }
+  .html .attr { color: #50fa7b; }
+  .html .string { color: #f1fa8c; }
+  .css .selector { color: #8be9fd; }
+  .css .property { color: #ff79c6; }
+  .css .value { color: #50fa7b; }
+  .js .keyword { color: #ff79c6; }
+  .js .function { color: #50fa7b; }
+  .js .string { color: #f1fa8c; }
+  /* RESPONSIVO */
+  @media (max-width: 380px) {
+    .hero {
+      padding: 1rem;
+    }
+    .hero-logo-title {
+      font-size: 2rem;
+      margin-top: 1vh;
+    }
+    .hero-title {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+    .code-preview {
+      padding: 1rem;
+      font-size: 0.7rem;
+      min-height: 180px;
+    }
+    .cta-button {
+      font-size: 0.9rem;
+      padding: 0.7rem 1.2rem;
+      margin-bottom: 1vh;
+    }
+  }
+  @media (min-width: 381px) and (max-width: 768px) {
+    .hero {
+      max-width: 90%;
+    }
+    .hero-logo-title {
+      font-size: 3rem;
+    }
+    .hero-title {
+      font-size: 1.8rem;
+    }
+    .code-preview {
+      min-height: 220px;
+      font-size: 0.85rem;
+    }
+  }
+  @media (min-width: 769px) and (max-width: 1299px) {
+    .hero { 
+      max-width: 720px; 
+      padding: 2rem; 
+    }
+    .hero-title { 
+      font-size: 2rem; 
+    }
+    .code-preview { 
+      font-size: 0.9rem; 
+      padding: 2rem; 
+      min-height: 250px;
+    }
+  }
+  @media (min-width: 1300px) {
+    .hero { 
+      max-width: 1024px; 
+    }
+    .hero-title { 
+      font-size: 2.5rem; 
+    }
+    .cta-button { 
+      font-size: 1.1rem; 
+      max-width: 280px; 
+    }
+    .code-preview { 
+      font-size: 1rem; 
+      min-height: 280px;
+    }
+  }
+</style>
+</head>
+<body>
+<main class="hero">
+  <div class="hero-content">
+    <h1 class="hero-logo-title">
+      <span class="logo-script">Script</span>
+      <span class="logo-store">Store</span>
+    </h1>
+  </div>
+  
+  <div class="hero-visual">
+    <div class="code-slider-container">
+      <div class="code-slider">
+        <div class="code-preview html">
+          <div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div></div>
+          <div><p>html</p></div>
+          <div class="code-content">
+            <span class="code-line">&lt;<span class="tag">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span>
+            <span class="code-line">  &lt;<span class="tag">h1</span>&gt;Olá Mundo&lt;/<span class="tag">h1</span>&gt;</span>
+            <span class="code-line">&lt;/<span class="tag">div</span>&gt;</span>
+          </div>
+        </div>
+        <div class="code-preview css">
+          <div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div></div>
+          <div><p>css</p></div>
+          <div class="code-content">
+            <span class="code-line"><span class="selector">.container</span> {</span>
+            <span class="code-line">  <span class="property">background</span>: <span class="value">#282c34</span>;</span>
+            <span class="code-line">  <span class="property">color</span>: <span class="value">#61dafb</span>;</span>
+            <span class="code-line">}</span>
+          </div>
+        </div>
+        <div class="code-preview js">
+          <div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div></div>
+          <div><p>js</p></div>
+          <div class="code-content">
+            <span class="code-line"><span class="keyword">function</span> <span class="function">sayHello</span>() {</span>
+            <span class="code-line">  <span class="keyword">return</span> <span class="string">'Olá Mundo!'</span>;</span>
+            <span class="code-line">}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="hero-content">
+    <h2 class="hero-title">
+      Códigos Prontos para <br /> Seu Projeto,
+      <span class="highlight">Sem <br /> Esforço!</span>
+    </h2>
+  </div>
+  
+  <div class="hero-content">
+    <a href="code-pages.html" class="cta-button">
+      <i class="fas fa-rocket"></i>
+      Explorar Códigos
+    </a>
+  </div>
+</main>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const backgrounds = [
+      'https://i.pinimg.com/736x/2c/ae/c1/2caec1b40fac82b458eebbf45817fb6c.jpg',
+      'https://i.pinimg.com/736x/ed/b2/5f/edb25f261d24881517dc8aa0995f3d12.jpg',
+      
+    ];
+    let currentIndex = 0;
+    const body = document.body;
+
+    function changeBackground() {
+      if (window.innerWidth <= 500) {
+        currentIndex = (currentIndex + 1) % backgrounds.length;
+        body.style.backgroundImage = `url(${backgrounds[currentIndex]})`;
+      }
+    }
+    
+    setInterval(changeBackground, 4000);
+  });
+</script>
+
+</body>
+</html>
