@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Gestão - Loja de Utilidades</title>
+    
+    <!-- CSS Responsivo -->
+    <link rel="stylesheet" href="styles/mobile.css">
+    <link rel="stylesheet" href="styles/desktop.css" media="screen and (min-width: 768px)">
+    
+    <!-- Chart.js para gráficos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Ícones Feather -->
+    <script src="https://unpkg.com/feather-icons"></script>
+</head>
+<body>
+    <!-- Header Principal -->
+    <header class="main-header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i data-feather="shopping-bag"></i>
+                    <h1>Loja da Luiza </h1>
+                </div>
+                
+                <nav class="main-nav">
+                    <button class="nav-btn active" data-section="dashboard">
+                        <i data-feather="home"></i>
+                        <span>Dashboard</span>
+                    </button>
+                    <button class="nav-btn" data-section="products">
+                        <i data-feather="package"></i>
+                        <span>Produtos</span>
+                    </button>
+                    <button class="nav-btn" data-section="sales">
+                        <i data-feather="shopping-cart"></i>
+                        <span>Vendas</span>
+                    </button>
+                    <button class="nav-btn" data-section="reports">
+                        <i data-feather="bar-chart-2"></i>
+                        <span>Relatórios</span>
+                    </button>
+                    <button class="nav-btn" data-section="admin">
+                        <i data-feather="settings"></i>
+                        <span>Admin</span>
+                    </button>
+                </nav>
+                
+                <div class="user-info">
+                    <span class="user-name" id="currentUser">Usuário</span>
+                    <button class="logout-btn" id="logoutBtn">
+                        <i data-feather="log-out"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Container Principal -->
+    <main class="main-container">
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="content-section active">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Dashboard</h2>
+                    <p>Visão geral do seu negócio</p>
+                </div>
+                
+                <!-- Cards de Métricas -->
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-icon">
+                            <i data-feather="dollar-sign"></i>
+                        </div>
+                        <div class="metric-info">
+                            <h3 id="totalRevenue">R$ 0,00</h3>
+                            <p>Receita Total</p>
+                        </div>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-icon">
+                            <i data-feather="shopping-cart"></i>
+                        </div>
+                        <div class="metric-info">
+                            <h3 id="totalSales">0</h3>
+                            <p>Vendas Hoje</p>
+                        </div>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-icon">
+                            <i data-feather="package"></i>
+                        </div>
+                        <div class="metric-info">
+                            <h3 id="totalProducts">0</h3>
+                            <p>Produtos</p>
+                        </div>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-icon">
+                            <i data-feather="alert-triangle"></i>
+                        </div>
+                        <div class="metric-info">
+                            <h3 id="lowStock">0</h3>
+                            <p>Estoque Baixo</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Gráficos -->
+                <div class="charts-grid">
+                    <div class="chart-card">
+                        <h3>Vendas dos Últimos 7 Dias</h3>
+                        <canvas id="salesChart"></canvas>
+                    </div>
+                    
+                    <div class="chart-card">
+                        <h3>Produtos Mais Vendidos</h3>
+                        <canvas id="productsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Products Section -->
+        <section id="products" class="content-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Gestão de Produtos</h2>
+                    <button class="btn btn-primary" id="addProductBtn">
+                        <i data-feather="plus"></i>
+                        Novo Produto
+                    </button>
+                </div>
+                
+                <!-- Filtros e Busca -->
+                <div class="filters-section">
+                    <div class="search-box">
+                        <i data-feather="search"></i>
+                        <input type="text" id="productSearch" placeholder="Buscar por nome, código ou categoria...">
+                    </div>
+                    
+                    <div class="filters">
+                        <select id="categoryFilter">
+                            <option value="">Todas as Categorias</option>
+                        </select>
+                        
+                        <select id="statusFilter">
+                            <option value="">Todos os Status</option>
+                            <option value="active">Ativo</option>
+                            <option value="inactive">Inativo</option>
+                            <option value="low-stock">Estoque Baixo</option>
+                        </select>
+                        
+                        <div class="price-range">
+                            <label>Preço:</label>
+                            <input type="number" id="minPrice" placeholder="Mín">
+                            <input type="number" id="maxPrice" placeholder="Máx">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Lista de Produtos -->
+                <div class="products-grid" id="productsGrid">
+                    <!-- Produtos serão carregados via JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Sales Section -->
+        <section id="sales" class="content-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Ponto de Venda</h2>
+                    <button class="btn btn-secondary" id="viewSalesHistoryBtn">
+                        <i data-feather="list"></i>
+                        Histórico
+                    </button>
+                </div>
+                
+                <div class="sales-layout">
+                    <!-- Lista de Produtos para Venda -->
+                    <div class="products-list">
+                        <div class="search-box">
+                            <i data-feather="search"></i>
+                            <input type="text" id="saleProductSearch" placeholder="Buscar produto...">
+                        </div>
+                        <div class="product-list" id="saleProductsList">
+                            <!-- Produtos para venda -->
+                        </div>
+                    </div>
+                    
+                    <!-- Carrinho de Compras -->
+                    <div class="shopping-cart">
+                        <h3>Carrinho</h3>
+                        <div class="cart-items" id="cartItems">
+                            <p class="empty-cart">Carrinho vazio</p>
+                        </div>
+                        
+                        <div class="cart-summary">
+                            <div class="summary-row">
+                                <span>Subtotal:</span>
+                                <span id="cartSubtotal">R$ 0,00</span>
+                            </div>
+                            <div class="summary-row total">
+                                <span>Total:</span>
+                                <span id="cartTotal">R$ 0,00</span>
+                            </div>
+                        </div>
+                        
+                        <div class="payment-section">
+                            <label>Forma de Pagamento:</label>
+                            <select id="paymentMethod">
+                                <option value="cash">Dinheiro</option>
+                                <option value="card">Cartão</option>
+                                <option value="pix">PIX</option>
+                                <option value="check">Cheque</option>
+                            </select>
+                            
+                            <button class="btn btn-primary btn-large" id="finalizeSaleBtn" disabled>
+                                <i data-feather="check"></i>
+                                Finalizar Venda
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reports Section -->
+        <section id="reports" class="content-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Relatórios</h2>
+                    <div class="date-range">
+                        <input type="date" id="startDate">
+                        <input type="date" id="endDate">
+                        <button class="btn btn-secondary" id="generateReportBtn">
+                            <i data-feather="refresh-cw"></i>
+                            Gerar
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Relatórios Cards -->
+                <div class="reports-grid">
+                    <div class="report-card">
+                        <h3>Resumo Financeiro</h3>
+                        <div class="report-content">
+                            <div class="report-item">
+                                <span>Total de Vendas:</span>
+                                <span id="reportTotalSales">R$ 0,00</span>
+                            </div>
+                            <div class="report-item">
+                                <span>Lucro Bruto:</span>
+                                <span id="reportGrossProfit">R$ 0,00</span>
+                            </div>
+                            <div class="report-item">
+                                <span>Margem de Lucro:</span>
+                                <span id="reportProfitMargin">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="report-card">
+                        <h3>Produtos Mais Vendidos</h3>
+                        <div class="report-content" id="topProductsList">
+                            <!-- Lista será gerada via JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <div class="report-card">
+                        <h3>Formas de Pagamento</h3>
+                        <canvas id="paymentMethodsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Admin Section -->
+        <section id="admin" class="content-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Painel Administrativo</h2>
+                </div>
+                
+                <div class="admin-tabs">
+                    <button class="tab-btn active" data-tab="users">Usuários</button>
+                    <button class="tab-btn" data-tab="cashflow">Caixa</button>
+                    <button class="tab-btn" data-tab="settings">Configurações</button>
+                </div>
+                
+                <!-- Users Tab -->
+                <div id="users-tab" class="tab-content active">
+                    <div class="tab-header">
+                        <h3>Gestão de Usuários</h3>
+                        <button class="btn btn-primary" id="addUserBtn">
+                            <i data-feather="user-plus"></i>
+                            Novo Usuário
+                        </button>
+                    </div>
+                    
+                    <div class="users-list" id="usersList">
+                        <!-- Lista de usuários -->
+                    </div>
+                </div>
+                
+                <!-- Cashflow Tab -->
+                <div id="cashflow-tab" class="tab-content">
+                    <div class="tab-header">
+                        <h3>Controle de Caixa</h3>
+                        <div class="cash-balance">
+                            <span>Saldo Atual: </span>
+                            <span id="currentBalance">R$ 0,00</span>
+                        </div>
+                    </div>
+                    
+                    <div class="cash-operations">
+                        <div class="cash-form">
+                            <h4>Nova Operação</h4>
+                            <select id="operationType">
+                                <option value="in">Entrada</option>
+                                <option value="out">Saída</option>
+                            </select>
+                            <input type="number" id="operationAmount" placeholder="Valor" step="0.01">
+                            <input type="text" id="operationDescription" placeholder="Descrição">
+                            <button class="btn btn-primary" id="addOperationBtn">
+                                <i data-feather="plus"></i>
+                                Adicionar
+                            </button>
+                        </div>
+                        
+                        <div class="cash-history" id="cashHistory">
+                            <!-- Histórico de operações -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Settings Tab -->
+                <div id="settings-tab" class="tab-content">
+                    <div class="tab-header">
+                        <h3>Configurações do Sistema</h3>
+                    </div>
+                    
+                    <div class="settings-form">
+                        <div class="setting-group">
+                            <label>Nome da Loja:</label>
+                            <input type="text" id="storeName" value="Loja de Utilidades">
+                        </div>
+                        
+                        <div class="setting-group">
+                            <label>Estoque Mínimo (Alerta):</label>
+                            <input type="number" id="minStockAlert" value="5">
+                        </div>
+                        
+                        <div class="setting-group">
+                            <label>Moeda:</label>
+                            <select id="currency">
+                                <option value="BRL">Real (R$)</option>
+                                <option value="USD">Dólar ($)</option>
+                                <option value="EUR">Euro (€)</option>
+                            </select>
+                        </div>
+                        
+                        <button class="btn btn-primary" id="saveSettingsBtn">
+                            <i data-feather="save"></i>
+                            Salvar Configurações
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal para Cadastro/Edição de Produto -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="productModalTitle">Novo Produto</h3>
+                <button class="close-btn" id="closeProductModal">
+                    <i data-feather="x"></i>
+                </button>
+            </div>
+            
+            <form id="productForm" class="modal-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Código:</label>
+                        <input type="text" id="productCode" readonly>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Nome do Produto:</label>
+                        <input type="text" id="productName" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Descrição:</label>
+                    <textarea id="productDescription" rows="3"></textarea>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Categoria:</label>
+                        <select id="productCategory" required>
+                            <option value="">Selecione...</option>
+                            <option value="alimentacao">Alimentação</option>
+                            <option value="limpeza">Limpeza</option>
+                            <option value="higiene">Higiene</option>
+                            <option value="eletronicos">Eletrônicos</option>
+                            <option value="utilidades">Utilidades</option>
+                            <option value="decoracao">Decoração</option>
+                            <option value="papelaria">Papelaria</option>
+                            <option value="outros">Outros</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Quantidade em Estoque:</label>
+                        <input type="number" id="productStock" min="0" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Preço de Custo (R$):</label>
+                        <input type="number" id="productCost" step="0.01" min="0" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Preço de Venda (R$):</label>
+                        <input type="number" id="productPrice" step="0.01" min="0" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>URL da Imagem:</label>
+                    <input type="url" id="productImage" placeholder="https://exemplo.com/imagem.jpg">
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="cancelProductBtn">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Salvar Produto</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal para Cadastro de Usuário -->
+    <div id="userModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Novo Usuário</h3>
+                <button class="close-btn" id="closeUserModal">
+                    <i data-feather="x"></i>
+                </button>
+            </div>
+            
+            <form id="userForm" class="modal-form">
+                <div class="form-group">
+                    <label>Nome:</label>
+                    <input type="text" id="userName" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>E-mail:</label>
+                    <input type="email" id="userEmail" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Senha:</label>
+                    <input type="password" id="userPassword" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Nível de Acesso:</label>
+                    <select id="userRole" required>
+                        <option value="">Selecione...</option>
+                        <option value="vendedor">Vendedor</option>
+                        <option value="gerente">Gerente</option>
+                        <option value="admin">Administrador</option>
+                    </select>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="cancelUserBtn">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Salvar Usuário</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loading" class="loading-overlay">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Scripts -->
+    <script src="scripts/auth.js"></script>
+    <script src="scripts/products.js"></script>
+    <script src="scripts/sales.js"></script>
+    <script src="scripts/reports.js"></script>
+    <script src="scripts/admin.js"></script>
+    <script src="scripts/main.js"></script>
+</body>
+</html>

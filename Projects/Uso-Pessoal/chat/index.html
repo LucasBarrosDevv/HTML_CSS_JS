@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Xtreino 4x4</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <div id="login" class="card">
+      <h2>Escolha seu ID</h2>
+      <input type="text" id="userInput" placeholder="Digite seu nome ou ID fictício">
+      <button onclick="salvarUsuario()">Entrar</button>
+    </div>
+
+    <div id="menu" class="card hidden">
+      <h2>Bem-vindo, <span id="nomeUsuario"></span>!</h2>
+      <button onclick="abrirCriacao()">Criar XTreino</button>
+    </div>
+
+    <div id="criacao" class="card hidden">
+      <h3>Digite o código de validação</h3>
+      <input type="password" id="codigoInput" placeholder="Código...">
+      <button onclick="validarCodigo()">Validar</button>
+    </div>
+
+    <div id="sala" class="card hidden">
+      <h2>Sala de XTreino</h2>
+      <button onclick="entrarNaSala()">Entrar na Sala</button>
+      <p>Jogadores na sala:</p>
+      <ul id="listaJogadores"></ul>
+      <button onclick="sortearTimes()">Sortear Times</button>
+
+      <div class="times hidden" id="resultadoTimes">
+        <h3>Time Esquerda</h3>
+        <ul id="timeA"></ul>
+        <h3>Time Direita</h3>
+        <ul id="timeB"></ul>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

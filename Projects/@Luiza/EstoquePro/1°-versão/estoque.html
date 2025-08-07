@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Estoque</title>
+  <link rel="stylesheet" href="styles/estoque.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+</head>
+<body>
+  <main>
+    <div class="info-valor">
+      <span class="label">Valor em Estoque:</span>
+      <div class="valor">
+        <span id="valor-total-display">R$ 0,00</span>
+        <button id="toggle-valor" class="toggle-btn">
+          <i class="fas fa-eye"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="seletor-tipo-valor">
+      <select id="tipo-valor">
+        <option value="venda" selected>Preço de Venda</option>
+        <option value="custo">Preço de Custo</option>
+      </select>
+    </div>
+
+    <section class="filtros">
+  
+      <div class="filtros-header">
+        <input type="text" placeholder="Buscar por nome, código ou categoria..." />
+        <button id="toggle-filtros" class="expander">
+          <i class="fas fa-chevron-down"></i>
+        </button>
+      </div>
+      <div id="filtros-ocultos" class="filtros-ocultos">
+        <div class="selects">
+          <select>
+            <option>Todas as Categorias</option>
+          </select>
+          <select>
+            <option>Todos os Status</option>
+          </select>
+        </div>
+      </div>
+      <a href="cadastro-produto.html">
+    <button class="adicionar">
+        <p>Novo</p>
+    </button>
+</a>
+    </section>
+
+    <section class="produtos">
+      <div class="card">
+        <div class="info">
+          <div class="top">
+            <span>#1</span>
+            <span>Ativo</span>
+          </div>
+          <h2>Detergente Ypê</h2>
+          <p class="categoria">Limpeza</p>
+          <p class="descricao">Detergente líquido concentrado para lavar louças</p>
+          <div class="dados">
+            <div><strong>PREÇO</strong><br /><span class="preco">R$ 2.99</span></div>
+            <div><strong>ESTOQUE</strong><br />50 un.</div>
+          </div>
+          <div class="dados">
+            <div><strong>CUSTO</strong><br />R$ 1.50</div>
+          </div>
+          <div class="acoes">
+            <button class="editar"><i class="fas fa-pen"></i> Editar</button>
+            <button class="desativar"><i class="fas fa-power-off"></i> Desativar</button>
+            <button class="excluir"><i class="fas fa-trash"></i> Excluir</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="scripts/estoque.js"></script>
+</body>
+</html>

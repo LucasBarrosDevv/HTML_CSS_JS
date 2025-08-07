@@ -1,0 +1,554 @@
+/* =================================================================
+   SISTEMA DE GESTÃO - Loja de Utilidades
+   CSS Desktop (Breakpoint: 768px+)
+   ================================================================= */
+
+/* Media Queries para Desktop */
+@media screen and (min-width: 768px) {
+    
+    /* Header Responsivo */
+    .header-content {
+        flex-wrap: nowrap;
+        align-items: center;
+    }
+    
+    .logo {
+        margin-bottom: 0;
+    }
+    
+    .logo h1 {
+        font-size: var(--font-size-3xl);
+    }
+    
+    /* Navegação Desktop */
+    .main-nav {
+        margin-bottom: 0;
+        flex-wrap: nowrap;
+    }
+    
+    .nav-btn {
+        padding: var(--space-3) var(--space-4);
+    }
+    
+    .nav-btn span {
+        display: inline;
+    }
+    
+    /* Informações do Usuário */
+    .user-name {
+        display: inline;
+    }
+    
+    /* Container Principal */
+    .container {
+        padding: 0 var(--space-6);
+    }
+    
+    .main-container {
+        padding: var(--space-8) 0;
+    }
+    
+    /* Section Header */
+    .section-header {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    /* Grid de Métricas */
+    .metrics-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    /* Grid de Gráficos */
+    .charts-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    /* Filtros */
+    .filters {
+        flex-direction: row;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+    
+    .filters select,
+    .filters input {
+        width: auto;
+        min-width: 150px;
+    }
+    
+    .price-range {
+        margin-left: auto;
+    }
+    
+    /* Grid de Produtos */
+    .products-grid {
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    }
+    
+    /* Layout de Vendas */
+    .sales-layout {
+        flex-direction: row;
+        gap: var(--space-8);
+    }
+    
+    .products-list {
+        flex: 2;
+    }
+    
+    .shopping-cart {
+        flex: 1;
+        max-width: 400px;
+        top: var(--space-8);
+    }
+    
+    /* Date Range */
+    .date-range {
+        flex-direction: row;
+        align-items: center;
+    }
+    
+    /* Reports Grid */
+    .reports-grid {
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    }
+    
+    /* Admin Tabs */
+    .tab-header {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .cash-operations {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+    
+    .cash-form {
+        flex: 1;
+        max-width: 400px;
+    }
+    
+    .cash-history {
+        flex: 2;
+    }
+    
+    /* Form Row */
+    .form-row {
+        flex-direction: row;
+        gap: var(--space-6);
+    }
+    
+    .form-row .form-group {
+        flex: 1;
+    }
+    
+    /* Form Actions */
+    .form-actions {
+        flex-direction: row;
+        justify-content: flex-end;
+    }
+    
+    .form-actions .btn {
+        width: auto;
+    }
+    
+    /* Modal Desktop */
+    .modal-content {
+        max-width: 600px;
+    }
+    
+    /* Toast Container */
+    .toast-container {
+        top: var(--space-6);
+        right: var(--space-6);
+    }
+}
+
+/* Breakpoint para Telas Grandes (1024px+) */
+@media screen and (min-width: 1024px) {
+    
+    /* Container Maior */
+    .container {
+        max-width: 1400px;
+        padding: 0 var(--space-8);
+    }
+    
+    /* Header com mais espaço */
+    .header-content {
+        padding: var(--space-6) 0;
+    }
+    
+    /* Navegação com mais espaço */
+    .nav-btn {
+        padding: var(--space-4) var(--space-6);
+        font-size: var(--font-size-base);
+    }
+    
+    /* Grid de Métricas 4 colunas */
+    .metrics-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    /* Grid de Produtos com mais colunas */
+    .products-grid {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+    
+    /* Layout de Vendas otimizado */
+    .sales-layout {
+        gap: var(--space-12);
+    }
+    
+    .shopping-cart {
+        max-width: 450px;
+    }
+    
+    /* Reports com 3 colunas */
+    .reports-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    /* Modal maior */
+    .modal-content {
+        max-width: 800px;
+    }
+    
+    /* Espaçamentos maiores */
+    .main-container {
+        padding: var(--space-12) 0;
+    }
+    
+    .section-header {
+        margin-bottom: var(--space-12);
+    }
+    
+    /* Cards com hover effect melhorado */
+    .metric-card:hover,
+    .product-card:hover,
+    .chart-card:hover,
+    .report-card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-xl);
+    }
+    
+    /* Animações suaves para desktop */
+    .metric-card,
+    .product-card,
+    .chart-card,
+    .report-card {
+        transition: transform var(--transition-base), box-shadow var(--transition-base);
+    }
+}
+
+/* Breakpoint para Telas Extra Grandes (1440px+) */
+@media screen and (min-width: 1440px) {
+    
+    /* Container máximo */
+    .container {
+        max-width: 1600px;
+    }
+    
+    /* Typography maior */
+    .logo h1 {
+        font-size: var(--font-size-4xl);
+    }
+    
+    .section-header h2 {
+        font-size: var(--font-size-4xl);
+    }
+    
+    /* Grid de Produtos ainda mais colunas */
+    .products-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+    
+    /* Sidebar fixa no layout de vendas */
+    .shopping-cart {
+        position: fixed;
+        right: var(--space-8);
+        top: 140px;
+        max-width: 500px;
+        max-height: calc(100vh - 160px);
+        overflow-y: auto;
+    }
+    
+    .products-list {
+        margin-right: 520px;
+    }
+    
+    /* Grid de reports com 4 colunas */
+    .reports-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    /* Métricas com ícones maiores */
+    .metric-icon {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .metric-icon i {
+        width: 32px;
+        height: 32px;
+    }
+    
+    /* Cards com padding maior */
+    .metric-card,
+    .chart-card,
+    .report-card {
+        padding: var(--space-8);
+    }
+    
+    /* Form com layout otimizado */
+    .form-row {
+        gap: var(--space-8);
+    }
+    
+    /* Admin tabs com mais espaço */
+    .admin-tabs {
+        margin-bottom: var(--space-8);
+    }
+    
+    .tab-btn {
+        padding: var(--space-4) var(--space-6);
+        font-size: var(--font-size-lg);
+    }
+}
+
+/* Media Query para Telas Ultra Wide (1920px+) */
+@media screen and (min-width: 1920px) {
+    
+    /* Layout otimizado para telas ultra wide */
+    .container {
+        max-width: 1800px;
+    }
+    
+    /* Grid de produtos com até 6 colunas */
+    .products-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+    
+    /* Dashboard com layout de 3 colunas */
+    .dashboard-layout {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: var(--space-12);
+    }
+    
+    /* Charts grid com mais espaço */
+    .charts-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    /* Reports em 5 colunas */
+    .reports-grid {
+        grid-template-columns: repeat(5, 1fr);
+    }
+    
+    /* Typography ainda maior */
+    .metric-info h3 {
+        font-size: var(--font-size-3xl);
+    }
+    
+    /* Espaçamentos generosos */
+    .main-container {
+        padding: var(--space-16) 0;
+    }
+    
+    .section-header {
+        margin-bottom: var(--space-16);
+    }
+}
+
+/* Melhorias para Dispositivos com Touch */
+@media (hover: hover) and (pointer: fine) {
+    
+    /* Hover effects apenas para dispositivos com mouse */
+    .btn:hover {
+        transform: translateY(-2px);
+    }
+    
+    .nav-btn:hover {
+        background: rgba(255, 255, 255, 0.3);
+    }
+    
+    .product-card:hover .product-actions {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    .product-actions {
+        opacity: 0.7;
+        transform: translateY(5px);
+        transition: var(--transition-base);
+    }
+}
+
+/* Print Styles */
+@media print {
+    
+    /* Ocultar elementos desnecessários */
+    .main-header,
+    .nav-btn,
+    .btn,
+    .modal,
+    .loading-overlay,
+    .toast-container {
+        display: none !important;
+    }
+    
+    /* Layout limpo para impressão */
+    body {
+        background: white;
+        color: black;
+    }
+    
+    .main-container {
+        padding: 0;
+    }
+    
+    .content-section {
+        display: block !important;
+    }
+    
+    .content-section:not(.active) {
+        display: none !important;
+    }
+    
+    /* Cards sem sombra */
+    .metric-card,
+    .chart-card,
+    .report-card,
+    .product-card {
+        box-shadow: none;
+        border: 1px solid var(--gray-300);
+    }
+    
+    /* Typography otimizada para impressão */
+    .section-header h2 {
+        font-size: var(--font-size-2xl);
+        margin-bottom: var(--space-4);
+    }
+}
+
+/* Suporte para Modo Escuro */
+@media (prefers-color-scheme: dark) {
+    
+    :root {
+        --gray-50: #18181b;
+        --gray-100: #27272a;
+        --gray-200: #3f3f46;
+        --gray-300: #52525b;
+        --gray-400: #71717a;
+        --gray-500: #a1a1aa;
+        --gray-600: #d4d4d8;
+        --gray-700: #e4e4e7;
+        --gray-800: #f4f4f5;
+        --gray-900: #fafafa;
+    }
+    
+    body {
+        background-color: var(--gray-50);
+        color: var(--gray-700);
+    }
+    
+    /* Cards com fundo escuro */
+    .metric-card,
+    .chart-card,
+    .report-card,
+    .product-card,
+    .shopping-cart,
+    .products-list,
+    .cash-form,
+    .modal-content {
+        background: var(--gray-100);
+        border: 1px solid var(--gray-200);
+    }
+    
+    /* Inputs com tema escuro */
+    input,
+    select,
+    textarea {
+        background: var(--gray-100);
+        color: var(--gray-700);
+        border-color: var(--gray-300);
+    }
+    
+    input:focus,
+    select:focus,
+    textarea:focus {
+        border-color: var(--primary-color);
+        background: var(--gray-50);
+    }
+}
+
+/* Otimizações para Performance */
+@media screen and (min-width: 768px) {
+    
+    /* GPU Acceleration para animações */
+    .metric-card,
+    .product-card,
+    .chart-card,
+    .report-card,
+    .btn {
+        will-change: transform, box-shadow;
+        transform: translateZ(0);
+    }
+    
+    /* Lazy loading para imagens */
+    .product-image,
+    .sale-product-image {
+        loading: lazy;
+    }
+}
+
+/* Acessibilidade Melhorada */
+@media (prefers-reduced-motion: reduce) {
+    
+    /* Reduzir animações para usuários sensíveis */
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    .spinner {
+        animation: none;
+    }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+    
+    /* Aumentar contraste */
+    .btn-primary {
+        background: #000;
+        color: #fff;
+        border: 2px solid #fff;
+    }
+    
+    .btn-secondary {
+        background: #fff;
+        color: #000;
+        border: 2px solid #000;
+    }
+    
+    input,
+    select,
+    textarea {
+        border: 2px solid #000;
+    }
+    
+    .metric-card,
+    .product-card,
+    .chart-card,
+    .report-card {
+        border: 2px solid #000;
+    }
+}

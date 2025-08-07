@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cadastro de Produtos</title>
+  <link rel="stylesheet" href="styles/cadastro-produtos.css">
+</head>
+<body>
+  <main class="container">
+    <h1>Cadastro de Produtos</h1>
+    <form id="produtoForm">
+      <input type="text" id="nome" placeholder="Nome do Produto" required />
+      <textarea id="descricao" placeholder="Descrição"></textarea>
+      <input type="text" id="categoria" placeholder="Categoria" required />
+      
+      <div class="duplo">
+        <input type="number" id="quantidade" placeholder="Quantidade" required />
+        <input type="number" id="custo" placeholder="Custo (R$)" step="0.01" required />
+      </div>
+
+      <div class="duplo">
+        <input type="number" id="preco_venda" placeholder="Preço de Venda (R$)" step="0.01" required />
+        <select id="status" required>
+          <option value="">Status</option>
+          <option value="ativo">Ativo</option>
+          <option value="inativo">Inativo</option>
+          <option value="esgotado">Esgotado</option>
+        </select>
+      </div>
+
+      <button type="submit">Cadastrar Produto</button>
+      <p id="msg"></p>
+    </form>
+  </main>
+
+  <script src="scripts/cadastro-produtos.js"></script>
+</body>
+</html>
