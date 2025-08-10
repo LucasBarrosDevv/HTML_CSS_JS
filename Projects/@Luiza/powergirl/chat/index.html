@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness Feminino</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: white;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+
+            
+            height: 90vh;
+        }
+        .peso-ico {
+           /* transform: scaleX(-1); */
+            width: 150px;
+
+        }
+
+        
+        /* Calendário */
+        .calendar {
+            background-color: black;
+            border-radius: 15px;
+            padding: 20px;
+            max-width: 300px;
+            width: 90%;
+
+            margin-top: 5%;
+        }
+
+        .calendar-header {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: red;
+            margin-bottom: 10px;
+
+            padding-bottom: 10px;
+        }
+
+        .calendar-days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            text-align: center;
+        }
+
+        .day-name {
+            font-weight: bold;
+            color: #ccc;
+        }
+        .no-train {
+            opacity: 0.5;
+        }
+
+        .day {
+            padding: 10px;
+            border-radius: 50%;
+            cursor: default;
+        }
+
+        .today {
+            background-color: red;
+            color: #fff;
+        }
+
+        /* Span do dia da semana */
+        .day-text {
+            margin: 20px 0;
+            color: #ff1493;
+            font-size: 1.3rem;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        /* Botão */
+        .start-button {
+            background-color: #ff1493;
+            color: #fff;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(255, 20, 147, 0.5);
+            transition: background-color 0.3s ease;
+        }
+
+        .start-button:hover {
+            background-color: #e01385;
+        }
+
+        /* Responsivo */
+        @media (max-width: 500px) {
+            .calendar {
+                max-width: 100%;
+                padding: 15px;
+            }
+
+            .calendar-header {
+                font-size: 1.3rem;
+            }
+
+            .day-text {
+                font-size: 1.1rem;
+            }
+
+            .start-button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <img class="peso-ico" src="https://cdn-icons-png.flaticon.com/512/1000/1000059.png" alt="">
+
+    <div class="calendar">
+        <div class="calendar-header" id="month-year"></div>
+        <div class="calendar-days" id="calendar-days"></div>
+    </div>
+
+    <div class="day-text" id="day-text"></div>
+
+    <button class="start-button" onclick="location.href='treino.html'">Começar treino</button>
+
+    <script>
+        const monthYear = document.getElementById('month-year');
+        const calendarDays = document.getElementById('calendar-days');
+        const dayText = document.getElementById('day-text');
+
+        const now = new Date();
+        const currentMonth = now.getMonth();
+        const currentYear = now.getFullYear();
+        const currentDay = now.getDate();
+        const currentWeekday = now.getDay(); // 0=domingo, 1=segunda, etc.
+
+        const monthNames = [
+            'JANEIRO', 'FEVEREIRO', 'MARÇO', 'ABRIL', 'MAIO', 'JUNHO',
+            'JULHO', 'AGOSTO', 'SETEMBRO', 'OUTUBRO', 'NOVEMBRO', 'DEZEMBRO'
+        ];
+
+        const weekdayNames = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
+
+        const weekdayLetters = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'];
+
+        // Mostra mês e ano
+        monthYear.textContent = monthNames[currentMonth];
+
+
+        // Cabeçalho dos dias da semana
+        weekdayLetters.forEach(letter => {
+            const div = document.createElement('div');
+            div.textContent = letter;
+            div.classList.add('day-name');
+            calendarDays.appendChild(div);
+        });
+
+        // Descobre qual dia da semana começa o mês
+        const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+        const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+        // Preenche espaços vazios antes do primeiro dia
+        for (let i = 0; i < firstDay; i++) {
+            calendarDays.appendChild(document.createElement('div'));
+        }
+
+        // Preenche os dias do mês
+        for (let day = 1; day <= daysInMonth; day++) {
+            const div = document.createElement('div');
+            div.textContent = day;
+            div.classList.add('day');
+
+            // Cria uma data para verificar o dia da semana
+            const dayDate = new Date(currentYear, currentMonth, day);
+
+            // Se for domingo, adicione a classe de transparência
+            if (dayDate.getDay() === 0) {
+                div.classList.add('no-train');
+            }
+
+            if (day === currentDay) {
+                div.classList.add('today');
+            }
+
+            calendarDays.appendChild(div);
+        }
+
+        // Texto do dia da semana
+        dayText.textContent = ` ${weekdayNames[currentWeekday]}`;
+    </script>
+</body>
+</html>

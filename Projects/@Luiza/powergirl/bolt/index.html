@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitGirl - Seu Treino Perfeito</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: white;
+        }
+
+        .app-container {
+            max-width: 400px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #ff1744, #e91e63, #ff6b9d);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .calendar {
+            background: rgba(26, 26, 46, 0.9);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 23, 68, 0.1);
+            width: 100%;
+        }
+
+        .calendar-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .month-year {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ff1744;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .weekdays {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .weekday {
+            text-align: center;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #b0b0b0;
+            padding: 8px;
+        }
+
+        .days-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 6px;
+        }
+
+        .day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #e0e0e0;
+            border-radius: 50%;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .day:hover {
+            background: rgba(255, 23, 68, 0.1);
+            transform: scale(1.1);
+        }
+
+        .day.other-month {
+            color: #555;
+        }
+
+        .day.today {
+            background: linear-gradient(135deg, #ff1744, #e91e63);
+            color: white;
+            font-weight: 700;
+            box-shadow: 0 4px 15px rgba(255, 23, 68, 0.4);
+        }
+
+        .workout-info {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #e91e63, #ff6b9d);
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(233, 30, 99, 0.3);
+            width: 100%;
+        }
+
+        .workout-day {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .start-button {
+            background: linear-gradient(135deg, #ff1744, #e91e63);
+            border: none;
+            padding: 18px 40px;
+            border-radius: 50px;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 25px rgba(255, 23, 68, 0.4);
+            width: 100%;
+            max-width: 280px;
+        }
+
+        .start-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(255, 23, 68, 0.6);
+        }
+
+        .start-button:active {
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 480px) {
+            .app-container {
+                max-width: 350px;
+                gap: 25px;
+            }
+
+            .logo {
+                font-size: 2rem;
+            }
+
+            .calendar {
+                padding: 20px;
+            }
+
+            .month-year {
+                font-size: 1.3rem;
+            }
+
+            .workout-day {
+                font-size: 1.1rem;
+            }
+
+            .start-button {
+                font-size: 1.1rem;
+                padding: 16px 35px;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .app-container {
+                max-width: 450px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="logo">FitGirl</div>
+        
+        <div class="calendar">
+            <div class="calendar-header">
+                <div class="month-year" id="monthYear"></div>
+            </div>
+            
+            <div class="weekdays">
+                <div class="weekday">D</div>
+                <div class="weekday">S</div>
+                <div class="weekday">T</div>
+                <div class="weekday">Q</div>
+                <div class="weekday">Q</div>
+                <div class="weekday">S</div>
+                <div class="weekday">S</div>
+            </div>
+            
+            <div class="days-grid" id="daysGrid"></div>
+        </div>
+
+        <div class="workout-info">
+            <div class="workout-day" id="workoutDay">Treino de Hoje</div>
+        </div>
+
+        <button class="start-button" onclick="startWorkout()">Começar Treino</button>
+    </div>
+
+    <script>
+        // Configuração do calendário
+        function initCalendar() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = now.getMonth();
+            const today = now.getDate();
+
+            // Array com nomes dos meses
+            const monthNames = [
+                'JANEIRO', 'FEVEREIRO', 'MARÇO', 'ABRIL', 'MAIO', 'JUNHO',
+                'JULHO', 'AGOSTO', 'SETEMBRO', 'OUTUBRO', 'NOVEMBRO', 'DEZEMBRO'
+            ];
+
+            // Array com nomes dos dias da semana
+            const dayNames = [
+                'Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'
+            ];
+
+            // Configurar o cabeçalho do mês
+            document.getElementById('monthYear').textContent = `${monthNames[month]} ${year}`;
+
+            // Configurar o dia do treino
+            const dayOfWeek = now.getDay();
+            document.getElementById('workoutDay').textContent = `Treino de ${dayNames[dayOfWeek]}`;
+
+            // Gerar os dias do calendário
+            const daysGrid = document.getElementById('daysGrid');
+            daysGrid.innerHTML = '';
+
+            // Primeiro dia do mês e último dia do mês anterior
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const daysInPrevMonth = new Date(year, month, 0).getDate();
+
+            // Adicionar dias do mês anterior (se necessário)
+            for (let i = firstDay - 1; i >= 0; i--) {
+                const dayElement = document.createElement('div');
+                dayElement.className = 'day other-month';
+                dayElement.textContent = daysInPrevMonth - i;
+                daysGrid.appendChild(dayElement);
+            }
+
+            // Adicionar dias do mês atual
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayElement = document.createElement('div');
+                dayElement.className = 'day';
+                dayElement.textContent = day;
+                
+                if (day === today) {
+                    dayElement.classList.add('today');
+                }
+                
+                daysGrid.appendChild(dayElement);
+            }
+
+            // Adicionar dias do próximo mês (para completar a grade)
+            const totalCells = daysGrid.children.length;
+            const remainingCells = 42 - totalCells; // 6 semanas * 7 dias
+            
+            for (let day = 1; day <= remainingCells && totalCells < 42; day++) {
+                const dayElement = document.createElement('div');
+                dayElement.className = 'day other-month';
+                dayElement.textContent = day;
+                daysGrid.appendChild(dayElement);
+            }
+        }
+
+        // Função para iniciar o treino
+        function startWorkout() {
+            // Animação do botão
+            const button = document.querySelector('.start-button');
+            button.style.transform = 'scale(0.95)';
+            
+            setTimeout(() => {
+                button.style.transform = 'scale(1)';
+                // Redirecionar para a página de treino
+                window.location.href = 'treino.html';
+            }, 150);
+        }
+
+        // Inicializar o calendário quando a página carregar
+        document.addEventListener('DOMContentLoaded', initCalendar);
+
+        // Atualizar o calendário à meia-noite
+        setInterval(() => {
+            const now = new Date();
+            if (now.getHours() === 0 && now.getMinutes() === 0) {
+                initCalendar();
+            }
+        }, 60000);
+    </script>
+</body>
+</html>

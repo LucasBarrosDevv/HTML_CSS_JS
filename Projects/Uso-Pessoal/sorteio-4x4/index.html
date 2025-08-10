@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorteio 4x4 - Interface Moderna</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1 class="title">Spartax  </h1>
+            
+        </div>
+
+        <div class="main-grid">
+            <!-- Left Panel - Controls -->
+            <div>
+                
+                <!-- Add Player Card -->
+<div class="card" style="margin-bottom: 1.5rem;">
+    <div class="card-header">
+        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
+        </svg>
+        <h2 class="card-title">Adicionar Jogador</h2>
+    </div>
+
+    <div class="input-group">
+        <textarea 
+            id="username" 
+            class="input" 
+            placeholder="Digite um nome por linha ou cole uma lista inteira"
+            rows="5"
+            onkeypress="handleKeyPress(event)"
+        ></textarea>
+    </div>
+
+    <button class="btn btn-primary">Entrar no Sorteio</button>
+</div>
+
+
+                <!-- Shuffle Button -->
+                <div class="card" style="margin-bottom: 1.5rem;">
+                    <button onclick="sortearEquipes()" id="shuffleBtn" class="btn btn-secondary">
+                        <svg class="icon" id="shuffleIcon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/>
+                        </svg>
+                        <span id="shuffleText">Sortear Equipes</span>
+                    </button>
+                </div>
+
+                <!-- Players List -->
+                <div class="card">
+                    <div class="card-header">
+                        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"/>
+                        </svg>
+                        <h2 class="card-title">Jogadores Inscritos</h2>
+                        <span class="badge" id="playerCount">0</span>
+                    </div>
+                    <div class="players-list" id="listaJogadores">
+                        <!-- Players will be populated here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Panel - Teams -->
+            <div>
+                <div id="waitingState" class="card waiting-state">
+                    <div class="waiting-icon">🏆</div>
+                    <h3 style="font-size: 1.5rem; font-weight: 600; color: #94a3b8; margin-bottom: 0.5rem;">
+                        Pronto para o sorteio!
+                    </h3>
+                    <p>Clique em "Sortear Equipes" para formar os times</p>
+                </div>
+
+                <div id="teamsContainer" class="teams-grid" style="display: none;">
+                    <!-- Team A -->
+                    <div class="team-card team-a">
+                        <div class="team-header">
+                            <svg class="icon-lg" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                            </svg>
+                            <h3 class="team-title">Time A</h3>
+                        </div>
+                        <div id="timeA">
+                            <!-- Team A members will be populated here -->
+                        </div>
+                    </div>
+
+                    <!-- Team B -->
+                    <div class="team-card team-b">
+                        <div class="team-header">
+                            <svg class="icon-lg" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                            </svg>
+                            <h3 class="team-title">Time B</h3>
+                        </div>
+                        <div id="timeB">
+                            <!-- Team B members will be populated here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+
+</body>
+</html>
