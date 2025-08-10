@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitTrack - Seu Acompanhamento de Treino</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary-color: #4a6bff;
+            --secondary-color: #ff6b6b;
+            --dark-color: #2c3e50;
+            --light-color: #f8f9fa;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --info-color: #17a2b8;
+            --border-radius: 10px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 100%;
+            padding: 15px;
+            margin: 0 auto;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px 0;
+            text-align: center;
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
+            box-shadow: var(--box-shadow);
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+
+        h2 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            text-align: center;
+            transition: var(--transition);
+            box-shadow: var(--box-shadow);
+            width: 100%;
+            margin: 5px 0;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary-color);
+        }
+
+        .btn-success {
+            background-color: var(--success-color);
+        }
+
+        .btn-warning {
+            background-color: var(--warning-color);
+            color: var(--dark-color);
+        }
+
+        .btn-info {
+            background-color: var(--info-color);
+        }
+
+        .btn-small {
+            padding: 8px 12px;
+            font-size: 0.9rem;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .timer-display {
+            font-size: 2rem;
+            font-weight: bold;
+            text-align: center;
+            margin: 15px 0;
+            color: var(--primary-color);
+        }
+
+        .exercise-item {
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+        }
+
+        .exercise-item:last-child {
+            border-bottom: none;
+        }
+
+        .exercise-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .exercise-icon {
+            font-size: 1.8rem;
+            margin-right: 15px;
+            color: var(--primary-color);
+            width: 40px;
+            text-align: center;
+        }
+
+        .exercise-title {
+            flex: 1;
+        }
+
+        .exercise-sets {
+            margin-left: 55px;
+        }
+
+        .set-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .set-number {
+            font-weight: bold;
+            margin-right: 10px;
+            min-width: 20px;
+        }
+
+        .rest-timer {
+            font-size: 0.9rem;
+            color: var(--info-color);
+            margin-left: auto;
+            cursor: pointer;
+        }
+
+        .rating-buttons {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 10px;
+        }
+
+        .rating-btn {
+            flex: 1;
+            margin: 0 5px;
+        }
+
+        .active-rating {
+            transform: scale(1.05);
+            box-shadow: 0 0 0 3px rgba(74, 107, 255, 0.3);
+        }
+
+        .tab-container {
+            display: flex;
+            margin-bottom: 15px;
+            overflow-x: auto;
+        }
+
+        .tab {
+            padding: 10px 15px;
+            background-color: white;
+            border: none;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+            margin-right: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+
+        .tab.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 250px;
+            width: 100%;
+            margin: 20px 0;
+        }
+
+        .day-selector {
+            display: flex;
+            overflow-x: auto;
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+        }
+
+        .day-btn {
+            padding: 10px 15px;
+            background-color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            margin-right: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: var(--transition);
+            white-space: nowrap;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .day-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .muscle-group {
+            font-size: 0.9rem;
+            color: var(--info-color);
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        .history-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .history-date {
+            font-weight: bold;
+        }
+
+        .history-duration {
+            color: var(--primary-color);
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                max-width: 600px;
+            }
+            
+            .btn {
+                max-width: 300px;
+                margin: 5px auto;
+                display: block;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .pulse {
+            animation: pulse 1.5s infinite;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>FitTrack</h1>
+            <p>Seu acompanhamento de treino</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Tela Inicial -->
+        <div id="home-screen" class="fade-in">
+            <div class="card">
+                <h2>Bem-vindo ao FitTrack</h2>
+                <p>Acompanhe seus treinos, melhore seu desempenho e alcance seus objetivos!</p>
+                <button id="start-workout-btn" class="btn btn-success pulse">Iniciar Treino</button>
+            </div>
+
+            <div class="card">
+                <h2>Seu Progresso</h2>
+                <div class="chart-container">
+                    <canvas id="progress-chart"></canvas>
+                </div>
+                <button id="view-history-btn" class="btn btn-info">Ver Histórico</button>
+            </div>
+        </div>
+
+        <!-- Seleção de Dia -->
+        <div id="day-selector-screen" class="hidden">
+            <div class="card">
+                <h2>Selecione o dia de treino</h2>
+                <div class="day-selector">
+                    <button class="day-btn" data-day="monday">Segunda</button>
+                    <button class="day-btn" data-day="tuesday">Terça</button>
+                    <button class="day-btn" data-day="wednesday">Quarta</button>
+                    <button class="day-btn" data-day="thursday">Quinta</button>
+                    <button class="day-btn" data-day="friday">Sexta</button>
+                    <button class="day-btn" data-day="saturday">Sábado</button>
+                </div>
+                <p class="muscle-group" id="muscle-group-info"></p>
+                <button id="confirm-day-btn" class="btn">Confirmar</button>
+                <button id="back-to-home-btn" class="btn btn-secondary">Voltar</button>
+            </div>
+        </div>
+
+        <!-- Tela de Treino -->
+        <div id="workout-screen" class="hidden">
+            <div class="card">
+                <h2 id="workout-day-title"></h2>
+                <p class="muscle-group" id="workout-muscle-group"></p>
+                <div class="timer-display" id="workout-timer">00:00:00</div>
+                <button id="finish-workout-btn" class="btn btn-secondary">Finalizar Treino</button>
+            </div>
+
+            <div class="card">
+                <h3>Exercícios do Dia</h3>
+                <div id="exercises-list"></div>
+            </div>
+        </div>
+
+        <!-- Temporizador de Descanso -->
+        <div id="rest-timer-screen" class="hidden">
+            <div class="card">
+                <h2>Tempo de Descanso</h2>
+                <div class="timer-display" id="rest-timer">01:30</div>
+                <button id="cancel-rest-btn" class="btn btn-secondary">Cancelar</button>
+            </div>
+        </div>
+
+        <!-- Histórico de Treinos -->
+        <div id="history-screen" class="hidden">
+            <div class="card">
+                <h2>Histórico de Treinos</h2>
+                <div id="history-list"></div>
+                <button id="back-from-history-btn" class="btn">Voltar</button>
+            </div>
+        </div>
+
+        <!-- Abas de Navegação -->
+        <div class="tab-container">
+            <button class="tab active" data-tab="home">Início</button>
+            <button class="tab" data-tab="history">Histórico</button>
+            <button class="tab" data-tab="settings">Configurações</button>
+        </div>
+    </main>
+
+    <script>
+        // Dados do aplicativo
+        const workoutData = {
+            muscleGroups: {
+                group1: "Peito e Tríceps",
+                group2: "Costas e Bíceps",
+                group3: "Pernas e Ombros"
+            },
+            exercises: {
+                monday: [
+                    { name: "Supino Reto", icon: "fa-dumbbell", sets: 4, liked: null },
+                    { name: "Crucifixo Máquina", icon: "fa-robot", sets: 3, liked: null },
+                    { name: "Tríceps Corda", icon: "fa-ropes", sets: 3, liked: null },
+                    { name: "Tríceps Francês", icon: "fa-dumbbell", sets: 3, liked: null }
+                ],
+                tuesday: [
+                    { name: "Puxada Alta", icon: "fa-ropes", sets: 4, liked: null },
+                    { name: "Remada Curvada", icon: "fa-dumbbell", sets: 3, liked: null },
+                    { name: "Rosca Direta", icon: "fa-dumbbell", sets: 3, liked: null },
+                    { name: "Rosca Martelo", icon: "fa-dumbbell", sets: 3, liked: null }
+                ],
+                wednesday: [
+                    { name: "Agachamento Livre", icon: "fa-dumbbell", sets: 4, liked: null },
+                    { name: "Leg Press", icon: "fa-robot", sets: 3, liked: null },
+                    { name: "Elevação Lateral", icon: "fa-dumbbell", sets: 3, liked: null },
+                    { name: "Desenvolvimento Máquina", icon: "fa-robot", sets: 3, liked: null }
+                ],
+                thursday: [
+                    { name: "Supino Inclinado", icon: "fa-dumbbell", sets: 4, liked: null },
+                    { name: "Peck Deck", icon: "fa-robot", sets: 3, liked: null },
+                    { name: "Tríceps Testa", icon: "fa-dumbbell", sets: 3, liked: null },
+                    { name: "Tríceps Banco", icon: "fa-bench", sets: 3, liked: null }
+                ],
+                friday: [
+                    { name: "Remada Máquina", icon: "fa-robot", sets: 4, liked: null },
+                    { name: "Puxada Frente", icon: "fa-ropes", sets: 3, liked: null },
+                    { name: "Rosca Scott", icon: "fa-dumbbell", sets: 3, liked: null },
+                    { name: "Rosca Concentrada", icon: "fa-dumbbell", sets: 3, liked: null }
+                ],
+                saturday: [
+                    { name: "Afundo", icon: "fa-dumbbell", sets: 4, liked: null },
+                    { name: "Cadeira Extensora", icon: "fa-robot", sets: 3, liked: null },
+                    { name: "Elevação Frontal", icon: "fa-dumbbell", sets: 3, liked: null },
+                    { name: "Encolhimento Halteres", icon: "fa-dumbbell", sets: 3, liked: null }
+                ]
+            },
+            schedule: {
+                monday: "group1",
+                tuesday: "group2",
+                wednesday: "group3",
+                thursday: "group1",
+                friday: "group2",
+                saturday: "group3"
+            },
+            dayNames: {
+                monday: "Segunda-feira",
+                tuesday: "Terça-feira",
+                wednesday: "Quarta-feira",
+                thursday: "Quinta-feira",
+                friday: "Sexta-feira",
+                saturday: "Sábado"
+            }
+        };
+
+        // Estado do aplicativo
+        let appState = {
+            currentScreen: "home",
+            selectedDay: null,
+            workoutStartTime: null,
+            workoutTimerInterval: null,
+            restTimerInterval: null,
+            restTimeLeft: 90, // 1 minuto e 30 segundos
+            workoutHistory: []
+        };
+
+        // Elementos DOM
+        const elements = {
+            screens: {
+                home: document.getElementById("home-screen"),
+                daySelector: document.getElementById("day-selector-screen"),
+                workout: document.getElementById("workout-screen"),
+                restTimer: document.getElementById("rest-timer-screen"),
+                history: document.getElementById("history-screen")
+            },
+            buttons: {
+                startWorkout: document.getElementById("start-workout-btn"),
+                confirmDay: document.getElementById("confirm-day-btn"),
+                backToHome: document.getElementById("back-to-home-btn"),
+                finishWorkout: document.getElementById("finish-workout-btn"),
+                cancelRest: document.getElementById("cancel-rest-btn"),
+                viewHistory: document.getElementById("view-history-btn"),
+                backFromHistory: document.getElementById("back-from-history-btn")
+            },
+            displays: {
+                workoutTimer: document.getElementById("workout-timer"),
+                restTimer: document.getElementById("rest-timer"),
+                muscleGroupInfo: document.getElementById("muscle-group-info"),
+                workoutDayTitle: document.getElementById("workout-day-title"),
+                workoutMuscleGroup: document.getElementById("workout-muscle-group"),
+                exercisesList: document.getElementById("exercises-list"),
+                historyList: document.getElementById("history-list")
+            },
+            tabs: document.querySelectorAll(".tab"),
+            dayButtons: document.querySelectorAll(".day-btn"),
+            progressChart: document.getElementById("progress-chart")
+        };
+
+        // Inicialização do aplicativo
+        function initApp() {
+            // Carregar dados salvos
+            loadSavedData();
+            
+            // Configurar eventos
+            setupEventListeners();
+            
+            // Inicializar gráfico
+            initProgressChart();
+            
+            // Atualizar histórico na tela inicial
+            updateHistoryDisplay();
+        }
+
+        // Carregar dados salvos no localStorage
+        function loadSavedData() {
+            const savedHistory = localStorage.getItem("workoutHistory");
+            if (savedHistory) {
+                appState.workoutHistory = JSON.parse(savedHistory);
+            }
+
+            const savedRatings = localStorage.getItem("exerciseRatings");
+            if (savedRatings) {
+                const ratings = JSON.parse(savedRatings);
+                for (const day in ratings) {
+                    if (workoutData.exercises[day]) {
+                        workoutData.exercises[day].forEach((exercise, index) => {
+                            if (ratings[day][index] !== undefined) {
+                                exercise.liked = ratings[day][index];
+                            }
+                        });
+                    }
+                }
+            }
+        }
+
+        // Configurar ouvintes de eventos
+        function setupEventListeners() {
+            // Botões principais
+            elements.buttons.startWorkout.addEventListener("click", () => showScreen("daySelector"));
+            elements.buttons.confirmDay.addEventListener("click", startWorkout);
+            elements.buttons.backToHome.addEventListener("click", () => showScreen("home"));
+            elements.buttons.finishWorkout.addEventListener("click", finishWorkout);
+            elements.buttons.cancelRest.addEventListener("click", cancelRestTimer);
+            elements.buttons.viewHistory.addEventListener("click", () => showScreen("history"));
+            elements.buttons.backFromHistory.addEventListener("click", () => showScreen("home"));
+
+            // Botões de dia
+            elements.dayButtons.forEach(btn => {
+                btn.addEventListener("click", () => selectDay(btn.dataset.day));
+            });
+
+            // Abas de navegação
+            elements.tabs.forEach(tab => {
+                tab.addEventListener("click", () => {
+                    const tabName = tab.dataset.tab;
+                    if (tabName === "home") showScreen("home");
+                    else if (tabName === "history") showScreen("history");
+                    // Adicionar outras abas conforme necessário
+                    
+                    // Atualizar estado das abas
+                    elements.tabs.forEach(t => t.classList.remove("active"));
+                    tab.classList.add("active");
+                });
+            });
+        }
+
+        // Mostrar uma tela específica
+        function showScreen(screenName) {
+            // Esconder todas as telas
+            for (const screen in elements.screens) {
+                elements.screens[screen].classList.add("hidden");
+            }
+            
+            // Mostrar a tela solicitada
+            elements.screens[screenName].classList.remove("hidden");
+            appState.currentScreen = screenName;
+            
+            // Atualizar conteúdo específico da tela se necessário
+            if (screenName === "home") {
+                updateHistoryDisplay();
+                updateProgressChart();
+            } else if (screenName === "history") {
+                renderHistoryScreen();
+            }
+        }
+
+        // Selecionar um dia de treino
+        function selectDay(day) {
+            appState.selectedDay = day;
+            
+            // Atualizar botões de dia
+            elements.dayButtons.forEach(btn => {
+                btn.classList.remove("active");
+                if (btn.dataset.day === day) {
+                    btn.classList.add("active");
+                }
+            });
+            
+            // Mostrar grupo muscular do dia
+            const muscleGroup = workoutData.schedule[day];
+            elements.displays.muscleGroupInfo.textContent = `Grupo Muscular: ${workoutData.muscleGroups[muscleGroup]}`;
+        }
+
+        // Iniciar um treino
+        function startWorkout() {
+            if (!appState.selectedDay) return;
+            
+            // Configurar informações do treino
+            elements.displays.workoutDayTitle.textContent = workoutData.dayNames[appState.selectedDay];
+            const muscleGroup = workoutData.schedule[appState.selectedDay];
+            elements.displays.workoutMuscleGroup.textContent = `Grupo Muscular: ${workoutData.muscleGroups[muscleGroup]}`;
+            
+            // Renderizar exercícios
+            renderExercises();
+            
+            // Iniciar cronômetro
+            startWorkoutTimer();
+            
+            // Mostrar tela de treino
+            showScreen("workout");
+        }
+
+        // Renderizar lista de exercícios
+        function renderExercises() {
+            elements.displays.exercisesList.innerHTML = "";
+            
+            const exercises = workoutData.exercises[appState.selectedDay];
+            
+            exercises.forEach((exercise, exIndex) => {
+                const exerciseEl = document.createElement("div");
+                exerciseEl.className = "exercise-item fade-in";
+                
+                // Cabeçalho do exercício
+                const headerEl = document.createElement("div");
+                headerEl.className = "exercise-header";
+                
+                const iconEl = document.createElement("i");
+                iconEl.className = `exercise-icon fas ${exercise.icon}`;
+                
+                const titleEl = document.createElement("div");
+                titleEl.className = "exercise-title";
+                titleEl.textContent = exercise.name;
+                
+                headerEl.appendChild(iconEl);
+                headerEl.appendChild(titleEl);
+                exerciseEl.appendChild(headerEl);
+                
+                // Séries do exercício
+                const setsEl = document.createElement("div");
+                setsEl.className = "exercise-sets";
+                
+                for (let i = 0; i < exercise.sets; i++) {
+                    const setEl = document.createElement("div");
+                    setEl.className = "set-item";
+                    
+                    const setNumberEl = document.createElement("span");
+                    setNumberEl.className = "set-number";
+                    setNumberEl.textContent = `${i + 1}`;
+                    
+                    const restTimerEl = document.createElement("span");
+                    restTimerEl.className = "rest-timer";
+                    restTimerEl.textContent = "Descanso 1:30";
+                    restTimerEl.dataset.exIndex = exIndex;
+                    restTimerEl.dataset.setIndex = i;
+                    restTimerEl.addEventListener("click", () => startRestTimer(exIndex, i));
+                    
+                    setEl.appendChild(setNumberEl);
+                    setEl.appendChild(restTimerEl);
+                    setsEl.appendChild(setEl);
+                }
+                
+                exerciseEl.appendChild(setsEl);
+                
+                // Botões de avaliação
+                const ratingEl = document.createElement("div");
+                ratingEl.className = "rating-buttons";
+                
+                const likeBtn = document.createElement("button");
+                likeBtn.className = `rating-btn btn btn-success btn-small ${exercise.liked === true ? 'active-rating' : ''}`;
+                likeBtn.innerHTML = '<i class="fas fa-thumbs-up"></i> Gostei';
+                likeBtn.addEventListener("click", () => rateExercise(exIndex, true));
+                
+                const dislikeBtn = document.createElement("button");
+                dislikeBtn.className = `rating-btn btn btn-secondary btn-small ${exercise.liked === false ? 'active-rating' : ''}`;
+                dislikeBtn.innerHTML = '<i class="fas fa-thumbs-down"></i> Não gostei';
+                dislikeBtn.addEventListener("click", () => rateExercise(exIndex, false));
+                
+                ratingEl.appendChild(likeBtn);
+                ratingEl.appendChild(dislikeBtn);
+                exerciseEl.appendChild(ratingEl);
+                
+                elements.displays.exercisesList.appendChild(exerciseEl);
+            });
+        }
+
+        // Avaliar um exercício
+        function rateExercise(exIndex, liked) {
+            const exercises = workoutData.exercises[appState.selectedDay];
+            exercises[exIndex].liked = liked;
+            
+            // Salvar avaliações
+            saveRatings();
+            
+            // Atualizar exibição
+            renderExercises();
+        }
+
+        // Salvar avaliações no localStorage
+        function saveRatings() {
+            const ratings = {};
+            
+            for (const day in workoutData.exercises) {
+                ratings[day] = workoutData.exercises[day].map(ex => ex.liked);
+            }
+            
+            localStorage.setItem("exerciseRatings", JSON.stringify(ratings));
+        }
+
+        // Iniciar cronômetro de treino
+        function startWorkoutTimer() {
+            appState.workoutStartTime = new Date();
+            
+            appState.workoutTimerInterval = setInterval(() => {
+                const now = new Date();
+                const diff = now - appState.workoutStartTime;
+                
+                const hours = Math.floor(diff / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+                
+                elements.displays.workoutTimer.textContent = 
+                    `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }, 1000);
+        }
+
+        // Finalizar treino
+        function finishWorkout() {
+            // Parar cronômetro
+            clearInterval(appState.workoutTimerInterval);
+            
+            // Calcular duração do treino
+            const endTime = new Date();
+            const duration = Math.floor((endTime - appState.workoutStartTime) / 1000); // em segundos
+            
+            // Adicionar ao histórico
+            appState.workoutHistory.push({
+                date: appState.workoutStartTime,
+                day: appState.selectedDay,
+                duration: duration,
+                muscleGroup: workoutData.schedule[appState.selectedDay]
+            });
+            
+            // Salvar histórico
+            localStorage.setItem("workoutHistory", JSON.stringify(appState.workoutHistory));
+            
+            // Atualizar gráfico
+            updateProgressChart();
+            
+            // Voltar para a tela inicial
+            showScreen("home");
+        }
+
+        // Iniciar temporizador de descanso
+        function startRestTimer(exIndex, setIndex) {
+            appState.restTimeLeft = 90; // Resetar para 1:30
+            
+            // Atualizar exibição imediatamente
+            elements.displays.restTimer.textContent = formatTime(appState.restTimeLeft);
+            
+            // Mostrar tela de descanso
+            showScreen("restTimer");
+            
+            // Iniciar contagem regressiva
+            appState.restTimerInterval = setInterval(() => {
+                appState.restTimeLeft--;
+                
+                // Atualizar exibição
+                elements.displays.restTimer.textContent = formatTime(appState.restTimeLeft);
+                
+                // Verificar se terminou
+                if (appState.restTimeLeft <= 0) {
+                    cancelRestTimer();
+                }
+            }, 1000);
+        }
+
+        // Cancelar temporizador de descanso
+        function cancelRestTimer() {
+            clearInterval(appState.restTimerInterval);
+            showScreen("workout");
+        }
+
+        // Formatador de tempo (segundos para MM:SS)
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        // Inicializar gráfico de progresso
+        function initProgressChart() {
+            const ctx = elements.progressChart.getContext('2d');
+            window.progressChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'Duração do Treino (minutos)',
+                        data: [],
+                        backgroundColor: 'rgba(74, 107, 255, 0.2)',
+                        borderColor: 'rgba(74, 107, 255, 1)',
+                        borderWidth: 2,
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Minutos'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Data'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `Duração: ${Math.round(context.raw)} minutos`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Atualizar gráfico de progresso
+        function updateProgressChart() {
+            if (!window.progressChart) return;
+            
+            // Ordenar histórico por data
+            const sortedHistory = [...appState.workoutHistory].sort((a, b) => a.date - b.date);
+            
+            // Preparar dados para o gráfico
+            const labels = sortedHistory.map(item => {
+                const date = new Date(item.date);
+                return date.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' });
+            });
+            
+            const data = sortedHistory.map(item => Math.floor(item.duration / 60));
+            
+            // Atualizar gráfico
+            window.progressChart.data.labels = labels;
+            window.progressChart.data.datasets[0].data = data;
+            window.progressChart.update();
+        }
+
+        // Atualizar exibição do histórico na tela inicial
+        function updateHistoryDisplay() {
+            if (appState.workoutHistory.length === 0) return;
+            
+            // Pegar os últimos 5 treinos
+            const recentWorkouts = [...appState.workoutHistory]
+                .sort((a, b) => new Date(b.date) - new Date(a.date))
+                .slice(0, 5);
+            
+            // Atualizar gráfico
+            updateProgressChart();
+        }
+
+        // Renderizar tela de histórico completo
+        function renderHistoryScreen() {
+            elements.displays.historyList.innerHTML = "";
+            
+            if (appState.workoutHistory.length === 0) {
+                elements.displays.historyList.innerHTML = "<p>Nenhum treino registrado ainda.</p>";
+                return;
+            }
+            
+            // Ordenar por data (mais recente primeiro)
+            const sortedHistory = [...appState.workoutHistory].sort((a, b) => new Date(b.date) - new Date(a.date));
+            
+            sortedHistory.forEach(workout => {
+                const workoutEl = document.createElement("div");
+                workoutEl.className = "history-item";
+                
+                const dateEl = document.createElement("div");
+                dateEl.className = "history-date";
+                dateEl.textContent = `${workoutData.dayNames[workout.day]}, ${new Date(workout.date).toLocaleDateString('pt-BR')}`;
+                
+                const durationEl = document.createElement("div");
+                durationEl.className = "history-duration";
+                durationEl.textContent = `${Math.floor(workout.duration / 60)}:${(workout.duration % 60).toString().padStart(2, '0')}`;
+                
+                const muscleGroupEl = document.createElement("div");
+                muscleGroupEl.className = "muscle-group";
+                muscleGroupEl.textContent = workoutData.muscleGroups[workout.muscleGroup];
+                
+                workoutEl.appendChild(dateEl);
+                workoutEl.appendChild(durationEl);
+                workoutEl.appendChild(muscleGroupEl);
+                
+                elements.displays.historyList.appendChild(workoutEl);
+            });
+        }
+
+        // Inicializar o aplicativo quando o DOM estiver carregado
+        document.addEventListener("DOMContentLoaded", initApp);
+    </script>
+</body>
+</html>
