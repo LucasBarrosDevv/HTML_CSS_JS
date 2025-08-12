@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ficha de Treino</title>
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="day-selector">
+                <button class="day-btn" data-day="0">Dom</button>
+                <button class="day-btn" data-day="1">Seg</button>
+                <button class="day-btn" data-day="2">Ter</button>
+                <button class="day-btn" data-day="3">Qua</button>
+                <button class="day-btn" data-day="4">Qui</button>
+                <button class="day-btn" data-day="5">Sex</button>
+                <button class="day-btn" data-day="6">Sáb</button>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="workout-header">
+                <h2 id="workout-title"></h2>
+                <div class="workout-controls">
+                    <button id="start-workout" class="btn btn-primary">Iniciar Treino</button>
+                    <button id="rest-timer" class="btn btn-secondary" style="display: none;">Descanso</button>
+                </div>
+            </div>
+
+            <div class="workout-info">
+                <p id="workout-description"></p>
+            </div>
+
+            <div class="exercises-container" id="exercises-container">
+                <!-- Exercícios serão inseridos aqui via JavaScript -->
+            </div>
+
+            <div class="timer-modal" id="timer-modal" style="display: none;">
+                <div class="timer-content">
+                    <h3 id="timer-title">Preparando...</h3>
+                    <div class="timer-display" id="timer-display">3</div>
+                    <button id="cancel-timer" class="btn btn-secondary">Cancelar</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script/script.js"></script>
+</body>
+</html>
