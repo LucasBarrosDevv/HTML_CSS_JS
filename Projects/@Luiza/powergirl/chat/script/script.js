@@ -16,14 +16,16 @@
                         sets: '4/12',
                         details: 'Exercício fundamental para quadríceps e glúteos',
                         variations: ['Smith tradicional', 'Smith com pausa', 'Smith sumô'],
-                        tips: ['Mantenha o core contraído', 'Desça até 90 graus', 'Controle a descida']
+                        tips: ['Mantenha o core contraído', 'Desça até 90 graus', 'Controle a descida'],
+                        image: 'https://img.freepik.com/vetores-premium/homem-realizando-exercicio-de-agachamento-com-barra-para-treinamento-de-forca-em-ilustracao-vetorial-de-ginastica_126712-40199.jpg'
                     },
                     {
                         name: 'Afundo',
                         sets: '3/10',
                         details: 'Trabalha quadríceps, glúteos e estabilização',
                         variations: ['Afundo estático', 'Afundo caminhando', 'Afundo búlgaro'],
-                        tips: ['Não deixe o joelho passar da ponta do pé', 'Mantenha o tronco ereto']
+                        tips: ['Não deixe o joelho passar da ponta do pé', 'Mantenha o tronco ereto'],
+                        image: 'https://img.freepik.com/vetores-premium/jovem-bela-jovem-em-roupas-esportivas-fazendo-alongamento-em-pe-na-frente-da-janela-no-ginasio_667085-355.jpg?semt=ais_hybrid&w=740&q=80'
                     },
                     {
                         name: 'Cadeira Extensora - Drop Set',
@@ -31,6 +33,8 @@
                         details: 'Isolamento do quadríceps com técnica avançada',
                         variations: ['Unilateral', 'Bilateral', 'Com pausa'],
                         tips: ['Execute a descida controlada', 'Pare apenas para reduzir peso']
+                        ,
+                        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwaW0OGgOw_ucZAkU_lCIOAAT904BSxnPxwQ&s'
                     },
                     {
                         name: 'Leg Press',
@@ -38,6 +42,8 @@
                         details: 'Exercício composto para membros inferiores',
                         variations: ['Pés altos', 'Pés baixos', 'Pegada estreita'],
                         tips: ['Não destrave completamente', 'Amplitude total do movimento']
+                        ,
+                        image: 'https://static.vecteezy.com/ti/vetor-gratis/t1/17582392-mulher-fazendo-exercicio-leg-press-na-maquina-ilustracaoial-plana-isolada-no-fundo-branco-vetor.jpg'
                     },
                     {
                         name: 'Cadeira Flexora',
@@ -45,6 +51,8 @@
                         details: 'Isolamento dos isquiotibiais',
                         variations: ['Sentada', 'Deitada', 'Em pé'],
                         tips: ['Controle a fase excêntrica', 'Não balance o corpo']
+                        ,
+                        image: 'https://static.wixstatic.com/media/52de9e_dbd28b649d4e4f53b88a622126ab7358.gif'
                     },
                     {
                         name: 'Stiff Unilateral',
@@ -52,6 +60,8 @@
                         details: 'Trabalha posterior e glúteos unilateralmente',
                         variations: ['Com halteres', 'Com barra', 'Com kettlebell'],
                         tips: ['Mantenha a coluna neutra', 'Sinta o alongamento do posterior']
+                        ,
+                        image: 'https://vitat.com.br/wp-content/uploads/2024/04/stiff-unilateral-1.jpg'
                     }
                 ],
                 focus: 'Força e Hipertrofia',
@@ -67,7 +77,8 @@
                         sets: '3/15',
                         details: 'Isolamento do deltóide medial',
                         variations: ['Com halteres', 'Na polia', 'Sentado'],
-                        tips: ['Controle o movimento', 'Não balance o corpo', 'Foque na contração']
+                        tips: ['Controle o movimento', 'Não balance o corpo', 'Foque na contração'],
+                        image: 'https://static.vecteezy.com/ti/vetor-gratis/p1/16138026-mulher-fazendo-exercicio-de-elevacao-lateral-ou-lateral-de-braco-duplo-levante-ambos-os-bracos-lateralmente-ate-a-horizontal-ilustracaoial-plana-isolada-no-fundo-branco-vetor.jpg'
                     },
                     {
                         name: 'Puxada na Polia com Corda',
@@ -678,16 +689,8 @@ function renderExercisesList() {
             modalContent.innerHTML = `
                 <div class="exercise-description">
                     <div class="exercise-image">
-                        <svg class="icon-xl" viewBox="0 0 24 24" fill="none" stroke="#c4b5fd" stroke-width="2">
-                            <path d="m6.5 6.5 11 11"/>
-                            <path d="m21 21-1-1"/>
-                            <path d="m3 3 1 1"/>
-                            <path d="m18 22 4-4"/>
-                            <path d="m2 6 4-4"/>
-                            <path d="m3 10 7-7"/>
-                            <path d="m14 21 7-7"/>
-                        </svg>
-                    </div>
+            ${exercise.image ? `<img src="${exercise.image}" alt="Imagem do exercício ${exercise.name}" style="width: 100%; height: auto; border-radius: 8px;">` : `<svg class="icon-xl" viewBox="0 0 24 24" fill="none" stroke="#c4b5fd" stroke-width="2">...</svg>`}
+        </div>
                     <p>${exercise.details}</p>
                 </div>
                 
