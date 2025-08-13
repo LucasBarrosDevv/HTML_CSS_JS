@@ -6,28 +6,29 @@
     <title>Ficha de Treino - Seu Personal Virtual</title>
     <meta name="description" content="Sua ficha de treino personalizada com cronômetro, descanso e detalhes dos exercícios">
     <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/dinamic.css">
 </head>
 <body>
-    <div class="container">
+    
         <!-- Cabeçalho -->
         <div class="header">
-            <img src="" alt="">
+            <img class="icon-fit" src="https://www.pikpng.com/pngl/b/538-5380134_fitness-icon-png-capa-para-story-instagram-academia.png" alt="">
+    <div class="container">
             <h1>Ficha de treino</h1>
         </div>
 
         <!-- Navegação de Dias -->
         <div class="day-navigation">
-            <div class="day-buttons" id="dayButtons">
-                <!-- Botões serão gerados pelo JavaScript -->
-            </div>
-        </div>
+  <div class="day-buttons-container" id="dayButtonsContainer">
+    <div class="day-buttons" id="dayButtons">
+      </div>
+  </div>
+</div>
 
         <!-- Cartão de Informações do Treino -->
         <div class="workout-card" id="workoutCard">
             <!-- Conteúdo será gerado pelo JavaScript -->
         </div>
-
-       
 
         <!-- Lista de Exercícios -->
         <div class="exercises-list" id="exercisesList">
@@ -47,70 +48,72 @@
             </div>
         </div>
     </div>
-     <!-- Controles do Cronômetro -->
-        <div class="timer-controls">
-            <div class="timer-header">
-                <div>
-                    <h4 style="font-size: 1.125rem; font-weight: 600; color: white;"></h4>
-                    <div class="timer-display" id="workoutTimer">00:00</div>
-                </div>
-                <div class="control-buttons">
-                    <button class="btn btn-start" id="startBtn">
-                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polygon points="5,3 19,12 5,21"/>
-                        </svg>
-                        Iniciar
-                    </button>
-                    <button class="btn btn-pause" id="pauseBtn" style="display: none;">
-                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <rect x="6" y="4" width="4" height="16"/>
-                            <rect x="14" y="4" width="4" height="16"/>
-                        </svg>
-                        Pausar
-                    </button>
-                    <button class="btn btn-reset" id="resetBtn">
-                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="1,4 1,10 7,10"/>
-                            <path d="M3.51,15a9,9,0,0,0,2.13,3.09,9,9,0,0,0,13.72,0,9,9,0,0,0,0-12.72,9,9,0,0,0-13.72,0A8.5,8.5,0,0,0,1.17,8.42"/>
-                        </svg>
-                        Reset
-                    </button>
-                </div>
+    
+    <!-- Controles do Cronômetro -->
+    <div class="timer-controls">
+        <div class="timer-header">
+            <div>
+                <h4 style="font-size: 1.125rem; font-weight: 600; color: white;"></h4>
+                <div class="timer-display" id="workoutTimer">00:00</div>
             </div>
-
-            <!-- Cronômetro de Descanso -->
-            <div class="rest-timer" id="restTimer" style="display: none;">
-                <div class="rest-timer-header">
-                    <div>
-                        <p>Descanso</p>
-                        <div class="timer-display" id="restDisplay">00:00</div>
-                    </div>
-                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#fdba74" stroke-width="2">
-                        <circle cx="12" cy="12" r="10"/>
-                        <polyline points="12,6 12,12 16,14"/>
+            <div class="control-buttons">
+                <button class="btn btn-start" id="startBtn">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="5,3 19,12 5,21"/>
                     </svg>
-                </div>
-            </div>
-            
-            <!-- Botões de Descanso -->
-            <div class="rest-buttons">
-                <button class="btn btn-rest" onclick="startRest(60)">1m</button>
-                <button class="btn btn-rest" onclick="startRest(90)">1:30</button>
-                <button class="btn btn-rest" onclick="startRest(120)">2m</button>
-                <button class="btn btn-rest" onclick="startRest(180)">3m</button>
+                    Iniciar
+                </button>
+                <button class="btn btn-pause" id="pauseBtn" style="display: none;">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="6" y="4" width="4" height="16"/>
+                        <rect x="14" y="4" width="4" height="16"/>
+                    </svg>
+                    Pausar
+                </button>
+                <button class="btn btn-reset" id="resetBtn">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="1,4 1,10 7,10"/>
+                        <path d="M3.51,15a9,9,0,0,0,2.13,3.09,9,9,0,0,0,13.72,0,9,9,0,0,0,0-12.72,9,9,0,0,0-13.72,0A8.5,8.5,0,0,0,1.17,8.42"/>
+                    </svg>
+                    Reset
+                </button>
             </div>
         </div>
-        <div id="confirmationModal" class="modal">
- <div class="modal-content">
-  <p id="confirmationMessage">Tem certeza que deseja resetar o o tempo?</p>
-  <div class="modal-buttons">
-   <button id="confirmResetBtn" class="btn btn-primary">Resetar</button>
-   <button id="cancelResetBtn" class="btn btn-secondary">Cancelar</button>
-  </div>
- </div>
-</div>
 
-<div id="modalBackdrop" class="modal-backdrop"></div>
+        <!-- Cronômetro de Descanso -->
+        <div class="rest-timer" id="restTimer" style="display: none;">
+            <div class="rest-timer-header">
+                <div>
+                    <p>Descanso</p>
+                    <div class="timer-display" id="restDisplay">00:00</div>
+                </div>
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#fdba74" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <polyline points="12,6 12,12 16,14"/>
+                </svg>
+            </div>
+        </div>
+        
+        <!-- Botões de Descanso -->
+        <div class="rest-buttons">
+            <button class="btn btn-rest" onclick="startRest(60)">1m</button>
+            <button class="btn btn-rest" onclick="startRest(90)">1:30</button>
+            <button class="btn btn-rest" onclick="startRest(120)">2m</button>
+            <button class="btn btn-rest" onclick="startRest(180)">3m</button>
+        </div>
+    </div>
+    
+    <div id="confirmationModal" class="modal">
+        <div class="modal-content">
+            <p id="confirmationMessage">Tem certeza que deseja resetar o tempo?</p>
+            <div class="modal-buttons">
+                <button id="confirmResetBtn" class="btn btn-primary">Resetar</button>
+                <button id="cancelResetBtn" class="btn btn-secondary">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalBackdrop" class="modal-backdrop"></div>
 
     <script src="script/script.js"></script>
 </body>

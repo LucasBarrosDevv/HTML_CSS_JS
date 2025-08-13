@@ -1,0 +1,121 @@
+/* Animação de entrada vindo da esquerda */
+.slide-enter-left {
+  animation: slideInLeft 0.5s ease-in-out forwards;
+}
+
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Animação de entrada vindo da direita */
+.slide-enter-right {
+  animation: slideInRight 0.5s ease-in-out forwards;
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Animação de saída para a esquerda */
+.slide-leave-left {
+  animation: slideOutLeft 0.5s ease-in-out forwards;
+}
+
+@keyframes slideOutLeft {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+}
+
+/* Animação de saída para a direita */
+.slide-leave-right {
+  animation: slideOutRight 0.5s ease-in-out forwards;
+}
+
+@keyframes slideOutRight {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+/* Container para a animação de deslize dos botões */
+.day-buttons-container {
+  overflow: hidden;
+  width: 100%;
+}
+
+/* Animação para os botões */
+.slide-buttons-leave-left {
+  animation: slideButtonsOutLeft 0.5s ease-in-out forwards;
+}
+
+@keyframes slideButtonsOutLeft {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+.slide-buttons-leave-right {
+  animation: slideButtonsOutRight 0.5s ease-in-out forwards;
+}
+
+@keyframes slideButtonsOutRight {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+.slide-buttons-enter-left {
+  animation: slideButtonsInLeft 0.5s ease-in-out forwards;
+}
+
+@keyframes slideButtonsInLeft {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.slide-buttons-enter-right {
+  animation: slideButtonsInRight 0.5s ease-in-out forwards;
+}
+
+@keyframes slideButtonsInRight {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
