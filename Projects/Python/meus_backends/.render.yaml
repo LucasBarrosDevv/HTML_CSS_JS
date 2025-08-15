@@ -1,9 +1,0 @@
-services:
-  - type: web
-    name: flask-backend
-    runtime: python
-    buildCommand: ""
-    startCommand: "python app.py"
-    envVars:
-      - key: PORT
-        value: 10000

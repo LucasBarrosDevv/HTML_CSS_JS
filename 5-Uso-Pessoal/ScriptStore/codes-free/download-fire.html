@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fire Particle Background - GitHub Style</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../styles/download.css"> </head>
+<body>
+  <div class="fire-preview">
+    <canvas id="fireCanvas"></canvas>
+  </div>
+  
+  <div class="header">
+    
+    <div class="repo-info">
+      <div class="repo-name">Incendio</div>
+      <div class="repo-description"><i>HTML CSS JS</i></div>
+    </div>
+  </div>
+  
+  <div class="container">
+    <div class="code-container">
+      <div class="code-header">
+        <div class="file-name">index.html</div>
+        <div class="code-actions">
+          <button class="btn" id="copyBtn">
+            <i class="far fa-copy"></i> Copy
+          </button>
+          <button class="btn btn-primary" id="downloadBtn">
+            <i class="fas fa-download"></i> Download
+          </button>
+        </div>
+      </div>
+      <div class="code-content">
+        <pre id="codeContent"><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="pt-BR"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Fundo de Fogo com Partículas&lt;/title&gt;
+  
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;style&gt;
+    @charset "UTF-8";
+
+  body, html {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      height: 100%;
+    }
+
+    body {
+      background: linear-gradient(to top, #660000 ,#300000 ,black ,black   );
+    }
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  &lt;/style&gt;
+
+  &lt;canvas id="fireCanvas"&gt;&lt;/canvas&gt;
+
+  &lt;script &gt;
+      const canvas = document.getElementById('fireCanvas');
+    const ctx = canvas.getContext('2d');
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    window.addEventListener('resize', () =&gt; {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+
+    const particles = [];
+
+    class Particle {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = canvas.height + Math.random() * 100;
+        this.size = Math.random() * 4 + 1;
+        this.speedY = Math.random() * -3 - 1;
+        this.speedX = Math.random() * 2 - 1;
+        this.color = `hsl(${Math.random() * 50}, 100%, 50%)`;
+      }
+
+      update() {
+        this.y += this.speedY;
+        this.x += this.speedX;
+        if (this.size > 0.2) this.size -= 0.05;
+      }
+
+      draw() {
+        ctx.beginPath();
+        ctx.fillStyle = this.color;
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    function handleParticles() {
+      for (let i = 0; i < 5; i++) {
+        particles.push(new Particle());
+      }
+
+      for (let i = 0; i < particles.length; i++) {
+        particles[i].update();
+        particles[i].draw();
+
+        if (particles[i].size <= 0.2) {
+          particles.splice(i, 1);
+          i--;
+        }
+      }
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      handleParticles();
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  &lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+      </div>
+    </div>
+  </div>
+  
+  <div class="toast" id="toast">Copied to clipboard!</div>
+  
+  <script>
+    // Fire effect from the original code
+    const canvas = document.getElementById('fireCanvas');
+    const ctx = canvas.getContext('2d');
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+
+    const particles = [];
+
+    class Particle {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = canvas.height + Math.random() * 100;
+        this.size = Math.random() * 4 + 1;
+        this.speedY = Math.random() * -3 - 1;
+        this.speedX = Math.random() * 2 - 1;
+        this.color = `hsl(${Math.random() * 50}, 100%, 50%)`;
+      }
+
+      update() {
+        this.y += this.speedY;
+        this.x += this.speedX;
+        if (this.size > 0.2) this.size -= 0.05;
+      }
+
+      draw() {
+        ctx.beginPath();
+        ctx.fillStyle = this.color;
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    function handleParticles() {
+      for (let i = 0; i < 5; i++) {
+        particles.push(new Particle());
+      }
+
+      for (let i = 0; i < particles.length; i++) {
+        particles[i].update();
+        particles[i].draw();
+
+        if (particles[i].size <= 0.2) {
+          particles.splice(i, 1);
+          i--;
+        }
+      }
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      handleParticles();
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+    
+    // Copy and download functionality
+    const copyBtn = document.getElementById('copyBtn');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const toast = document.getElementById('toast');
+    const codeContent = document.getElementById('codeContent').textContent;
+    
+    copyBtn.addEventListener('click', () => {
+      navigator.clipboard.writeText(codeContent).then(() => {
+        showToast();
+      });
+    });
+    
+    downloadBtn.addEventListener('click', () => {
+      const blob = new Blob([codeContent], { type: 'text/html' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'fire.html';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    });
+    
+    function showToast() {
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2000);
+    }
+  </script>
+</body>
+</html>

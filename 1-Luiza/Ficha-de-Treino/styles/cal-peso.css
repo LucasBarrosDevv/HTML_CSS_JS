@@ -1,0 +1,273 @@
+/* ======== BASE ======== */
+button,
+input,
+select {
+  font: inherit;
+}
+
+/* FAB / Container */
+.rastreador-peso {
+  position: fixed;
+  right: 20px;
+  top: 20px;
+  width: 64px;
+  height: 64px;
+  border-radius: 999px;
+  background: #ffffff;
+  overflow: hidden;
+  transition: width .35s ease, height .35s ease, border-radius .35s ease, box-shadow .35s ease;
+  will-change: width, height, border-radius;
+  z-index: 9999;
+  color: #222222;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.rastreador-peso.expandido {
+  width: 85vw;
+  height: 0vh;
+  border-radius: 16px;
+  color: #222222;
+}
+
+/* Botão de alternar */
+.rastreador-alternar {
+  appearance: none;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #222222;
+}
+.rastreador-alternar:focus-visible {
+  outline: 2px solid #3aa1ff;
+  outline-offset: 2px;
+  border-radius: 999px;
+}
+
+/* Conteúdo */
+.rastreador-conteudo {
+  opacity: 0;
+  pointer-events: none;
+  height: calc(100% - 64px);
+  border-top: 1px solid #dddddd;
+  padding: 14px;
+  overflow: auto;
+  transition: opacity .25s ease;
+}
+.rastreador-peso.expandido .rastreador-conteudo {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Cabeçalho */
+.rastreador-cabecalho {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.rastreador-cabecalho h2 {
+  font-size: 1rem;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  color: #222222;
+}
+.etiqueta {
+  font-size: .75rem;
+  color: #444444;
+  border: 1px dashed #bbbbbb;
+  padding: .25rem .5rem;
+  border-radius: 999px;
+  background: #f7f7f7;
+}
+
+/* Formulário */
+.formulario {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 10px;
+  align-items: end;
+  margin-bottom: 12px;
+}
+.formulario .campo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.rotulo {
+  font-size: .8rem;
+  color: #333333;
+}
+.entrada {
+  background: #ffffff;
+  border: 1px solid #cccccc;
+  color: #222222;
+  padding: .6rem .7rem;
+  border-radius: 10px;
+}
+.botao {
+  border: 1px solid #cccccc;
+  background: #f8f8f8;
+  color: #222222;
+  padding: .65rem .9rem;
+  border-radius: 10px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.botao:hover {
+  border-color: #999999;
+  background: #f0f0f0;
+}
+.botao-principal {
+  background: #3aa1ff;
+  color: #ffffff;
+  border-color: transparent;
+  width: 150px;
+}
+.botao-perigo {
+  background: #ff4d4d;
+  color: #ffffff;
+  border-color: #cc3333;
+
+  width: 150px;
+}
+.botao-fantasma {
+  background: transparent;
+  color: #222222;
+}
+.botao:disabled {
+  opacity: .6;
+  cursor: not-allowed;
+}
+
+/* Diagnóstico */
+.diagnostico {
+  border: 1px solid #cccccc;
+  background: linear-gradient(0deg, rgba(58, 161, 255, .05), rgba(58, 161, 255, .05)) #ffffff;
+  padding: 10px;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  font-size: .95rem;
+  color: #222222;
+  margin-top: 20px;
+}
+.diagnostico .destaque {
+  font-weight: 600;
+  color: #111111;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+.diagnostico.ganho {
+  border-color: #2ecc71;
+}
+.diagnostico.perda {
+  border-color: #e74c3c;
+}
+.diagnostico.estavel {
+  border-style: dashed;
+  opacity: .95;
+}
+
+/* Tabela */
+.tabela {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #cccccc;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.tabela th,
+.tabela td {
+  padding: .6rem .7rem;
+  border-bottom: 1px solid #dddddd;
+  text-align: left;
+  font-size: .9rem;
+  color: #222222;
+}
+.tabela thead th {
+  background: #f0f0f0;
+  color: #111111;
+  font-weight: 600;
+}
+.tabela tbody tr:hover {
+  background: #f9f9f9;
+}
+.silenciado {
+  color: #888888;
+}
+.direita {
+  text-align: right;
+}
+
+.acoes {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+
+/* Ícones alternáveis */
+.icone-voltar {
+  display: none;
+}
+
+.rastreador-peso.expandido .icone-menu {
+  display: none;
+}
+
+.rastreador-peso.expandido .icone-voltar {
+  display: block;
+}
+
+
+
+/* ======== MOBILE FIRST AJUSTES ======== */
+@media (max-width: 520px) {
+  .rastreador-peso.expandido {
+    width: 100vw;
+    height: 100vh;
+    bottom: 0;
+    right: 0;
+    border-radius: 0;
+  }
+  .rastreador-cabecalho h2 {
+    font-size: .9rem;
+  }
+  .etiqueta {
+    font-size: .7rem;
+    padding: .2rem .4rem;
+  }
+  .formulario {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .botao {
+    padding: .6rem;
+    font-size: .85rem;
+  }
+  .entrada {
+    padding: .55rem .65rem;
+    font-size: .9rem;
+  }
+  .tabela th,
+  .tabela td {
+    font-size: .8rem;
+    padding: .5rem;
+  }
+  .acoes {
+    flex-direction: column;
+    gap: 6px;
+  }
+  .dica {
+    display: none;
+  }
+}
