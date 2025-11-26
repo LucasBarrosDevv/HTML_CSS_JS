@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analisador de Avaliações Físicas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: black;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .back-button {
+            display: inline;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .controls {
+            padding: 30px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .control-group {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .control-item {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .control-item label {
+            font-weight: 600;
+            color: #495057;
+            font-size: 0.9rem;
+        }
+
+        select, input {
+            padding: 10px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        select:focus, input:focus {
+            outline: none;
+            border-color: #4facfe;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: transform 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #e9ecef;
+            position: relative;
+        }
+
+        .tab {
+            padding: 15px 25px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            color: #6c757d;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .tab.active {
+            color: #4facfe;
+            border-bottom-color: #4facfe;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 1px solid #e9ecef;
+        }
+
+        .card h3 {
+            color: #495057;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+            border-bottom: 2px solid #4facfe;
+            padding-bottom: 10px;
+        }
+
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #f8f9fa;
+        }
+
+        .metric:last-child {
+            border-bottom: none;
+        }
+
+        .metric-label {
+            font-weight: 600;
+            color: #6c757d;
+        }
+
+        .metric-value {
+            font-weight: 700;
+            color: #495057;
+        }
+
+        .status-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-normal { background: #d4edda; color: #155724; }
+        .status-alto { background: #fff3cd; color: #856404; }
+        .status-muito-alto { background: #f8d7da; color: #721c24; }
+        .status-baixo { background: #cce5ff; color: #004085; }
+
+        .chart-container {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .comparison-table th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #495057;
+        }
+
+        .comparison-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e9ecef;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 5px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+            transition: width 0.3s;
+        }
+
+        .no-data {
+            text-align: center;
+            color: #6c757d;
+            font-style: italic;
+            padding: 40px;
+        }
+
+        .report-modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .report-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .report-content h2 {
+            margin-bottom: 20px;
+            border-bottom: 2px solid #4facfe;
+            padding-bottom: 10px;
+        }
+
+        .report-content ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .report-content li {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .report-content li span {
+            font-weight: bold;
+        }
+
+        .close-btn {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close-btn:hover,
+        .close-btn:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Mobile styles */
+        @media (max-width: 768px) {
+            .control-group {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .tabs {
+                flex-wrap: wrap;
+                padding-right: 40px; /* Espaço para o botão de voltar */
+            }
+
+            .tab {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .back-button {
+                position: absolute;
+                right: 10px;
+                top: 10px;
+                background: none;
+                border: none;
+                font-size: 20px;
+                color: #6c757d;
+                cursor: pointer;
+                z-index: 10;
+            }
+            
+            .tabs-container {
+                position: relative;
+            }
+        }
+
+        /* Menu compacto para mobile */
+        .mobile-tabs-menu {
+            display: none;
+            width: 100%;
+            padding: 10px;
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .mobile-tabs-menu:after {
+            content: '▼';
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 12px;
+        }
+
+        .mobile-tabs-dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background: white;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            z-index: 100;
+        }
+
+        .mobile-tabs-dropdown a {
+            display: block;
+            padding: 12px 15px;
+            color: #495057;
+            text-decoration: none;
+            border-bottom: 1px solid #f8f9fa;
+        }
+
+        .mobile-tabs-dropdown a.active {
+            color: #4facfe;
+            background: #f8f9fa;
+        }
+
+        .mobile-tabs-dropdown a:last-child {
+            border-bottom: none;
+        }
+
+        @media (max-width: 768px) {
+            .tabs {
+                display: none;
+            }
+            
+            .mobile-tabs-menu {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="back-button" onclick="window.location.href='index.html'">✕</button>
+    <div class="container">
+        <div class="tabs-container">
+            
+            
+            <div class="mobile-tabs-menu" onclick="toggleMobileTabs()">
+                📋 Visão Geral
+            </div>
+            <div class="mobile-tabs-dropdown" id="mobileTabsDropdown">
+                <a href="#" class="active" onclick="showMobileTab('overview')">📋 Visão Geral</a>
+                <a href="#" onclick="showMobileTab('anthropometry')">📏 Antropometria</a>
+                <a href="#" onclick="showMobileTab('functional')">🤸 Avaliação Funcional</a>
+                <a href="#" onclick="showMobileTab('comparison')">📊 Comparação</a>
+            </div>
+
+            <div class="tabs">
+                <button class="tab active" onclick="showTab('overview')">📋 Visão Geral</button>
+                <button class="tab" onclick="showTab('anthropometry')">📏 Antropometria</button>
+                <button class="tab" onclick="showTab('functional')">🤸 Avaliação Funcional</button>
+                <button class="tab" onclick="showTab('comparison')">📊 Comparação</button>
+            </div>
+        </div>
+
+        <div class="content">
+            <div id="overview" class="tab-content active">
+                <div class="cards-grid" id="overviewCards">
+                    </div>
+            </div>
+
+            <div id="anthropometry" class="tab-content">
+                <div class="chart-container">
+                    <h3>📏 Dados Antropométricos</h3>
+                    <div id="anthropometryData">
+                        </div>
+                </div>
+            </div>
+
+            <div id="functional" class="tab-content">
+                <div class="chart-container">
+                    <h3>🤸 Avaliação Funcional</h3>
+                    <div id="functionalData">
+                        </div>
+                </div>
+            </div>
+
+            <div id="comparison" class="tab-content">
+                <div class="chart-container">
+                    <h3>📊 Comparação entre Clientes</h3>
+                    <table class="comparison-table" id="comparisonTable">
+                        </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="reportModal" class="report-modal">
+        <div class="report-content">
+            <span class="close-btn" onclick="closeReportModal()">&times;</span>
+            <h2>Relatório Gerado</h2>
+            <div id="reportContentList"></div>
+        </div>
+    </div>
+
+    <script>
+        // Dados dos clientes baseados no arquivo fornecido
+        const clientsData = [
+            {
+                month: "MAIO",
+                name: "ANA LUIZA DE CRISTO FERREIRA",
+                gender: "FEMININO",
+                age: 17,
+                birthDate: "01/06/2008",
+                date: "03/05/2025",
+                weight: 54.80,
+                height: 164.00,
+                bmi: 20.37,
+                icq: 0.71,
+                metabolicRate: 1525.05,
+                bodyFat: 28.18,
+                fatMass: 15.44,
+                leanMass: 39.36,
+                bodyFatStatus: "NORMAL",
+                visceralFat: null,
+                bodyAge: null,
+                circumferences: {
+                    arm: 25.00,
+                    contractedArm: 26.00,
+                    chest: 80.00,
+                    waist: 65.00,
+                    abdomen: 71.00,
+                    hip: 96.00,
+                    thigh: 48.00,
+                    calf: 30.00
+                },
+                functionalTests: {
+                    coreMackenzie: "REPROVADO",
+                    thomas: { iliopsoas: "X", rectusFemoris: "X" },
+                    laseque: { posteriorThigh: "N", calf: "S" },
+                    lowerBackPain: "SIM"
+                }
+            },
+            // Dados de outros clientes podem ser adicionados aqui
+        ];
+
+        let filteredData = [...clientsData];
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', function() {
+            updateDisplay();
+        });
+
+        function updateDisplay() {
+            updateOverview();
+            updateAnthropometry();
+            updateFunctional();
+            updateComparison();
+        }
+
+        function updateOverview() {
+            const container = document.getElementById('overviewCards');
+            container.innerHTML = '';
+            
+            if (filteredData.length === 0) {
+                container.innerHTML = '<div class="no-data">Nenhum dado encontrado para os filtros selecionados.</div>';
+                return;
+            }
+
+            filteredData.forEach(client => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                
+                const bmiStatus = getBMIStatus(client.bmi);
+                const bodyFatBadge = getStatusBadge(client.bodyFatStatus);
+                
+                card.innerHTML = `
+                    <h3>👤 ${client.name}</h3>
+                    <div class="metric">
+                        <span class="metric-label">Idade:</span>
+                        <span class="metric-value">${client.age} anos</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Data da Avaliação:</span>
+                        <span class="metric-value">${client.date}</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Peso:</span>
+                        <span class="metric-value">${client.weight} kg</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Altura:</span>
+                        <span class="metric-value">${client.height} cm</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">IMC:</span>
+                        <span class="metric-value">${client.bmi.toFixed(2)} <span class="status-badge ${bmiStatus.class}">${bmiStatus.text}</span></span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">% Gordura:</span>
+                        <span class="metric-value">${client.bodyFat.toFixed(2)}% ${bodyFatBadge}</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Taxa Metabólica:</span>
+                        <span class="metric-value">${client.metabolicRate.toFixed(2)} kcal</span>
+                    </div>
+                    ${client.bodyAge !== null ? `
+                    <div class="metric">
+                        <span class="metric-label">Idade Corporal:</span>
+                        <span class="metric-value">${client.bodyAge} anos</span>
+                    </div>` : ''}
+                `;
+                
+                container.appendChild(card);
+            });
+        }
+
+        function updateAnthropometry() {
+            const container = document.getElementById('anthropometryData');
+            container.innerHTML = '';
+            
+            if (filteredData.length === 0) {
+                container.innerHTML = '<div class="no-data">Nenhum dado encontrado.</div>';
+                return;
+            }
+
+            filteredData.forEach(client => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                
+                card.innerHTML = `
+                    <h3>📏 ${client.name}</h3>
+                    <div class="metric">
+                        <span class="metric-label">Braço:</span>
+                        <span class="metric-value">${client.circumferences.arm} cm</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Braço Contraído:</span>
+                        <span class="metric-value">${client.circumferences.contractedArm} cm</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Tórax:</span>
+                        <span class="metric-value">${client.circumferences.chest} cm</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Cintura:</span>
+                        <span class="metric-value">${client.circumferences.waist} cm</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Abdome:</span>
+                        <span class="metric-value">${client.circumferences.abdomen} cm</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Quadril:</span>
+                        <span class="metric-value">${client.circumferences.hip} cm</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Coxa:</span>
+                        <span class="metric-value">${client.circumferences.thigh} cm</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Panturrilha:</span>
+                        <span class="metric-value">${client.circumferences.calf} cm</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Relação Cintura/Quadril:</span>
+                        <span class="metric-value">${client.icq.toFixed(2)}</span>
+                    </div>
+                `;
+                
+                container.appendChild(card);
+            });
+        }
+
+        function updateFunctional() {
+            const container = document.getElementById('functionalData');
+            container.innerHTML = '';
+            
+            if (filteredData.length === 0) {
+                container.innerHTML = '<div class="no-data">Nenhum dado encontrado.</div>';
+                return;
+            }
+
+            filteredData.forEach(client => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                
+                card.innerHTML = `
+                    <h3>🤸 ${client.name}</h3>
+                    <div class="metric">
+                        <span class="metric-label">Teste Core Mackenzie:</span>
+                        <span class="metric-value status-badge ${client.functionalTests.coreMackenzie === 'REPROVADO' ? 'status-muito-alto' : 'status-normal'}">${client.functionalTests.coreMackenzie}</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Teste Thomas - Iliopsoas:</span>
+                        <span class="metric-value">${client.functionalTests.thomas.iliopsoas || 'N/A'}</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Teste Thomas - Reto Femoral:</span>
+                        <span class="metric-value">${client.functionalTests.thomas.rectusFemoris || 'N/A'}</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Teste Laseque - Posterior Coxa:</span>
+                        <span class="metric-value">${client.functionalTests.laseque.posteriorThigh || 'N/A'}</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Teste Laseque - Panturrilha:</span>
+                        <span class="metric-value">${client.functionalTests.laseque.calf || 'N/A'}</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Dor Lombar:</span>
+                        <span class="metric-value status-badge ${client.functionalTests.lowerBackPain === 'SIM' ? 'status-muito-alto' : 'status-normal'}">${client.functionalTests.lowerBackPain || 'N/A'}</span>
+                    </div>
+                `;
+                
+                container.appendChild(card);
+            });
+        }
+
+        function updateComparison() {
+            const table = document.getElementById('comparisonTable');
+            table.innerHTML = '';
+            
+            if (filteredData.length === 0) {
+                table.innerHTML = '<tr><td colspan="100%" class="no-data">Nenhum dado encontrado.</td></tr>';
+                return;
+            }
+
+            const headers = ['Nome', 'Idade', 'IMC', '% Gordura', 'Peso', 'Altura', 'Taxa Metabólica', 'Status'];
+            
+            let tableHTML = '<thead><tr>';
+            headers.forEach(header => {
+                tableHTML += `<th>${header}</th>`;
+            });
+            tableHTML += '</tr></thead><tbody>';
+
+            filteredData.forEach(client => {
+                const bmiStatus = getBMIStatus(client.bmi);
+                tableHTML += `
+                    <tr>
+                        <td><strong>${client.name}</strong></td>
+                        <td>${client.age} anos</td>
+                        <td>${client.bmi.toFixed(2)}</td>
+                        <td>${client.bodyFat.toFixed(2)}%</td>
+                        <td>${client.weight} kg</td>
+                        <td>${client.height} cm</td>
+                        <td>${client.metabolicRate.toFixed(2)} kcal</td>
+                        <td><span class="status-badge ${bmiStatus.class}">${bmiStatus.text}</span></td>
+                    </tr>
+                `;
+            });
+
+            tableHTML += '</tbody>';
+            table.innerHTML = tableHTML;
+        }
+
+        function getBMIStatus(bmi) {
+            if (bmi < 18.5) return { text: 'Abaixo do peso', class: 'status-baixo' };
+            if (bmi < 25) return { text: 'Peso normal', class: 'status-normal' };
+            if (bmi < 30) return { text: 'Sobrepeso', class: 'status-alto' };
+            return { text: 'Obesidade', class: 'status-muito-alto' };
+        }
+
+        function getStatusBadge(status) {
+            if (!status) return '';
+            const statusClass = status.toLowerCase().replace(' ', '-');
+            return `<span class="status-badge status-${statusClass}">${status}</span>`;
+        }
+
+        function showTab(tabName) {
+            // Esconder todas as abas
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remover classe active de todos os botões
+            document.querySelectorAll('.tab').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Mostrar aba selecionada
+            document.getElementById(tabName).classList.add('active');
+            
+            // Adicionar classe active ao botão clicado
+            event.target.classList.add('active');
+            
+            // Atualizar menu mobile
+            updateMobileMenu(tabName);
+        }
+        
+        function toggleMobileTabs() {
+            const dropdown = document.getElementById('mobileTabsDropdown');
+            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+        }
+        
+        function showMobileTab(tabName) {
+            showTab(tabName);
+            document.getElementById('mobileTabsDropdown').style.display = 'none';
+            document.querySelector('.mobile-tabs-menu').textContent = document.querySelector(`.tab[onclick="showTab('${tabName}')"]`).textContent;
+        }
+        
+        function updateMobileMenu(tabName) {
+            const menuItems = document.querySelectorAll('.mobile-tabs-dropdown a');
+            menuItems.forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('onclick').includes(tabName)) {
+                    item.classList.add('active');
+                }
+            });
+        }
+
+        function generateReport() {
+            if (filteredData.length === 0) {
+                alert('Nenhum dado disponível para gerar relatório.');
+                return;
+            }
+
+            const reportList = document.getElementById('reportContentList');
+            reportList.innerHTML = '';
+
+            filteredData.forEach(client => {
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `
+                    <span>Nome:</span> ${client.name}<br>
+                    <span>Idade:</span> ${client.age} anos<br>
+                    <span>IMC:</span> ${client.bmi.toFixed(2)}<br>
+                    <span>% Gordura:</span> ${client.bodyFat.toFixed(2)}%<br>
+                    <span>Peso:</span> ${client.weight} kg<br>
+                    <span>Altura:</span> ${client.height} cm<br>
+                    <span>Status:</span> ${getBMIStatus(client.bmi).text}
+                `;
+                reportList.appendChild(listItem);
+            });
+
+            document.getElementById('reportModal').style.display = 'flex';
+        }
+
+        function closeReportModal() {
+            document.getElementById('reportModal').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

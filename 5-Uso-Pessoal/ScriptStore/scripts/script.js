@@ -278,3 +278,22 @@ window.addEventListener('scroll', handleScrollAndMenuToggle);
 
 // Chame a função uma vez ao carregar a página para definir o estado inicial
 document.addEventListener('DOMContentLoaded', handleScrollAndMenuToggle);
+
+document.querySelectorAll(".whatsapp-btn").forEach(btn => {
+  btn.addEventListener("click", function (e) {
+    e.preventDefault();
+
+    // Detecta se está no navegador do TikTok
+    const ua = navigator.userAgent.toLowerCase();
+    const isTikTok = ua.includes("tiktok");
+
+    if (isTikTok) {
+      // Redireciona para página de aviso
+      window.location.href = "tiktok-warning.html";
+    } else {
+      // Abre WhatsApp normalmente
+      const link = this.getAttribute("href");
+      window.open(link, "_blank");
+    }
+  });
+});

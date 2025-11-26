@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Controle de Corridas (Mobile)</title>
+<style>
+  :root{
+    --bg:#0f1724;
+    --card:#0b1220;
+    --accent:#06b6d4;
+    --muted:#94a3b8;
+    --glass: rgba(255,255,255,0.03);
+    --danger:#ef4444;
+    --success:#10b981;
+  }
+  *{box-sizing:border-box;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial}
+  html,body{height:100%;margin:0;background:linear-gradient(180deg,#071026 0%, #0b1220 100%);color:#e6eef6}
+  .wrap{max-width:520px;margin:18px auto;padding:16px;}
+  header{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+  header h1{font-size:18px;margin:0}
+  .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:14px;padding:14px;box-shadow:0 6px 18px rgba(2,6,23,0.6);border:1px solid rgba(255,255,255,0.03)}
+  .input-row{display:flex;gap:8px}
+  input[type="number"], input[type="text"]{
+    flex:1;padding:12px 10px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:var(--glass);color:inherit;font-size:16px
+  }
+  button{
+    background:var(--accent);color:#042027;border:none;padding:0 14px;border-radius:10px;font-weight:600;cursor:pointer;
+  }
+  .small{font-size:13px;color:var(--muted);margin-top:8px}
+  .list{margin-top:12px;display:grid;gap:8px;max-height:260px;overflow:auto;padding-right:6px}
+  .ride{
+    display:flex;justify-content:space-between;align-items:center;padding:10px;border-radius:10px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.02)
+  }
+  .ride .meta{display:flex;gap:8px;align-items:center}
+  .badge{background:rgba(255,255,255,0.03);padding:6px 8px;border-radius:8px;font-weight:600}
+  .actions button{background:transparent;color:var(--muted);border:none;padding:6px;border-radius:8px;cursor:pointer}
+  .summary{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+  .summary .item{padding:10px;border-radius:10px;background:rgba(255,255,255,0.02);text-align:center}
+  .calc{margin-top:12px;display:grid;gap:8px}
+  label{font-size:13px;color:var(--muted);margin-bottom:4px;display:block}
+  .footer{display:flex;gap:8px;justify-content:space-between;margin-top:12px;align-items:center}
+  .muted{color:var(--muted);font-size:13px}
+  .big-result{font-size:20px;font-weight:700;color:var(--success)}
+  @media (max-width:420px){
+    .summary{grid-template-columns:repeat(2,1fr)}
+    header h1{font-size:16px}
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div style="width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#60a5fa);display:flex;align-items:center;justify-content:center;font-weight:800;color:#022;box-shadow:0 6px 16px rgba(3,7,18,0.6)">R</div>
+      <div>
+        <h1>Controle de Corridas — Mobile</h1>
+        <div class="small">Insira valores de cada corrida (R$) — soma em tempo real</div>
+      </div>
+    </header>
+
+    <section class="card">
+      <div style="display:flex;gap:8px;flex-direction:column">
+        <div class="input-row">
+          <input id="valueInput" type="number" step="0.01" placeholder="Valor recebido (ex: 23.50)" />
+          <button id="addBtn">Adicionar</button>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:8px">
+          <input id="noteInput" type="text" placeholder="Observação (opcional)" />
+          <button id="clearAll" style="background:transparent;color:var(--muted);border:1px solid rgba(255,255,255,0.03)">Limpar</button>
+        </div>
+        <div class="list" id="ridesList" aria-live="polite"></div>
+
+        <div class="summary" aria-hidden="false">
+          <div class="item">
+            <div class="muted">Total</div>
+            <div id="total" class="big-result">R$ 0,00</div>
+          </div>
+          <div class="item">
+            <div class="muted">Corridas</div>
+            <div id="count" style="font-weight:700">0</div>
+          </div>
+          <div class="item">
+            <div class="muted">Média</div>
+            <div id="avg" style="font-weight:700">R$ 0,00</div>
+          </div>
+        </div>
+
+        <hr style="border:none;border-top:1px solid rgba(255,255,255,0.03);margin:12px 0">
+
+        <div class="calc">
+          <label>KM percorridos (total)</label>
+          <input id="kmInput" type="number" step="0.1" placeholder="Total de km rodados (ex: 120.5)" />
+          <label>Consumo (km por litro)</label>
+          <input id="consumoInput" type="number" step="0.1" placeholder="Km por litro (ex: 10)" />
+          <label>Preço do litro (R$)</label>
+          <input id="precoCombInput" type="number" step="0.01" placeholder="Preço por litro (ex: 6.59)" />
+          <label>Taxas / Descontos (%)</label>
+          <input id="taxPercentInput" type="number" step="0.1" placeholder="Percentual de taxas (ex: 20)" />
+          <div style="display:flex;gap:8px">
+            <button id="calcGasBtn">Calcular gastos</button>
+            <button id="calcNetBtn" style="background:transparent;color:var(--muted);border:1px solid rgba(255,255,255,0.03)">Calcular líquido</button>
+          </div>
+
+          <div style="display:flex;gap:8px;margin-top:8px;flex-direction:column">
+            <div class="muted">Gasto estimado com gasolina</div>
+            <div id="gasCost" style="font-weight:700">R$ 0,00</div>
+
+            <div class="muted">Total de taxas (R$)</div>
+            <div id="taxAmount" style="font-weight:700">R$ 0,00</div>
+
+            <div class="muted">Líquido após gastos e taxas</div>
+            <div id="netResult" style="font-weight:800;font-size:18px">R$ 0,00</div>
+          </div>
+        </div>
+
+        <div class="footer">
+          <div class="muted">Dicas: insira cada corrida e clique em "Adicionar".</div>
+          <div style="display:flex;gap:6px">
+            <button id="exportCsv" style="background:transparent;color:var(--muted);border:1px solid rgba(255,255,255,0.03)">Exportar CSV</button>
+            <button id="importSample" style="background:transparent;color:var(--muted);border:1px solid rgba(255,255,255,0.03)">Exemplo</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+<script>
+(function(){
+  // state
+  let rides = []; // {value: number, note: string, id: timestamp}
+  const $ = id => document.getElementById(id);
+  const fmt = v => 'R$ ' + Number(v || 0).toFixed(2).replace('.',',');
+
+  // UI refs
+  const valueInput = $('valueInput');
+  const noteInput = $('noteInput');
+  const addBtn = $('addBtn');
+  const ridesList = $('ridesList');
+  const totalEl = $('total');
+  const countEl = $('count');
+  const avgEl = $('avg');
+  const clearAllBtn = $('clearAll');
+
+  const kmInput = $('kmInput');
+  const consumoInput = $('consumoInput');
+  const precoCombInput = $('precoCombInput');
+  const taxPercentInput = $('taxPercentInput');
+  const calcGasBtn = $('calcGasBtn');
+  const calcNetBtn = $('calcNetBtn');
+  const gasCostEl = $('gasCost');
+  const taxAmountEl = $('taxAmount');
+  const netResultEl = $('netResult');
+
+  const exportCsvBtn = $('exportCsv');
+  const importSampleBtn = $('importSample');
+
+  // helpers
+  function saveState(){ localStorage.setItem('rides_v1', JSON.stringify(rides)); }
+  function loadState(){
+    try{
+      const s = JSON.parse(localStorage.getItem('rides_v1') || '[]');
+      if(Array.isArray(s)) rides = s;
+    }catch(e){ rides = []; }
+  }
+
+  function addRide(value, note){
+    const v = parseFloat(String(value).replace(',', '.'));
+    if(isNaN(v) || v <= 0) return false;
+    rides.unshift({id: Date.now()+Math.random(), value: +v, note: note || ''});
+    saveState();
+    render();
+    return true;
+  }
+  function removeRide(id){
+    rides = rides.filter(r => r.id !== id);
+    saveState();
+    render();
+  }
+  function clearAll(){
+    if(!confirm('Limpar todas as corridas?')) return;
+    rides = [];
+    saveState();
+    render();
+  }
+
+  function sum(){
+    return rides.reduce((s,r)=> s + Number(r.value), 0);
+  }
+  function count(){ return rides.length; }
+  function average(){ return count() ? (sum()/count()) : 0; }
+
+  function render(){
+    // list
+    ridesList.innerHTML = '';
+    if(rides.length === 0){
+      ridesList.innerHTML = '<div class="muted" style="padding:12px">Nenhuma corrida adicionada.</div>';
+    }else{
+      for(const r of rides){
+        const div = document.createElement('div');
+        div.className = 'ride';
+        div.innerHTML = `
+          <div class="meta">
+            <div class="badge">${fmt(r.value)}</div>
+            <div style="display:flex;flex-direction:column">
+              <div style="font-size:13px;color:var(--muted)">${r.note || '—'}</div>
+              <div style="font-size:11px;color:rgba(255,255,255,0.18)">${new Date(r.id).toLocaleString()}</div>
+            </div>
+          </div>
+          <div class="actions">
+            <button title="Excluir" data-id="${r.id}">🗑️</button>
+          </div>
+        `;
+        ridesList.appendChild(div);
+      }
+      // attach delete handlers
+      ridesList.querySelectorAll('button[data-id]').forEach(btn=>{
+        btn.addEventListener('click', e=>{
+          const id = Number(btn.getAttribute('data-id'));
+          removeRide(id);
+        });
+      });
+    }
+
+    // summary
+    totalEl.textContent = fmt(sum());
+    countEl.textContent = count();
+    avgEl.textContent = fmt(average());
+
+    // recalc net automatically if possible
+    recalcNet();
+  }
+
+  // calculations
+  function calcGas(){
+    const km = parseFloat(String(kmInput.value||'').replace(',','.'));
+    const consumo = parseFloat(String(consumoInput.value||'').replace(',','.'));
+    const preco = parseFloat(String(precoCombInput.value||'').replace(',','.'));
+    if(isNaN(km) || isNaN(consumo) || isNaN(preco) || consumo <= 0) return null;
+    const litros = km / consumo;
+    const cost = litros * preco;
+    return {km,consumo,preco,litros,cost};
+  }
+
+  function recalcNet(){
+    const gas = calcGas();
+    const taxPercent = parseFloat(String(taxPercentInput.value||'').replace(',','.')) || 0;
+    const total = sum();
+    const taxAmount = total * (taxPercent / 100);
+    const gasCost = gas ? gas.cost : 0;
+    const net = total - taxAmount - gasCost;
+    gasCostEl.textContent = fmt(gasCost);
+    taxAmountEl.textContent = fmt(taxAmount);
+    netResultEl.textContent = fmt(net);
+    return {gasCost, taxAmount, net};
+  }
+
+  // events
+  addBtn.addEventListener('click', ()=>{
+    if(addRide(valueInput.value, noteInput.value)){
+      valueInput.value = '';
+      noteInput.value = '';
+      valueInput.focus();
+    }else{
+      alert('Insira um valor válido (maior que 0).');
+    }
+  });
+  valueInput.addEventListener('keydown', e=>{
+    if(e.key === 'Enter') addBtn.click();
+  });
+
+  clearAllBtn.addEventListener('click', clearAll);
+
+  calcGasBtn.addEventListener('click', ()=>{
+    const g = calcGas();
+    if(!g){
+      alert('Preencha KM, consumo e preço do litro corretamente.');
+      return;
+    }
+    gasCostEl.textContent = fmt(g.cost);
+  });
+
+  calcNetBtn.addEventListener('click', ()=>{
+    const result = recalcNet();
+    alert('Cálculo realizado.\n\n' +
+      'Gasto com gasolina: ' + fmt(result.gasCost) + '\n' +
+      'Taxas: ' + fmt(result.taxAmount) + '\n' +
+      'Líquido: ' + fmt(result.net)
+    );
+  });
+
+  exportCsvBtn.addEventListener('click', ()=>{
+    if(rides.length === 0){ alert('Nenhuma corrida para exportar.'); return; }
+    let csv = 'valor,observacao,data\\n';
+    for(const r of rides){
+      csv += `${Number(r.value).toFixed(2).replace('.',',')},` +
+             `"${(r.note||'').replace(/"/g,'""')}",` +
+             `"${new Date(r.id).toLocaleString()}"\\n`;
+    }
+    const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'corridas.csv';
+    a.click();
+    URL.revokeObjectURL(url);
+  });
+
+  importSampleBtn.addEventListener('click', ()=>{
+    if(!confirm('Inserir dados de exemplo?')) return;
+    const sample = [23.5, 18.75, 42.9, 15.0, 28.2];
+    for(const v of sample) addRide(v, 'exemplo');
+    render();
+  });
+
+  // init
+  loadState();
+  render();
+
+  // expose for debugging (optional)
+  window.__ridesApp = {
+    addRide, removeRide, clearAll, getState: ()=>rides, recalcNet
+  };
+})();
+</script>
+</body>
+</html>

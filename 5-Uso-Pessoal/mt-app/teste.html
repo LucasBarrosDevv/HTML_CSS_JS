@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>App Corridas Moderno</title>
+<style>
+    :root {
+        --primaria: #12c26b;
+        --primaria-escura: #0e9e56;
+        --lucro: #ffd700;
+        --fundo: #f4f6f9;
+        --card: #ffffff;
+        --texto: #222;
+        --cinza: #dcdcdc;
+    }
+
+    body {
+        margin: 0;
+        font-family: "Inter", sans-serif;
+        background: var(--fundo);
+        padding: 18px;
+        color: var(--texto);
+    }
+
+    h2 {
+        text-align: center;
+        font-size: 22px;
+        font-weight: 700;
+        margin-bottom: 18px;
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(3,1fr);
+        gap: 14px;
+        margin-bottom: 25px;
+    }
+
+    .bubble {
+        background: var(--card);
+        padding: 18px;
+        border-radius: 16px;
+        border: 2px solid var(--primaria);
+        text-align: center;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        box-shadow: 0 3px 8px #00000010;
+        transition:.25s;
+    }
+
+    .bubble:hover {
+        background: #eafff2;
+        transform: translateY(-3px);
+    }
+
+    .hidden { display:none; }
+
+    #valor-grid, #km-grid { transition: opacity .3s; }
+
+    .button-discreto, .button-principal {
+        width: 100%;
+        padding: 12px;
+        border-radius: 10px;
+        border: none;
+        cursor: pointer;
+        margin-bottom: 12px;
+        font-weight: 600;
+        transition:.25s;
+    }
+
+    .button-principal {
+        background: var(--primaria);
+        color: white;
+        font-size: 16px;
+        box-shadow: 0 3px 8px #12c26b66;
+    }
+
+    .button-principal:hover {
+        background: var(--primaria-escura);
+        transform: translateY(-2px);
+    }
+
+    .button-discreto {
+        background: var(--cinza);
+        color: #555;
+        font-size: 14px;
+    }
+
+    .button-discreto:hover {
+        background: #c8c8c8;
+    }
+
+    .input-box input {
+        width: 100%;
+        padding: 12px;
+        border-radius: 10px;
+        border: 2px solid var(--primaria);
+        margin-top: 10px;
+        font-size: 16px;
+    }
+
+    /* HISTÓRICO */
+    #historico {
+        margin-top: 25px;
+        background: var(--card);
+        padding: 14px;
+        border-radius: 14px;
+        box-shadow: 0 2px 6px #00000015;
+    }
+
+    .item-hist {
+        padding: 10px;
+        border-bottom: 1px solid #eee;
+        font-size: 15px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .item-hist:last-child {
+        border: none;
+    }
+
+    .tag { color: var(--primaria-escura); font-weight:700; }
+</style>
+</head>
+<body>
+
+<h2>Selecione o KM</h2>
+<div id="km-grid" class="grid"></div>
+<button id="mostrar-mais" class="button-principal">Mostrar mais km</button>
+<div class="input-box hidden" id="km-manual-box"><input id="km-manual" type="number" placeholder="Outro km"></div>
+
+<h2 id="titulo-valores" class="hidden">Selecione o Valor</h2>
+<div id="valor-grid" class="grid hidden"></div>
+<button id="valor-manual-btn" class="button-discreto" hidden>Outro valor</button>
+<div id="valor-manual-box" class="input-box hidden"><input id="valor-manual" type="number" placeholder="Digite o valor"></div>
+
+<h2>Histórico</h2>
+<div id="historico"></div>
+
+<script>
+const kmGrid = document.getElementById("km-grid");
+const valorGrid = document.getElementById("valor-grid");
+const tituloValores = document.getElementById("titulo-valores");
+const mostrarMais = document.getElementById("mostrar-mais");
+const kmManualBox = document.getElementById("km-manual-box");
+const valorManualBtn = document.getElementById("valor-manual-btn");
+const valorManualBox = document.getElementById("valor-manual-box");
+const historicoBox = document.getElementById("historico");
+
+let historico = [];
+
+const kmOpcoes = [1,2,3,4,5,6,7,8,9,10,12,15,16];
+
+const kmValores = {1:[5,6,7,8,9,10],2:[5,7,8,10,11,12],3:[5,8,10,12,14,15],4:[7,9,11,13,14,15],5:[8,10,12,14,15,18],6:[10,12,15,18,20,25],7:[12,15,18,20,30,35],8:[12,16,20,25,30,35],9:[12,18,22,26,30,36],10:[15,18,22,26,30,38],12:[15,20,25,30,35,40],15:[20,25,30,35,40,45],16:[20,25,30,35,45,50]};
+
+function atualizarHistorico() {
+    historicoBox.innerHTML = "";
+    historico.forEach(item => {
+        historicoBox.innerHTML += `
+            <div class='item-hist'>
+                <span><b>${item.km} km</b> → R$ ${item.valor}</span>
+                <span class='tag'>${item.pkm.toFixed(2)} / km</span>
+            </div>`;
+    });
+}
+
+function selecionarValor(valor, km) {
+    const distanciaMotorista = (Math.random() * (2.5 - 0.5) + 0.5).toFixed(2);
+    const kmTotal = km + parseFloat(distanciaMotorista);
+    const precoPorKm = valor / kmTotal;
+
+    historico.push({ km, valor, pkm: precoPorKm });
+    atualizarHistorico();
+}
+
+function renderKm() {
+    kmGrid.innerHTML = "";
+    kmOpcoes.forEach((km, index) => {
+        const el = document.createElement("div");
+        el.className = "bubble";
+        el.textContent = km + " km";
+        if(index > 4) el.classList.add("hidden");
+        el.onclick = () => selecionarKm(km);
+        kmGrid.appendChild(el);
+    });
+}
+renderKm();
+
+mostrarMais.onclick = () => {
+    document.querySelectorAll('#km-grid .bubble.hidden').forEach(b => b.classList.remove('hidden'));
+    mostrarMais.classList.add("hidden");
+    kmManualBox.classList.remove("hidden");
+};
+
+function selecionarKm(km){
+    kmGrid.style.opacity = 0;
+    setTimeout(()=>{
+        kmGrid.classList.add("hidden");
+        tituloValores.classList.remove("hidden");
+        valorGrid.classList.remove("hidden");
+        valorManualBtn.hidden = false;
+
+        valorGrid.innerHTML = "";
+        kmValores[km].forEach(v=>{
+            const el = document.createElement("div");
+            el.className = "bubble";
+            el.textContent = "R$ " + v;
+            el.onclick = ()=> selecionarValor(v, km);
+            valorGrid.appendChild(el);
+        });
+        valorGrid.style.opacity = 1;
+    },300);
+}
+
+valorManualBtn.onclick = ()=> valorManualBox.classList.remove("hidden");
+</script>
+</body>
+</html>

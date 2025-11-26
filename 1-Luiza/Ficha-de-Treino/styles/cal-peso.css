@@ -57,6 +57,8 @@ select {
   padding: 14px;
   overflow: auto;
   transition: opacity .25s ease;
+
+  background-color: antiquewhite;
 }
 .rastreador-peso.expandido .rastreador-conteudo {
   opacity: 1;
@@ -70,15 +72,19 @@ select {
   gap: 10px;
   justify-content: space-between;
   margin-bottom: 12px;
+
+  
 }
-.rastreador-cabecalho h2 {
-  font-size: 1rem;
+.rastreador-cabecalho > h2 {
+  
   margin: 0;
   display: flex;
   align-items: center;
   gap: 8px;
   font-weight: 600;
   color: #222222;
+
+  font-size: 3em;
 }
 .etiqueta {
   font-size: .75rem;
