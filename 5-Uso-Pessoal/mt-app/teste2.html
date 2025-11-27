@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <title>App Corridas Premium</title>
 
 <style>
@@ -263,7 +263,7 @@
     .edit-btn {
         position: absolute;
         top: 12px;
-        right: 12px;
+        right: 80px;
         background: rgba(139, 92, 246, 0.2);
         border: 1px solid var(--roxo-primario);
         border-radius: 8px;
@@ -278,6 +278,26 @@
     .edit-btn:hover {
         background: rgba(139, 92, 246, 0.3);
         box-shadow: 0 2px 10px var(--sombra-roxa);
+    }
+
+    .delete-btn {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        background: rgba(239, 68, 68, 0.2);
+        border: 1px solid rgba(239, 68, 68, 0.5);
+        border-radius: 8px;
+        padding: 6px 12px;
+        font-size: 12px;
+        color: #fca5a5;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-weight: 600;
+    }
+
+    .delete-btn:hover {
+        background: rgba(239, 68, 68, 0.3);
+        box-shadow: 0 2px 10px rgba(239, 68, 68, 0.3);
     }
 
     .destaque {
@@ -627,11 +647,10 @@ function renderPickup() {
         
         if(index >= 6) el.classList.add("hidden");
         
-        // Click handler
-        el.onclick = () => selecionarPickup(km);
-        
-        // Long press handler for picker wheel
-        el.addEventListener('touchstart', (e) => handleLongPress(e, km, 'pickup'));
+        el.addEventListener('click', () => selecionarPickup(km));
+        el.addEventListener('touchstart', (e) => {
+            handleLongPress(e, km, 'pickup');
+        });
         el.addEventListener('mousedown', (e) => handleLongPress(e, km, 'pickup'));
         el.addEventListener('touchend', cancelLongPress);
         el.addEventListener('mouseup', cancelLongPress);
@@ -653,11 +672,10 @@ function renderKm() {
         
         if(index >= 6) el.classList.add("hidden");
         
-        // Click handler
-        el.onclick = () => selecionarKm(km);
-        
-        // Long press handler for picker wheel
-        el.addEventListener('touchstart', (e) => handleLongPress(e, km, 'trip'));
+        el.addEventListener('click', () => selecionarKm(km));
+        el.addEventListener('touchstart', (e) => {
+            handleLongPress(e, km, 'trip');
+        });
         el.addEventListener('mousedown', (e) => handleLongPress(e, km, 'trip'));
         el.addEventListener('touchend', cancelLongPress);
         el.addEventListener('mouseup', cancelLongPress);
@@ -668,10 +686,9 @@ function renderKm() {
 }
 
 function handleLongPress(e, value, type) {
-    e.preventDefault();
     longPressTimer = setTimeout(() => {
         showPicker(value, type);
-    }, 500); // 500ms long press
+    }, 500);
 }
 
 function cancelLongPress() {
@@ -923,7 +940,7 @@ function selecionarValor(valor) {
     
     document.getElementById('preco-por-km').textContent = `R$ ${calculo.precoPorKm.toFixed(2)}/km`;
     document.getElementById('calculo-detalhes').innerHTML = `
-        🚗 Busca: ${pickupSelecionado.toFixed(1)}km • 📍 Corrida: ${kmSelecionado.toFixed(1)}km<br>
+        🚗 Busca: ${pickupSelecionado.toFixed(1)}km busca + 📍 Corrida: ${kmSelecionado.toFixed(1)}km<br>
         💵 Valor: R$ ${valor.toFixed(2)}<br>
         <span class="destaque">Distância total percorrida:</span> ${calculo.distanciaTotal.toFixed(1)}km
     `;
@@ -962,20 +979,21 @@ function renderHistorico() {
         
         el.innerHTML = `
             <button class="edit-btn" data-index="${index}">✏️ Editar</button>
+            <button class="delete-btn" data-index="${index}">🗑️ Excluir</button>
             <div class="historico-item-header">
                 <span class="historico-km">${pickupDisplay}📍 ${tripDisplay}km</span>
                 <span class="historico-valor">R$ ${item.valor.toFixed(2)}</span>
             </div>
             <div class="historico-detalhes">
-                💰 <span class="destaque">R$ ${item.precoPorKm.toFixed(2)}/km</span> • 
-                📏 ${item.distanciaTotal.toFixed(1)}km total • 
-                🕒 ${item.timestamp}
+                💰 <span class="destaque">R$ ${item.precoPorKm.toFixed(2)}/km</span> • 📏 ${item.distanciaTotal.toFixed(1)}km total • 🕒 ${item.timestamp}
             </div>
         `;
         
-        // Add edit button click handler
         const editBtn = el.querySelector('.edit-btn');
         editBtn.onclick = () => editarItem(index);
+        
+        const deleteBtn = el.querySelector('.delete-btn');
+        deleteBtn.onclick = () => deletarItem(index);
         
         historicoLista.appendChild(el);
     });
@@ -1070,6 +1088,14 @@ function resetarApp() {
 if(historico.length > 0) {
     renderHistorico();
     historicoSection.classList.remove("hidden");
+}
+
+function deletarItem(index) {
+    if (confirm('Deseja excluir esta corrida do histórico?')) {
+        historico.splice(index, 1);
+        salvarHistorico();
+        renderHistorico();
+    }
 }
 </script>
 
