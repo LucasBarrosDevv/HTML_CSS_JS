@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <title>App Corridas Premium</title>
 
 <style>
@@ -19,6 +19,9 @@
         --text-secondary: #94a3b8;
         --sombra-verde: rgba(16, 185, 129, 0.3);
         --sombra-dourada: rgba(251, 191, 36, 0.3);
+        --roxo-primario: #8b5cf6;
+        --roxo-escuro: #7c3aed;
+        --sombra-roxa: rgba(139, 92, 246, 0.3);
     }
 
     * {
@@ -75,6 +78,9 @@
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         position: relative;
         overflow: hidden;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
     }
 
     .bubble::before {
@@ -99,6 +105,15 @@
         background: var(--bg-card-hover);
     }
 
+    .bubble.pickup-bubble {
+        border-color: var(--roxo-primario);
+    }
+
+    .bubble.pickup-bubble:hover {
+        border-color: var(--roxo-escuro);
+        box-shadow: 0 8px 25px var(--sombra-roxa);
+    }
+
     .bubble.valor-bubble {
         border-color: var(--dourado);
     }
@@ -106,7 +121,6 @@
     .bubble.valor-bubble:hover {
         border-color: var(--dourado-escuro);
         box-shadow: 0 8px 25px var(--sombra-dourada);
-        /* background: var(--bg-card-hover); */
     }
 
     .bubble-label {
@@ -212,6 +226,7 @@
         margin-bottom: 12px;
         border-left: 4px solid var(--dourado);
         transition: all 0.3s;
+        position: relative;
     }
 
     .historico-item:hover {
@@ -242,6 +257,47 @@
         font-size: 13px;
         color: var(--text-secondary);
         line-height: 1.6;
+    }
+
+    /* Add edit button styles for history items */
+    .edit-btn {
+        position: absolute;
+        top: 12px;
+        right: 80px;
+        background: rgba(139, 92, 246, 0.2);
+        border: 1px solid var(--roxo-primario);
+        border-radius: 8px;
+        padding: 6px 12px;
+        font-size: 12px;
+        color: var(--roxo-primario);
+        cursor: pointer;
+        transition: all 0.3s;
+        font-weight: 600;
+    }
+
+    .edit-btn:hover {
+        background: rgba(139, 92, 246, 0.3);
+        box-shadow: 0 2px 10px var(--sombra-roxa);
+    }
+
+    .delete-btn {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        background: rgba(239, 68, 68, 0.2);
+        border: 1px solid rgba(239, 68, 68, 0.5);
+        border-radius: 8px;
+        padding: 6px 12px;
+        font-size: 12px;
+        color: #fca5a5;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-weight: 600;
+    }
+
+    .delete-btn:hover {
+        background: rgba(239, 68, 68, 0.3);
+        box-shadow: 0 2px 10px rgba(239, 68, 68, 0.3);
     }
 
     .destaque {
@@ -316,14 +372,14 @@
         font-size: 14px;
     }
     
-    .voltar-btn { /* Estilo específico para o botão de voltar */
+    .voltar-btn {
         background: rgba(148, 163, 184, 0.2);
-        border-color: rgba(148, 163, 184, 0.5);
+        border: 1px solid rgba(148, 163, 184, 0.5);
         color: var(--text-secondary);
         margin-top: 10px;
     }
 
-    .limpar-btn:hover, .voltar-btn:hover {
+    .limpar-btn:hover {
         background: rgba(239, 68, 68, 0.3);
         box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
     }
@@ -341,6 +397,107 @@
         from { opacity: 0; }
         to { opacity: 1; }
     }
+
+    /* iOS-style picker wheel styles */
+    .picker-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        animation: fadeIn 0.3s ease-out;
+    }
+
+    .picker-container {
+        background: var(--bg-card);
+        border-radius: 20px;
+        padding: 20px;
+        width: 90%;
+        max-width: 350px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .picker-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .picker-title {
+        font-size: 18px;
+        font-weight: 700;
+        color: var(--text-primary);
+    }
+
+    .picker-close {
+        background: none;
+        border: none;
+        color: var(--text-secondary);
+        font-size: 28px;
+        cursor: pointer;
+        padding: 0;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .picker-wheel {
+        height: 200px;
+        overflow-y: scroll;
+        position: relative;
+        scroll-snap-type: y mandatory;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+
+    .picker-wheel::-webkit-scrollbar {
+        display: none;
+    }
+
+    .picker-item {
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        font-weight: 600;
+        color: var(--text-secondary);
+        scroll-snap-align: center;
+        transition: all 0.3s;
+    }
+
+    .picker-item.active {
+        color: var(--verde-neon);
+        font-size: 28px;
+        font-weight: 800;
+    }
+
+    .picker-highlight {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        height: 40px;
+        transform: translateY(-50%);
+        border-top: 2px solid rgba(16, 185, 129, 0.3);
+        border-bottom: 2px solid rgba(16, 185, 129, 0.3);
+        background: rgba(16, 185, 129, 0.05);
+        pointer-events: none;
+    }
+
+    .picker-confirm {
+        margin-top: 20px;
+        background: linear-gradient(135deg, var(--verde-primario), var(--verde-escuro));
+        padding: 14px;
+    }
 </style>
 </head>
 
@@ -355,23 +512,35 @@
         </div>
     </div>
 
-    <div id="km-section">
-        <h2 class="section-title">Selecione a Distância</h2>
-        <div id="km-grid" class="grid"></div>
-        <button id="mostrar-mais" class="button">Ver Mais Opções</button>
-        <div id="km-manual-box" class="input-box hidden">
-            <input id="km-manual" type="number" placeholder="Digite KM personalizado" />
+    <!-- New section for pickup distance -->
+    <div id="pickup-section">
+        <h2 class="section-title">🚗 Distância até o Passageiro</h2>
+        <div id="pickup-grid" class="grid"></div>
+        <button id="mostrar-mais-pickup" class="button">Ver Mais Opções</button>
+        <div id="pickup-manual-box" class="input-box hidden">
+            <input id="pickup-manual" type="number" step="0.1" placeholder="Digite distância personalizada (km)" />
         </div>
     </div>
 
+    <!-- Updated trip distance section -->
+    <div id="km-section" class="hidden">
+        <h2 class="section-title">📍 Distância da Corrida</h2>
+        <div id="km-grid" class="grid"></div>
+        <button id="mostrar-mais-km" class="button">Ver Mais Opções</button>
+        <div id="km-manual-box" class="input-box hidden">
+            <input id="km-manual" type="number" step="0.1" placeholder="Digite KM personalizado" />
+        </div>
+        <button id="voltar-pickup-btn" class="button voltar-btn">Voltar para Distância de Busca</button>
+    </div>
+
     <div id="valor-section" class="hidden">
-        <h2 class="section-title">Selecione o Valor da Corrida</h2>
+        <h2 class="section-title">💵 Selecione o Valor da Corrida</h2>
         <div id="valor-grid" class="grid"></div>
         <div id="valor-manual-box" class="input-box hidden">
-            <input id="valor-manual" type="number" placeholder="Digite valor personalizado" />
+            <input id="valor-manual" type="number" step="0.5" placeholder="Digite valor personalizado" />
         </div>
         <button id="valor-manual-btn" class="button hidden">Valor Personalizado</button>
-        <button id="voltar-km-btn" class="button voltar-btn">Voltar para KM</button>
+        <button id="voltar-km-btn" class="button voltar-btn">Voltar para KM da Corrida</button>
     </div>
 
     <div id="historico-section" class="hidden">
@@ -393,21 +562,45 @@
     </div>
 </div>
 
+<!-- iOS-style picker wheel overlay -->
+<div id="picker-overlay" class="picker-overlay hidden">
+    <div class="picker-container">
+        <div class="picker-header">
+            <div class="picker-title" id="picker-title">Selecione o valor</div>
+            <button class="picker-close" id="picker-close">×</button>
+        </div>
+        <div class="picker-wheel" id="picker-wheel">
+            <div class="picker-highlight"></div>
+        </div>
+        <button class="button picker-confirm" id="picker-confirm">Confirmar</button>
+    </div>
+</div>
+
 <script>
+const pickupGrid = document.getElementById("pickup-grid");
 const kmGrid = document.getElementById("km-grid");
 const valorGrid = document.getElementById("valor-grid");
+const pickupSection = document.getElementById("pickup-section");
 const kmSection = document.getElementById("km-section");
 const valorSection = document.getElementById("valor-section");
 const calculoSection = document.getElementById("calculo-section");
 const historicoSection = document.getElementById("historico-section");
-const mostrarMais = document.getElementById("mostrar-mais");
-const kmManualBox = document.getElementById("km-manual-box");
-const valorManualBtn = document.getElementById("valor-manual-btn");
-const valorManualBox = document.getElementById("valor-manual-box");
 const historicoLista = document.getElementById("historico-lista");
-const voltarKmBtn = document.getElementById("voltar-km-btn"); // NOVO ELEMENTO
 
-const kmOpcoes = [1,2,3,4,5,6,7,8,9,10,12,15,16];
+const pickupOpcoes = [0.1, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0];
+const pickupLabels = {
+    0.1: "100m",
+    0.5: "500m",
+    1.0: "1.0 km",
+    1.5: "1.5 km",
+    2.0: "2.0 km",
+    2.5: "2.5 km",
+    3.0: "3.0 km",
+    3.5: "3.5 km",
+    4.0: "4.0 km"
+};
+
+const kmOpcoes = [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 12.0, 15.0, 16.0, 18.0, 20.0];
 
 const kmValores = {
     1: [5,6,7,8,9,10],
@@ -422,14 +615,49 @@ const kmValores = {
     10:[15,18,22,26,30,38],
     12:[15,20,25,30,35,40],
     15:[20,25,30,35,40,45],
-    16:[20,25,30,35,45,50]
+    16:[20,25,30,35,45,50],
+    18:[22,28,33,38,48,55],
+    20:[25,30,35,40,50,60]
 };
 
 let historico = JSON.parse(localStorage.getItem('historicocorridas')) || [];
+let pickupSelecionado = null;
 let kmSelecionado = null;
+
+let editingIndex = null;
+
+let pickerType = null;
+let pickerValues = [];
+let pickerCallback = null;
+let longPressTimer = null;
 
 function salvarHistorico() {
     localStorage.setItem('historicocorridas', JSON.stringify(historico));
+}
+
+function renderPickup() {
+    pickupGrid.innerHTML = "";
+    pickupOpcoes.forEach((km, index) => {
+        const el = document.createElement("div");
+        el.className = "bubble pickup-bubble";
+        el.innerHTML = `
+            <div>${pickupLabels[km] || km.toFixed(1) + ' km'}</div>
+            <div class="bubble-label">busca</div>
+        `;
+        
+        if(index >= 6) el.classList.add("hidden");
+        
+        el.addEventListener('click', () => selecionarPickup(km));
+        el.addEventListener('touchstart', (e) => {
+            handleLongPress(e, km, 'pickup');
+        });
+        el.addEventListener('mousedown', (e) => handleLongPress(e, km, 'pickup'));
+        el.addEventListener('touchend', cancelLongPress);
+        el.addEventListener('mouseup', cancelLongPress);
+        el.addEventListener('mouseleave', cancelLongPress);
+        
+        pickupGrid.appendChild(el);
+    });
 }
 
 function renderKm() {
@@ -438,25 +666,181 @@ function renderKm() {
         const el = document.createElement("div");
         el.className = "bubble";
         el.innerHTML = `
-            <div>${km}</div>
-            <div class="bubble-label">km</div>
+            <div>${km.toFixed(1)}</div>
+            <div class="bubble-label">busca</div>
         `;
         
-        if(index > 4) el.classList.add("hidden");
+        if(index >= 6) el.classList.add("hidden");
         
-        el.onclick = () => selecionarKm(km);
+        el.addEventListener('click', () => selecionarKm(km));
+        el.addEventListener('touchstart', (e) => {
+            handleLongPress(e, km, 'trip');
+        });
+        el.addEventListener('mousedown', (e) => handleLongPress(e, km, 'trip'));
+        el.addEventListener('touchend', cancelLongPress);
+        el.addEventListener('mouseup', cancelLongPress);
+        el.addEventListener('mouseleave', cancelLongPress);
+        
         kmGrid.appendChild(el);
     });
 }
 
+function handleLongPress(e, value, type) {
+    longPressTimer = setTimeout(() => {
+        showPicker(value, type);
+    }, 500);
+}
+
+function cancelLongPress() {
+    if (longPressTimer) {
+        clearTimeout(longPressTimer);
+        longPressTimer = null;
+    }
+}
+
+// Picker wheel functionality with fractional increments (0.1 for pickup, 0.05 for trip)
+function showPicker(initialValue, type) {
+    pickerType = type;
+    const overlay = document.getElementById('picker-overlay');
+    const wheel = document.getElementById('picker-wheel');
+    const title = document.getElementById('picker-title');
+    
+    // Set title based on type
+    if (type === 'pickup') {
+        title.textContent = '🚗 Distância de Busca';
+        // Generate values from 0.1 to 10.0 in 0.1 increments
+        pickerValues = [];
+        for (let i = 1; i <= 100; i++) {
+            pickerValues.push(i * 0.1);
+        }
+    } else if (type === 'trip') {
+        title.textContent = '📍 Distância da Corrida';
+        // Generate values from 0.5 to 50 in 0.5 increments (fractional support)
+        pickerValues = [];
+        for (let i = 1; i <= 100; i++) {
+            pickerValues.push(i * 0.5);
+        }
+    }
+    
+    // Clear and populate wheel
+    wheel.innerHTML = '<div class="picker-highlight"></div>';
+    
+    // Add padding items at top and bottom
+    for (let i = 0; i < 4; i++) {
+        const padding = document.createElement('div');
+        padding.className = 'picker-item';
+        wheel.appendChild(padding);
+    }
+    
+    pickerValues.forEach((val, idx) => {
+        const item = document.createElement('div');
+        item.className = 'picker-item';
+        item.textContent = val.toFixed(1) + (type === 'pickup' ? ' km' : ' km');
+        item.dataset.value = val;
+        item.dataset.index = idx;
+        wheel.appendChild(item);
+    });
+    
+    // Add padding items at bottom
+    for (let i = 0; i < 4; i++) {
+        const padding = document.createElement('div');
+        padding.className = 'picker-item';
+        wheel.appendChild(padding);
+    }
+    
+    overlay.classList.remove('hidden');
+    
+    // Scroll to initial value
+    setTimeout(() => {
+        const targetIndex = pickerValues.findIndex(v => v >= initialValue);
+        const itemHeight = 40;
+        wheel.scrollTop = targetIndex * itemHeight;
+        updatePickerHighlight();
+    }, 50);
+    
+    // Update highlight on scroll
+    wheel.addEventListener('scroll', updatePickerHighlight);
+}
+
+function updatePickerHighlight() {
+    const wheel = document.getElementById('picker-wheel');
+    const items = wheel.querySelectorAll('.picker-item[data-value]');
+    const wheelRect = wheel.getBoundingClientRect();
+    const centerY = wheelRect.top + wheelRect.height / 2;
+    
+    let closestItem = null;
+    let closestDistance = Infinity;
+    
+    items.forEach(item => {
+        const itemRect = item.getBoundingClientRect();
+        const itemCenterY = itemRect.top + itemRect.height / 2;
+        const distance = Math.abs(centerY - itemCenterY);
+        
+        if (distance < closestDistance) {
+            closestDistance = distance;
+            closestItem = item;
+        }
+        
+        item.classList.remove('active');
+    });
+    
+    if (closestItem) {
+        closestItem.classList.add('active');
+    }
+}
+
+document.getElementById('picker-close').onclick = () => {
+    document.getElementById('picker-overlay').classList.add('hidden');
+};
+
+document.getElementById('picker-confirm').onclick = () => {
+    const wheel = document.getElementById('picker-wheel');
+    const activeItem = wheel.querySelector('.picker-item.active');
+    
+    if (activeItem && activeItem.dataset.value) {
+        const selectedValue = parseFloat(activeItem.dataset.value);
+        
+        if (pickerType === 'pickup') {
+            selecionarPickup(selectedValue);
+        } else if (pickerType === 'trip') {
+            selecionarKm(selectedValue);
+        }
+    }
+    
+    document.getElementById('picker-overlay').classList.add('hidden');
+};
+
+function selecionarPickup(km) {
+    pickupSelecionado = km;
+    pickupSection.classList.add("hidden");
+    kmSection.classList.remove("hidden");
+    kmSection.classList.add("fade-in");
+}
+
+renderPickup();
 renderKm();
 
-mostrarMais.onclick = () => {
+document.getElementById('mostrar-mais-pickup').onclick = () => {
+    document.querySelectorAll('#pickup-grid .bubble.hidden').forEach(b => {
+        b.classList.remove('hidden');
+    });
+    document.getElementById('mostrar-mais-pickup').classList.add("hidden");
+    document.getElementById('pickup-manual-box').classList.remove("hidden");
+};
+
+document.getElementById('pickup-manual').addEventListener('keypress', (e) => {
+    if(e.key === 'Enter') {
+        const pickupCustom = parseFloat(e.target.value);
+        if(pickupCustom > 0) selecionarPickup(pickupCustom);
+    }
+});
+
+document.getElementById('mostrar-mais-km').onclick = () => {
     document.querySelectorAll('#km-grid .bubble.hidden').forEach(b => {
         b.classList.remove('hidden');
     });
-    mostrarMais.classList.add("hidden");
-    kmManualBox.classList.remove("hidden");
+    document.getElementById('mostrar-mais-km').classList.add("hidden");
+    document.getElementById('km-manual-box').classList.remove("hidden");
 };
 
 document.getElementById('km-manual').addEventListener('keypress', (e) => {
@@ -466,6 +850,22 @@ document.getElementById('km-manual').addEventListener('keypress', (e) => {
     }
 });
 
+document.getElementById('voltar-pickup-btn').onclick = () => {
+    pickupSelecionado = null;
+    pickupSection.classList.remove("hidden");
+    kmSection.classList.add("hidden");
+    
+    // Reset km section
+    document.getElementById('km-manual').value = "";
+    document.getElementById('km-manual-box').classList.add("hidden");
+    document.getElementById('mostrar-mais-km').classList.remove("hidden");
+    
+    // Hide extra bubbles
+    document.querySelectorAll('#km-grid .bubble').forEach((b, idx) => {
+        if (idx >= 6) b.classList.add('hidden');
+    });
+};
+
 function selecionarKm(km) {
     kmSelecionado = km;
     kmSection.classList.add("hidden");
@@ -473,7 +873,7 @@ function selecionarKm(km) {
     valorSection.classList.add("fade-in");
     
     valorGrid.innerHTML = "";
-    const valores = kmValores[km] || [5,10,15,20,25,30];
+    const valores = kmValores[Math.round(km)] || [5,10,15,20,25,30];
     
     valores.forEach(v => {
         const el = document.createElement("div");
@@ -486,11 +886,11 @@ function selecionarKm(km) {
         valorGrid.appendChild(el);
     });
     
-    valorManualBtn.classList.remove("hidden");
+    document.getElementById('valor-manual-btn').classList.remove("hidden");
 }
 
-valorManualBtn.onclick = () => {
-    valorManualBox.classList.remove("hidden");
+document.getElementById('valor-manual-btn').onclick = () => {
+    document.getElementById('valor-manual-box').classList.remove("hidden");
 };
 
 document.getElementById('valor-manual').addEventListener('keypress', (e) => {
@@ -500,55 +900,49 @@ document.getElementById('valor-manual').addEventListener('keypress', (e) => {
     }
 });
 
-function calcularPrecoPorKm(km, valor) {
-    // Distância mínima e máxima do motorista (500m a 2.5km)
-    const distanciaMinMotorista = 0.5;
-    const distanciaMaxMotorista = 2.5;
-    const distanciaMediaMotorista = (distanciaMinMotorista + distanciaMaxMotorista) / 2;
-    
-    // Distância total percorrida (ida até passageiro + corrida)
-    const distanciaTotalMin = km + distanciaMinMotorista;
-    const distanciaTotalMax = km + distanciaMaxMotorista;
-    const distanciaTotalMedia = km + distanciaMediaMotorista;
-    
-    // Preço por KM baseado na distância média
-    const precoPorKmMedio = valor / distanciaTotalMedia;
-    const precoPorKmMin = valor / distanciaTotalMax; // Pior cenário
-    const precoPorKmMax = valor / distanciaTotalMin; // Melhor cenário
+function calcularPrecoPorKm(pickupKm, tripKm, valor) {
+    const distanciaTotal = pickupKm + tripKm;
+    const precoPorKm = valor / distanciaTotal;
     
     return {
-        medio: precoPorKmMedio,
-        minimo: precoPorKmMin,
-        maximo: precoPorKmMax,
-        distanciaTotal: distanciaTotalMedia
+        precoPorKm: precoPorKm,
+        distanciaTotal: distanciaTotal,
+        pickupKm: pickupKm,
+        tripKm: tripKm
     };
 }
 
 function selecionarValor(valor) {
-    const calculo = calcularPrecoPorKm(kmSelecionado, valor);
+    const calculo = calcularPrecoPorKm(pickupSelecionado, kmSelecionado, valor);
     
-    // Adicionar ao histórico
     const item = {
-        km: kmSelecionado,
+        pickupKm: pickupSelecionado,
+        tripKm: kmSelecionado,
         valor: valor,
-        precoPorKm: calculo.medio,
+        precoPorKm: calculo.precoPorKm,
         timestamp: new Date().toLocaleString('pt-BR'),
         distanciaTotal: calculo.distanciaTotal
     };
     
-    historico.unshift(item);
+    // If editing, update existing item; otherwise add new item
+    if (editingIndex !== null) {
+        historico[editingIndex] = item;
+        editingIndex = null; // Clear editing mode
+    } else {
+        historico.unshift(item);
+    }
+    
     salvarHistorico();
     
     // Mostrar cálculo
     calculoSection.classList.remove("hidden");
     calculoSection.classList.add("fade-in");
     
-    document.getElementById('preco-por-km').textContent = `R$ ${calculo.medio.toFixed(2)}/km`;
+    document.getElementById('preco-por-km').textContent = `R$ ${calculo.precoPorKm.toFixed(2)}/km`;
     document.getElementById('calculo-detalhes').innerHTML = `
-        Corrida: ${kmSelecionado}km por R$ ${valor.toFixed(2)}<br>
-        <span class="destaque">Melhor cenário:</span> R$ ${calculo.maximo.toFixed(2)}/km (motorista a 500m)<br>
-        <span class="destaque">Pior cenário:</span> R$ ${calculo.minimo.toFixed(2)}/km (motorista a 2.5km)<br>
-        <span class="destaque">Distância total média:</span> ${calculo.distanciaTotal.toFixed(1)}km
+        🚗 Busca: ${pickupSelecionado.toFixed(1)}km busca + 📍 Corrida: ${kmSelecionado.toFixed(1)}km<br>
+        💵 Valor: R$ ${valor.toFixed(2)}<br>
+        <span class="destaque">Distância total percorrida:</span> ${calculo.distanciaTotal.toFixed(1)}km
     `;
     
     // Mostrar histórico
@@ -562,23 +956,16 @@ function selecionarValor(valor) {
     }, 5000);
 }
 
-// FUNÇÃO PARA VOLTAR PARA A SEÇÃO DE KM
-function voltarParaKm() {
-    kmSelecionado = null; // Reseta o KM selecionado
-    kmSection.classList.remove("hidden"); // Mostra a seção de KM
-    valorSection.classList.add("hidden"); // Esconde a seção de Valor
+document.getElementById('voltar-km-btn').onclick = () => {
+    kmSelecionado = null;
+    kmSection.classList.remove("hidden");
+    valorSection.classList.add("hidden");
     
-    // Reseta o estado da seção de Valor
     document.getElementById('valor-manual').value = "";
-    valorManualBox.classList.add("hidden");
+    document.getElementById('valor-manual-box').classList.add("hidden");
     
-    // Esconde o cálculo anterior, se estiver visível
     calculoSection.classList.add("hidden");
-}
-
-// EVENT LISTENER PARA O BOTÃO DE VOLTAR
-voltarKmBtn.onclick = voltarParaKm;
-
+};
 
 function renderHistorico() {
     historicoLista.innerHTML = "";
@@ -586,17 +973,28 @@ function renderHistorico() {
     historico.forEach((item, index) => {
         const el = document.createElement("div");
         el.className = "historico-item";
+        
+        const pickupDisplay = item.pickupKm ? `🚗 ${item.pickupKm.toFixed(1)}km busca + ` : '';
+        const tripDisplay = item.tripKm || item.km;
+        
         el.innerHTML = `
+            <button class="edit-btn" data-index="${index}">✏️ Editar</button>
+            <button class="delete-btn" data-index="${index}">🗑️ Excluir</button>
             <div class="historico-item-header">
-                <span class="historico-km">${item.km} km</span>
+                <span class="historico-km">${pickupDisplay}📍 ${tripDisplay}km</span>
                 <span class="historico-valor">R$ ${item.valor.toFixed(2)}</span>
             </div>
             <div class="historico-detalhes">
-                💰 <span class="destaque">R$ ${item.precoPorKm.toFixed(2)}/km</span> • 
-                📍 ${item.distanciaTotal.toFixed(1)}km total • 
-                🕒 ${item.timestamp}
+                💰 <span class="destaque">R$ ${item.precoPorKm.toFixed(2)}/km</span> • 📏 ${item.distanciaTotal.toFixed(1)}km total • 🕒 ${item.timestamp}
             </div>
         `;
+        
+        const editBtn = el.querySelector('.edit-btn');
+        editBtn.onclick = () => editarItem(index);
+        
+        const deleteBtn = el.querySelector('.delete-btn');
+        deleteBtn.onclick = () => deletarItem(index);
+        
         historicoLista.appendChild(el);
     });
     
@@ -604,6 +1002,45 @@ function renderHistorico() {
     document.getElementById('total-corridas').textContent = historico.length;
     const ganhoTotal = historico.reduce((acc, item) => acc + item.valor, 0);
     document.getElementById('ganho-total').textContent = `R$ ${ganhoTotal.toFixed(2)}`;
+}
+
+// Opens the selection UI pre-filled with the record's data
+function editarItem(index) {
+    const item = historico[index];
+    
+    // Set editing mode with the index
+    editingIndex = index;
+    
+    // Pre-fill the selections
+    pickupSelecionado = item.pickupKm;
+    kmSelecionado = item.tripKm;
+    
+    // Hide history and show pickup section to start the edit flow
+    historicoSection.classList.add("hidden");
+    calculoSection.classList.add("hidden");
+    
+    // Go directly to valor section since we already have pickup and km
+    pickupSection.classList.add("hidden");
+    kmSection.classList.add("hidden");
+    valorSection.classList.remove("hidden");
+    valorSection.classList.add("fade-in");
+    
+    // Populate valor grid based on km
+    valorGrid.innerHTML = "";
+    const valores = kmValores[Math.round(kmSelecionado)] || [5,10,15,20,25,30];
+    
+    valores.forEach(v => {
+        const el = document.createElement("div");
+        el.className = "bubble valor-bubble";
+        el.innerHTML = `
+            <div>R$ ${v}</div>
+            <div class="bubble-label">corrida</div>
+        `;
+        el.onclick = () => selecionarValor(v);
+        valorGrid.appendChild(el);
+    });
+    
+    document.getElementById('valor-manual-btn').classList.remove("hidden");
 }
 
 document.getElementById('limpar-historico').onclick = () => {
@@ -615,26 +1052,50 @@ document.getElementById('limpar-historico').onclick = () => {
 };
 
 function resetarApp() {
-    kmSection.classList.remove("hidden");
+    pickupSection.classList.remove("hidden");
+    kmSection.classList.add("hidden");
     valorSection.classList.add("hidden");
     calculoSection.classList.add("hidden");
     
+    // Clear editing mode
+    editingIndex = null;
+    
     // Resetar grids
+    renderPickup();
     renderKm();
     valorGrid.innerHTML = "";
     
     // Resetar inputs
+    document.getElementById('pickup-manual').value = "";
     document.getElementById('km-manual').value = "";
     document.getElementById('valor-manual').value = "";
-    kmManualBox.classList.add("hidden");
-    valorManualBox.classList.add("hidden");
-    mostrarMais.classList.remove("hidden");
+    document.getElementById('pickup-manual-box').classList.add("hidden");
+    document.getElementById('km-manual-box').classList.add("hidden");
+    document.getElementById('valor-manual-box').classList.add("hidden");
+    document.getElementById('mostrar-mais-pickup').classList.remove("hidden");
+    document.getElementById('mostrar-mais-km').classList.remove("hidden");
+    
+    // Hide extra bubbles
+    document.querySelectorAll('#pickup-grid .bubble').forEach((b, idx) => {
+        if (idx >= 6) b.classList.add('hidden');
+    });
+    document.querySelectorAll('#km-grid .bubble').forEach((b, idx) => {
+        if (idx >= 6) b.classList.add('hidden');
+    });
 }
 
 // Carregar histórico ao iniciar
 if(historico.length > 0) {
     renderHistorico();
     historicoSection.classList.remove("hidden");
+}
+
+function deletarItem(index) {
+    if (confirm('Deseja excluir esta corrida do histórico?')) {
+        historico.splice(index, 1);
+        salvarHistorico();
+        renderHistorico();
+    }
 }
 </script>
 

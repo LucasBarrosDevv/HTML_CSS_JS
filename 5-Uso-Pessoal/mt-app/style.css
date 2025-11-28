@@ -1,0 +1,636 @@
+:root {
+  --verde-primario: #10b981;
+  --verde-escuro: #059669;
+  --verde-neon: #34d399;
+  --dourado: #fbbf24;
+  --dourado-escuro: #f59e0b;
+  --bg-escuro: #0f172a;
+  --bg-card: #1e293b;
+  --bg-card-hover: #334155;
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --sombra-verde: rgba(16, 185, 129, 0.3);
+  --sombra-dourada: rgba(251, 191, 36, 0.3);
+  --roxo-primario: #8b5cf6;
+  --roxo-escuro: #7c3aed;
+  --sombra-roxa: rgba(139, 92, 246, 0.3);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  min-height: 100vh;
+  padding: 20px;
+  color: var(--text-primary);
+}
+
+.container {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.section-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  margin-top: 20px;
+  color: var(--verde-neon);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.bubble {
+  background: var(--bg-card);
+  border-radius: 16px;
+  padding: 20px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--text-primary);
+  border: 2px solid var(--verde-primario);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.bubble::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.bubble:hover::before {
+  left: 100%;
+}
+
+.bubble:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 8px 25px var(--sombra-verde);
+  border-color: var(--verde-neon);
+  background: var(--bg-card-hover);
+}
+
+.bubble.pickup-bubble {
+  border-color: var(--roxo-primario);
+}
+
+.bubble.pickup-bubble:hover {
+  border-color: var(--roxo-escuro);
+  box-shadow: 0 8px 25px var(--sombra-roxa);
+}
+
+.bubble.valor-bubble {
+  border-color: var(--dourado);
+}
+
+.bubble.valor-bubble:hover {
+  border-color: var(--dourado-escuro);
+  box-shadow: 0 8px 25px var(--sombra-dourada);
+}
+
+.bubble-label {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+.button {
+  width: 100%;
+  padding: 16px;
+  background: linear-gradient(135deg, var(--verde-primario), var(--verde-escuro));
+  border: none;
+  border-radius: 14px;
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 6px 20px var(--sombra-verde);
+  transition: all 0.3s;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px var(--sombra-verde);
+}
+
+.button:active {
+  transform: translateY(0);
+}
+
+.input-box {
+  margin: 20px 0;
+}
+
+input {
+  width: 100%;
+  padding: 16px;
+  border: 2px solid var(--verde-primario);
+  border-radius: 12px;
+  font-size: 16px;
+  outline: none;
+  background: var(--bg-card);
+  color: var(--text-primary);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s;
+}
+
+input:focus {
+  border-color: var(--verde-neon);
+  box-shadow: 0 6px 20px var(--sombra-verde);
+}
+
+input::placeholder {
+  color: var(--text-secondary);
+}
+
+.hidden {
+  display: none !important;
+}
+
+.historico-section {
+  margin-top: 30px;
+  background: var(--bg-card);
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+  animation: slideIn 0.5s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.historico-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--dourado);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.historico-title::before {
+  content: "📊";
+  font-size: 26px;
+}
+
+/* Fixed layout for historico-item to prevent button overlap */
+.historico-item {
+  background: var(--bg-escuro);
+  border-radius: 12px;
+  padding: 16px;
+  padding-top: 45px;
+  margin-bottom: 12px;
+  border-left: 4px solid var(--dourado);
+  transition: all 0.3s;
+  position: relative;
+}
+
+.historico-item:hover {
+  transform: translateX(4px);
+  box-shadow: 0 4px 15px var(--sombra-dourada);
+}
+
+.historico-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.historico-km {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--verde-neon);
+}
+
+.historico-valor {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--dourado);
+}
+
+.historico-detalhes {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* Fixed edit and delete button positioning */
+.edit-btn {
+  position: absolute;
+  top: 8px;
+  right: 80px;
+  background: rgba(139, 92, 246, 0.2);
+  border: 1px solid var(--roxo-primario);
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 12px;
+  color: var(--roxo-primario);
+  cursor: pointer;
+  transition: all 0.3s;
+  font-weight: 600;
+  z-index: 10;
+}
+
+.edit-btn:hover {
+  background: rgba(139, 92, 246, 0.3);
+  box-shadow: 0 2px 10px var(--sombra-roxa);
+}
+
+.delete-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(239, 68, 68, 0.2);
+  border: 1px solid rgba(239, 68, 68, 0.5);
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 12px;
+  color: #fca5a5;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-weight: 600;
+  z-index: 10;
+}
+
+.delete-btn:hover {
+  background: rgba(239, 68, 68, 0.3);
+  box-shadow: 0 2px 10px rgba(239, 68, 68, 0.3);
+}
+
+/* Added thermometer indicator styles */
+.thermometer {
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px;
+  height: 70%;
+  border-radius: 3px;
+  transition: all 0.3s;
+}
+
+.thermometer.temp-red {
+  background: linear-gradient(to top, #ef4444, #dc2626);
+}
+
+.thermometer.temp-orange {
+  background: linear-gradient(to top, #f97316, #ea580c);
+}
+
+.thermometer.temp-yellow {
+  background: linear-gradient(to top, #eab308, #ca8a04);
+}
+
+.thermometer.temp-light-green {
+  background: linear-gradient(to top, #84cc16, #65a30d);
+}
+
+.thermometer.temp-dark-green {
+  background: linear-gradient(to top, #22c55e, #16a34a);
+}
+
+.thermometer.temp-blue {
+  background: linear-gradient(to top, #3b82f6, #2563eb);
+}
+
+.destaque {
+  color: var(--verde-neon);
+  font-weight: 600;
+}
+
+.calculo-box {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(251, 191, 36, 0.1));
+  border-radius: 16px;
+  padding: 20px;
+  margin: 0 0 20px 0;
+  border: 2px solid var(--dourado);
+  box-shadow: 0 6px 20px var(--sombra-dourada);
+}
+
+.calculo-titulo {
+  font-size: 16px;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.calculo-resultado {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--dourado);
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.calculo-info {
+  font-size: 13px;
+  color: var(--text-secondary);
+  text-align: center;
+  line-height: 1.5;
+}
+
+.stats-box {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.stat-card {
+  background: var(--bg-escuro);
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.stat-label {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.stat-value {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--verde-neon);
+}
+
+/* Added net profit display styles */
+.stat-net {
+  font-size: 11px;
+  color: var(--text-secondary);
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(148, 163, 184, 0.2);
+  line-height: 1.4;
+}
+
+.limpar-btn {
+  background: rgba(239, 68, 68, 0.2);
+  border: 1px solid rgba(239, 68, 68, 0.5);
+  color: #fca5a5;
+  margin-top: 12px;
+  padding: 12px;
+  font-size: 14px;
+}
+
+.voltar-btn {
+  background: rgba(148, 163, 184, 0.2);
+  border: 1px solid rgba(148, 163, 184, 0.5);
+  color: var(--text-secondary);
+  margin-top: 10px;
+}
+
+.limpar-btn:hover {
+  background: rgba(239, 68, 68, 0.3);
+  box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+}
+
+.voltar-btn:hover {
+  background: rgba(148, 163, 184, 0.3);
+  box-shadow: 0 4px 15px rgba(148, 163, 184, 0.3);
+}
+
+.fade-in {
+  animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* iOS-style picker wheel styles */
+.picker-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.picker-container {
+  background: var(--bg-card);
+  border-radius: 20px;
+  padding: 20px;
+  width: 90%;
+  max-width: 350px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+.picker-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.picker-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.picker-close {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 28px;
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.picker-wheel {
+  height: 200px;
+  overflow-y: scroll;
+  position: relative;
+  scroll-snap-type: y mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.picker-wheel::-webkit-scrollbar {
+  display: none;
+}
+
+.picker-item {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  scroll-snap-align: center;
+  transition: all 0.3s;
+}
+
+.picker-item.active {
+  color: var(--verde-neon);
+  font-size: 28px;
+  font-weight: 800;
+}
+
+.picker-highlight {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 40px;
+  transform: translateY(-50%);
+  border-top: 2px solid rgba(16, 185, 129, 0.3);
+  border-bottom: 2px solid rgba(16, 185, 129, 0.3);
+  background: rgba(16, 185, 129, 0.05);
+  pointer-events: none;
+}
+
+.picker-confirm {
+  margin-top: 20px;
+  background: linear-gradient(135deg, var(--verde-primario), var(--verde-escuro));
+  padding: 14px;
+}
+
+/* Added configuration section styles */
+.config-box {
+  background: var(--bg-card);
+  border-radius: 16px;
+  padding: 20px;
+  margin-top: 20px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.config-field {
+  margin-bottom: 16px;
+}
+
+.config-field label {
+  display: block;
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.config-field input {
+  margin: 0;
+}
+
+.config-btn {
+  padding: 10px 16px;
+  font-size: 13px;
+  margin-bottom: 12px;
+  background: rgba(139, 92, 246, 0.2);
+  border: 1px solid var(--roxo-primario);
+  color: var(--roxo-primario);
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+.config-btn:hover {
+  background: rgba(139, 92, 246, 0.3);
+  box-shadow: 0 4px 15px var(--sombra-roxa);
+}
+
+/* Added header actions and total km display */
+.historico-header-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.total-km-display {
+  background: var(--bg-escuro);
+  border-radius: 10px;
+  padding: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.total-km-label {
+  font-size: 13px;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.total-km-value {
+  font-size: 16px;
+  color: var(--verde-neon);
+  font-weight: 700;
+}
+
+/* Added styles to make real km display more prominent and trip km more discreet */
+.total-km-display.main-km {
+  border: 2px solid rgba(16, 185, 129, 0.4);
+  background: rgba(16, 185, 129, 0.05);
+}
+
+.total-km-display.trip-km {
+  opacity: 0.6;
+  font-size: 0.9em;
+  padding: 8px 12px;
+}
+
+/* Added styles for manual input confirm buttons */
+.manual-confirm-btn {
+  margin-top: 10px;
+  padding: 12px;
+  font-size: 14px;
+}
