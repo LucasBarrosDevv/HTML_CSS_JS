@@ -217,6 +217,7 @@ input::placeholder {
   border-radius: 12px;
   padding: 16px;
   padding-top: 45px;
+  padding-right: 70px;
   margin-bottom: 12px;
   border-left: 4px solid var(--dourado);
   transition: all 0.3s;
@@ -294,42 +295,6 @@ input::placeholder {
 .delete-btn:hover {
   background: rgba(239, 68, 68, 0.3);
   box-shadow: 0 2px 10px rgba(239, 68, 68, 0.3);
-}
-
-/* Added thermometer indicator styles */
-.thermometer {
-  position: absolute;
-  left: 8px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 6px;
-  height: 70%;
-  border-radius: 3px;
-  transition: all 0.3s;
-}
-
-.thermometer.temp-red {
-  background: linear-gradient(to top, #ef4444, #dc2626);
-}
-
-.thermometer.temp-orange {
-  background: linear-gradient(to top, #f97316, #ea580c);
-}
-
-.thermometer.temp-yellow {
-  background: linear-gradient(to top, #eab308, #ca8a04);
-}
-
-.thermometer.temp-light-green {
-  background: linear-gradient(to top, #84cc16, #65a30d);
-}
-
-.thermometer.temp-dark-green {
-  background: linear-gradient(to top, #22c55e, #16a34a);
-}
-
-.thermometer.temp-blue {
-  background: linear-gradient(to top, #3b82f6, #2563eb);
 }
 
 .destaque {
@@ -620,6 +585,31 @@ input::placeholder {
 .total-km-display.main-km {
   border: 2px solid rgba(16, 185, 129, 0.4);
   background: rgba(16, 185, 129, 0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.km-controls {
+  display: flex;
+  gap: 6px;
+}
+
+.km-control-btn {
+  background: rgba(139, 92, 246, 0.2);
+  border: 1px solid var(--roxo-primario);
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 11px;
+  color: var(--roxo-primario);
+  cursor: pointer;
+  transition: all 0.3s;
+  font-weight: 600;
+}
+
+.km-control-btn:hover {
+  background: rgba(139, 92, 246, 0.3);
+  box-shadow: 0 2px 8px var(--sombra-roxa);
 }
 
 .total-km-display.trip-km {

@@ -442,11 +442,6 @@ function renderHistorico() {
     const el = document.createElement("div")
     el.className = "historico-item"
 
-    const thermometerClass = getThermometerClass(item.precoPorKm)
-    const thermometer = document.createElement("div")
-    thermometer.className = `thermometer ${thermometerClass}`
-    el.appendChild(thermometer)
-
     const pickupDisplay =
       item.pickupKm < 1 ? `🚗 ${(item.pickupKm * 1000).toFixed(0)}m + ` : `🚗 ${item.pickupKm.toFixed(1)}km + `
     const tripDisplay =
@@ -488,12 +483,13 @@ function renderHistorico() {
   const netDisplay = document.getElementById("ganho-liquido")
   if (custos.totalCost > 0) {
     netDisplay.innerHTML = `
-            Líquido: <strong>R$ ${ganhoLiquido.toFixed(2)}</strong><br>
-            (- R$ ${custos.fuelCost.toFixed(2)} combustível<br>
-            - R$ ${custos.totalAppFee.toFixed(2)} taxa app)
+            Lucro Líquido: <strong>R$ ${ganhoLiquido.toFixed(2)}</strong><br>
+            <span style="font-size: 10px;">(Descontado combustível + taxa do app)</span>
         `
   } else {
-    netDisplay.innerHTML = ""
+    netDisplay.innerHTML = `
+            Lucro Líquido: <strong>R$ ${ganhoLiquido.toFixed(2)}</strong>
+        `
   }
 }
 
@@ -606,4 +602,30 @@ document.getElementById("save-config").onclick = () => {
   historicoSection.classList.remove("hidden")
 
   // Alert removed for silent save
+}
+
+document.getElementById("edit-real-km-btn").onclick = () => {
+  const currentKm = config.totalKm || 0
+  const newKm = prompt(`📏 Digite o novo Total KM Real:\n\n(Valor atual: ${currentKm.toFixed(1)} km)`, currentKm)
+
+  if (newKm !== null && newKm !== "") {
+    const parsedKm = Number.parseFloat(newKm)
+    if (!isNaN(parsedKm) && parsedKm >= 0) {
+      config.totalKm = parsedKm
+      salvarConfig()
+      renderHistorico()
+    } else {
+      alert("Por favor, digite um valor válido.")
+    }
+  }
+}
+
+document.getElementById("reset-real-km-btn").onclick = () => {
+  if (
+    confirm("⚠️ Tem certeza que deseja resetar o Total KM Real para 0?\n\nO histórico de corridas não será afetado.")
+  ) {
+    config.totalKm = 0
+    salvarConfig()
+    renderHistorico()
+  }
 }
