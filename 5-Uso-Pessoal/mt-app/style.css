@@ -38,8 +38,8 @@ body {
 .section-title {
   font-size: 20px;
   font-weight: 700;
-  margin-bottom: 16px;
-  margin-top: 20px;
+  margin-bottom: 5px;
+  margin-top: 0px;
   color: var(--verde-neon);
   display: flex;
   align-items: center;
@@ -336,38 +336,45 @@ input::placeholder {
 .stats-box {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
+  gap: 14px;
   margin-top: 20px;
 }
 
 .stat-card {
   background: var(--bg-escuro);
-  border-radius: 12px;
-  padding: 16px;
+  border-radius: 14px;
+  padding: 18px;
   text-align: center;
   border: 1px solid rgba(16, 185, 129, 0.2);
+  transition: all 0.3s;
+}
+
+.stat-card:hover {
+  border-color: rgba(16, 185, 129, 0.4);
+  transform: translateY(-2px);
 }
 
 .stat-label {
   font-size: 12px;
   color: var(--text-secondary);
-  margin-bottom: 8px;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .stat-value {
-  font-size: 24px;
+  font-size: 26px;
   font-weight: 700;
   color: var(--verde-neon);
 }
 
-/* Added net profit display styles */
 .stat-net {
   font-size: 11px;
   color: var(--text-secondary);
-  margin-top: 8px;
-  padding-top: 8px;
+  margin-top: 10px;
+  padding-top: 10px;
   border-top: 1px solid rgba(148, 163, 184, 0.2);
-  line-height: 1.4;
+  line-height: 1.5;
 }
 
 .limpar-btn {
@@ -514,25 +521,34 @@ input::placeholder {
 .config-box {
   background: var(--bg-card);
   border-radius: 16px;
-  padding: 20px;
+  padding: 24px;
   margin-top: 20px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
 }
 
 .config-field {
-  margin-bottom: 16px;
+  margin-bottom: 18px;
 }
 
 .config-field label {
   display: block;
-  font-size: 13px;
-  color: var(--text-secondary);
+  font-size: 14px;
+  color: var(--verde-neon);
   margin-bottom: 8px;
   font-weight: 600;
 }
 
+.config-field small {
+  display: block;
+  font-size: 11px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+  line-height: 1.4;
+}
+
 .config-field input {
   margin: 0;
+  font-size: 16px;
 }
 
 .config-btn {
@@ -556,7 +572,7 @@ input::placeholder {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin-bottom: 16px;
+  margin-bottom: 0px;
 }
 
 .total-km-display {
@@ -582,12 +598,63 @@ input::placeholder {
 }
 
 /* Added styles to make real km display more prominent and trip km more discreet */
+.fuel-info {
+  display: flex;
+  gap: 12px;
+  margin-top: 6px;
+  font-size: 11px;
+  color: var(--text-secondary);
+  padding-top: 6px;
+  border-top: 1px solid rgba(148, 163, 184, 0.1);
+}
+
+.fuel-info span {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Improved total km display with better hierarchy */
 .total-km-display.main-km {
   border: 2px solid rgba(16, 185, 129, 0.4);
   background: rgba(16, 185, 129, 0.05);
   display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding: 14px;
+  margin-top: 7px;
+}
+
+.total-km-display.main-km .total-km-label {
+  font-size: 12px;
+  margin-bottom: 4px;
+  
+  
+}
+
+.total-km-display.main-km .total-km-value {
+  font-size: 20px;
+  display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* Make trip km more subtle */
+.total-km-display.trip-km {
+  opacity: 0.5;
+  font-size: 0.85em;
+  padding: 10px 12px;
+  border: 1px solid rgba(148, 163, 184, 0.1);
+}
+
+.total-km-display.trip-km .total-km-label {
+  font-size: 11px;
+}
+
+.total-km-display.trip-km .total-km-value {
+  font-size: 14px;
 }
 
 .km-controls {
@@ -612,15 +679,28 @@ input::placeholder {
   box-shadow: 0 2px 8px var(--sombra-roxa);
 }
 
-.total-km-display.trip-km {
-  opacity: 0.6;
-  font-size: 0.9em;
-  padding: 8px 12px;
-}
-
 /* Added styles for manual input confirm buttons */
 .manual-confirm-btn {
   margin-top: 10px;
   padding: 12px;
   font-size: 14px;
+}
+
+/* Better button styling for "Mostrar Mais/Menos" */
+#mostrar-mais-pickup,
+#mostrar-mais-km {
+  background: rgba(139, 92, 246, 0.15);
+  border: 1px solid var(--roxo-primario);
+  color: var(--roxo-primario);
+  padding: 12px;
+  font-size: 14px;
+  margin-top: 0px;
+  transition: all 0.3s;
+}
+
+#mostrar-mais-pickup:hover,
+#mostrar-mais-km:hover {
+  background: rgba(139, 92, 246, 0.25);
+  box-shadow: 0 4px 15px var(--sombra-roxa);
+  transform: translateY(-1px);
 }

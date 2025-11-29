@@ -260,11 +260,24 @@ renderPickup()
 renderKm()
 
 document.getElementById("mostrar-mais-pickup").onclick = () => {
-  document.querySelectorAll("#pickup-grid .bubble.hidden").forEach((b) => {
-    b.classList.remove("hidden")
-  })
-  document.getElementById("mostrar-mais-pickup").classList.add("hidden")
-  document.getElementById("pickup-manual-box").classList.remove("hidden")
+  const hiddenBubbles = document.querySelectorAll("#pickup-grid .bubble.hidden")
+  const btn = document.getElementById("mostrar-mais-pickup")
+
+  if (hiddenBubbles.length > 0) {
+    // Show all hidden bubbles
+    hiddenBubbles.forEach((b) => {
+      b.classList.remove("hidden")
+    })
+    btn.textContent = "👆 Mostrar Menos"
+    document.getElementById("pickup-manual-box").classList.remove("hidden")
+  } else {
+    // Hide bubbles after index 5
+    document.querySelectorAll("#pickup-grid .bubble").forEach((b, idx) => {
+      if (idx >= 6) b.classList.add("hidden")
+    })
+    btn.textContent = "👇 Mostrar Mais"
+    document.getElementById("pickup-manual-box").classList.add("hidden")
+  }
 }
 
 document.getElementById("pickup-manual-confirm").onclick = () => {
@@ -347,15 +360,21 @@ function calcularPrecoPorKm(pickupKm, tripKm, valor) {
 
 function calcularCustos() {
   const totalKmViajado = historico.reduce((acc, item) => acc + item.distanciaTotal, 0)
+
+  const totalTripKm = historico.reduce((acc, item) => acc + (item.tripKm || item.km || 0), 0)
+
   // Use real total km from config for fuel calculation
   const realTotalKm = config.totalKm || 0
   const fuelConsumed = config.fuelAvg > 0 && realTotalKm > 0 ? realTotalKm / config.fuelAvg : 0
   const fuelCost = fuelConsumed * config.gasPrice
-  const totalAppFee = config.appFee * historico.length
+
+  const totalAppFee = config.appFee || 0
 
   return {
     totalKmViajado,
+    totalTripKm,
     realTotalKm,
+    fuelConsumed,
     fuelCost,
     totalAppFee,
     totalCost: fuelCost + totalAppFee,
@@ -435,8 +454,18 @@ function renderHistorico() {
   const totalKmViajado = historico.reduce((acc, item) => acc + item.distanciaTotal, 0)
   document.getElementById("total-km-traveled").textContent = `${totalKmViajado.toFixed(1)} km`
 
-  // Display real total km (manual input)
-  document.getElementById("total-real-km").textContent = `${(config.totalKm || 0).toFixed(1)} km`
+  const custos = calcularCustos()
+
+  const realKmText = `${custos.realTotalKm.toFixed(1)} km`
+  const fuelInfoHTML =
+    custos.fuelConsumed > 0
+      ? `<div class="fuel-info">
+        <span>⛽ ${custos.fuelConsumed.toFixed(1)}L consumidos</span>
+        <span>💰 R$ ${custos.fuelCost.toFixed(2)}</span>
+      </div>`
+      : ""
+
+  document.getElementById("total-real-km").innerHTML = `${realKmText}${fuelInfoHTML}`
 
   historico.forEach((item, index) => {
     const el = document.createElement("div")
@@ -477,14 +506,21 @@ function renderHistorico() {
   const ganhoTotal = historico.reduce((acc, item) => acc + item.valor, 0)
   document.getElementById("ganho-total").textContent = `R$ ${ganhoTotal.toFixed(2)}`
 
-  const custos = calcularCustos()
   const ganhoLiquido = ganhoTotal - custos.totalCost
 
   const netDisplay = document.getElementById("ganho-liquido")
   if (custos.totalCost > 0) {
+    const breakdown = []
+    if (custos.fuelCost > 0) {
+      breakdown.push(`Combustível: R$ ${custos.fuelCost.toFixed(2)}`)
+    }
+    if (custos.totalAppFee > 0) {
+      breakdown.push(`Taxa do app: R$ ${custos.totalAppFee.toFixed(2)}`)
+    }
+
     netDisplay.innerHTML = `
             Lucro Líquido: <strong>R$ ${ganhoLiquido.toFixed(2)}</strong><br>
-            <span style="font-size: 10px;">(Descontado combustível + taxa do app)</span>
+            <span style="font-size: 10px;">${breakdown.join(" + ")}</span>
         `
   } else {
     netDisplay.innerHTML = `
@@ -589,19 +625,21 @@ document.getElementById("config-btn").onclick = () => {
 }
 
 document.getElementById("save-config").onclick = () => {
-  // Overwrite totalKm (not cumulative)
-  config.gasPrice = Number.parseFloat(document.getElementById("gas-price").value) || 0
-  config.fuelAvg = Number.parseFloat(document.getElementById("fuel-avg").value) || 0
-  config.totalKm = Number.parseFloat(document.getElementById("total-km").value) || 0
-  config.appFee = Number.parseFloat(document.getElementById("app-fee").value) || 0
+  const gasPrice = Number.parseFloat(document.getElementById("gas-price").value) || 0
+  const fuelAvg = Number.parseFloat(document.getElementById("fuel-avg").value) || 0
+  const totalKm = Number.parseFloat(document.getElementById("total-km").value) || 0
+  const appFee = Number.parseFloat(document.getElementById("app-fee").value) || 0
+
+  config.gasPrice = gasPrice
+  config.fuelAvg = fuelAvg
+  config.totalKm = totalKm
+  config.appFee = appFee
 
   salvarConfig()
 
   configSection.classList.add("hidden")
   renderHistorico()
   historicoSection.classList.remove("hidden")
-
-  // Alert removed for silent save
 }
 
 document.getElementById("edit-real-km-btn").onclick = () => {
