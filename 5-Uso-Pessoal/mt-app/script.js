@@ -48,22 +48,23 @@ const kmValores = {
   20: [25, 30, 35, 40, 50, 60],
 }
 
-const historico = JSON.parse(localStorage.getItem("historicocorridas")) || []
+let historico = JSON.parse(localStorage.getItem("historicocorridas")) || []
 let pickupSelecionado = null
 let kmSelecionado = null
 
 let editingIndex = null
-let editingItem = null
-let editSteps = []
-let currentEditStep = 0
 
 let pickerType = null
 let pickerValues = []
 const pickerCallback = null
 let longPressTimer = null
-let isPickerDragging = false
-let pickerDragStartY = 0
-let pickerScrollStartTop = 0
+
+const config = JSON.parse(localStorage.getItem("corridasConfig")) || {
+  gasPrice: 0,
+  fuelAvg: 0,
+  totalKm: 0,
+  appFee: 0,
+}
 
 function salvarHistorico() {
   localStorage.setItem("historicocorridas", JSON.stringify(historico))
@@ -147,12 +148,14 @@ function showPicker(initialValue, type) {
 
   if (type === "pickup") {
     title.textContent = "🚗 Distância de Busca"
+    // Generate values from 0.1 (100m) to 10.0 in 0.1 increments
     pickerValues = []
     for (let i = 1; i <= 100; i++) {
       pickerValues.push(i * 0.1)
     }
   } else if (type === "trip") {
     title.textContent = "📍 Distância da Corrida"
+    // Generate values from 0.1 (100m) to 50 in 0.1 increments (100-meter support)
     pickerValues = []
     for (let i = 1; i <= 500; i++) {
       pickerValues.push(i * 0.1)
@@ -190,66 +193,12 @@ function showPicker(initialValue, type) {
 
   setTimeout(() => {
     const targetIndex = pickerValues.findIndex((v) => v >= initialValue)
-    const actualIndex = targetIndex >= 0 ? targetIndex : pickerValues.length - 1
     const itemHeight = 40
-    wheel.scrollTop = actualIndex * itemHeight
+    wheel.scrollTop = targetIndex * itemHeight
     updatePickerHighlight()
   }, 50)
 
   wheel.addEventListener("scroll", updatePickerHighlight)
-
-  setupPickerDrag(wheel)
-}
-
-function setupPickerDrag(wheel) {
-  const handleDragStart = (e) => {
-    isPickerDragging = true
-    pickerDragStartY = e.type.includes("touch") ? e.touches[0].clientY : e.clientY
-    pickerScrollStartTop = wheel.scrollTop
-    wheel.style.scrollBehavior = "auto"
-  }
-
-  const handleDragMove = (e) => {
-    if (!isPickerDragging) return
-    e.preventDefault()
-
-    const currentY = e.type.includes("touch") ? e.touches[0].clientY : e.clientY
-    const deltaY = pickerDragStartY - currentY
-
-    // Apply drag with reduced speed for better control
-    wheel.scrollTop = pickerScrollStartTop + deltaY * 0.8
-  }
-
-  const handleDragEnd = () => {
-    if (!isPickerDragging) return
-    isPickerDragging = false
-    wheel.style.scrollBehavior = "smooth"
-
-    snapToNearestItem(wheel)
-  }
-
-  wheel.addEventListener("touchstart", handleDragStart, { passive: true })
-  wheel.addEventListener("mousedown", handleDragStart)
-
-  wheel.addEventListener("touchmove", handleDragMove, { passive: false })
-  wheel.addEventListener("mousemove", handleDragMove)
-
-  wheel.addEventListener("touchend", handleDragEnd)
-  wheel.addEventListener("mouseup", handleDragEnd)
-  wheel.addEventListener("mouseleave", handleDragEnd)
-}
-
-function snapToNearestItem(wheel) {
-  const itemHeight = 40
-  const scrollTop = wheel.scrollTop
-  const nearestIndex = Math.round(scrollTop / itemHeight)
-
-  wheel.scrollTo({
-    top: nearestIndex * itemHeight,
-    behavior: "smooth",
-  })
-
-  setTimeout(() => updatePickerHighlight(), 100)
 }
 
 function updatePickerHighlight() {
@@ -291,19 +240,9 @@ document.getElementById("picker-confirm").onclick = () => {
     const selectedValue = Number.parseFloat(activeItem.dataset.value)
 
     if (pickerType === "pickup") {
-      if (editingIndex !== null && editSteps.includes("pickup")) {
-        editingItem.pickupKm = selectedValue
-        proceedToNextEditStep()
-      } else {
-        selecionarPickup(selectedValue)
-      }
+      selecionarPickup(selectedValue)
     } else if (pickerType === "trip") {
-      if (editingIndex !== null && editSteps.includes("trip")) {
-        editingItem.tripKm = selectedValue
-        proceedToNextEditStep()
-      } else {
-        selecionarKm(selectedValue)
-      }
+      selecionarKm(selectedValue)
     }
   }
 
@@ -317,28 +256,8 @@ function selecionarPickup(km) {
   kmSection.classList.add("fade-in")
 }
 
-function selecionarKm(km) {
-  kmSelecionado = km
-  kmSection.classList.add("hidden")
-  valorSection.classList.remove("hidden")
-  valorSection.classList.add("fade-in")
-
-  valorGrid.innerHTML = ""
-  const valores = kmValores[Math.round(km * 10) / 10] || kmValores[Math.round(km)] || [5, 10, 15, 20, 25, 30]
-
-  valores.forEach((v) => {
-    const el = document.createElement("div")
-    el.className = "bubble valor-bubble"
-    el.innerHTML = `
-            <div>R$ ${v}</div>
-            <div class="bubble-label">corrida</div>
-        `
-    el.onclick = () => selecionarValor(v)
-    valorGrid.appendChild(el)
-  })
-
-  document.getElementById("valor-manual-btn").classList.remove("hidden")
-}
+renderPickup()
+renderKm()
 
 document.getElementById("mostrar-mais-pickup").onclick = () => {
   const hiddenBubbles = document.querySelectorAll("#pickup-grid .bubble.hidden")
@@ -393,13 +312,59 @@ document.getElementById("km-manual").addEventListener("keypress", (e) => {
   }
 })
 
+function selecionarKm(km) {
+  kmSelecionado = km
+  kmSection.classList.add("hidden")
+  valorSection.classList.remove("hidden")
+  valorSection.classList.add("fade-in")
+
+  valorGrid.innerHTML = ""
+  const valores = kmValores[Math.round(km * 10) / 10] || kmValores[Math.round(km)] || [5, 10, 15, 20, 25, 30]
+
+  valores.forEach((v) => {
+    const el = document.createElement("div")
+    el.className = "bubble valor-bubble"
+    el.innerHTML = `
+            <div>R$ ${v}</div>
+            <div class="bubble-label">corrida</div>
+        `
+    el.onclick = () => selecionarValor(v)
+    valorGrid.appendChild(el)
+  })
+
+  document.getElementById("valor-manual-btn").classList.remove("hidden")
+}
+
+document.getElementById("valor-manual-btn").onclick = () => {
+  document.getElementById("valor-manual-box").classList.remove("hidden")
+}
+
+document.getElementById("valor-manual").addEventListener("keypress", (e) => {
+  if (e.key === "Enter") {
+    const valorCustom = Number.parseFloat(e.target.value)
+    if (valorCustom > 0) selecionarValor(valorCustom)
+  }
+})
+
+function calcularPrecoPorKm(pickupKm, tripKm, valor) {
+  const distanciaTotal = pickupKm + tripKm
+  const precoPorKm = valor / distanciaTotal
+
+  return {
+    precoPorKm: precoPorKm,
+    distanciaTotal: distanciaTotal,
+    pickupKm: pickupKm,
+    tripKm: tripKm,
+  }
+}
+
 function calcularCustos() {
   const totalKmViajado = historico.reduce((acc, item) => acc + item.distanciaTotal, 0)
 
   const totalTripKm = historico.reduce((acc, item) => acc + (item.tripKm || item.km || 0), 0)
 
-  // Use trip km (calculated km) for fuel calculation
-  const realTotalKm = totalTripKm
+  // Use real total km from config for fuel calculation
+  const realTotalKm = config.totalKm || 0
   const fuelConsumed = config.fuelAvg > 0 && realTotalKm > 0 ? realTotalKm / config.fuelAvg : 0
   const fuelCost = fuelConsumed * config.gasPrice
 
@@ -408,7 +373,7 @@ function calcularCustos() {
   return {
     totalKmViajado,
     totalTripKm,
-    realTotalKm: config.totalKm || 0,
+    realTotalKm,
     fuelConsumed,
     fuelCost,
     totalAppFee,
@@ -431,16 +396,25 @@ function selecionarValor(valor) {
   if (editingIndex !== null) {
     historico[editingIndex] = item
     editingIndex = null
-    editingItem = null
-    editSteps = []
-    currentEditStep = 0
   } else {
     historico.unshift(item)
   }
 
   salvarHistorico()
 
-  showCalculoToast(calculo, valor)
+  calculoSection.classList.remove("hidden")
+  calculoSection.classList.add("fade-in")
+
+  const pickupDisplay =
+    pickupSelecionado < 1 ? `${(pickupSelecionado * 1000).toFixed(0)}m` : `${pickupSelecionado.toFixed(1)}km`
+  const tripDisplay = kmSelecionado < 1 ? `${(kmSelecionado * 1000).toFixed(0)}m` : `${kmSelecionado.toFixed(1)}km`
+
+  document.getElementById("preco-por-km").textContent = `R$ ${calculo.precoPorKm.toFixed(2)}/km`
+  document.getElementById("calculo-detalhes").innerHTML = `
+        🚗 Busca: ${pickupDisplay} + 📍 Corrida: ${tripDisplay}<br>
+        💵 Valor: R$ ${valor.toFixed(2)}<br>
+        <span class="destaque">Distância total percorrida:</span> ${calculo.distanciaTotal.toFixed(1)}km
+    `
 
   renderHistorico()
   historicoSection.classList.remove("hidden")
@@ -451,41 +425,27 @@ function selecionarValor(valor) {
   }, 5000)
 }
 
-function showCalculoToast(calculo, valor) {
-  const toast = document.getElementById("calculo-toast")
+document.getElementById("voltar-pickup-btn").onclick = () => {
+  pickupSelecionado = null
+  pickupSection.classList.remove("hidden")
+  kmSection.classList.add("hidden")
 
-  const pickupDisplay =
-    pickupSelecionado < 1 ? `${(pickupSelecionado * 1000).toFixed(0)}m` : `${pickupSelecionado.toFixed(1)}km`
-  const tripDisplay = kmSelecionado < 1 ? `${(kmSelecionado * 1000).toFixed(0)}m` : `${kmSelecionado.toFixed(1)}km`
+  document.getElementById("km-manual").value = ""
+  document.getElementById("km-manual-box").classList.add("hidden")
+  document.getElementById("mostrar-mais-km").classList.remove("hidden")
 
-  document.getElementById("preco-por-km").textContent = `R$ ${calculo.precoPorKm.toFixed(2)}/km`
-  document.getElementById("calculo-detalhes").innerHTML = `
-    🚗 Busca: ${pickupDisplay} + 📍 Corrida: ${tripDisplay}<br>
-    💵 Valor: R$ ${valor.toFixed(2)}<br>
-    <span class="destaque">Distância total percorrida:</span> ${calculo.distanciaTotal.toFixed(1)}km
-  `
-
-  toast.classList.remove("hidden", "fade-out")
-
-  // Auto hide after 4 seconds
-  setTimeout(() => {
-    toast.classList.add("fade-out")
-    setTimeout(() => {
-      toast.classList.add("hidden")
-    }, 400)
-  }, 4000)
+  document.querySelectorAll("#km-grid .bubble").forEach((b, idx) => {
+    if (idx >= 6) b.classList.add("hidden")
+  })
 }
 
-function calcularPrecoPorKm(pickupKm, tripKm, valor) {
-  const distanciaTotal = pickupKm + tripKm
-  const precoPorKm = valor / distanciaTotal
-
-  return {
-    precoPorKm: precoPorKm,
-    distanciaTotal: distanciaTotal,
-    pickupKm: pickupKm,
-    tripKm: tripKm,
-  }
+function getThermometerClass(precoPorKm) {
+  if (precoPorKm < 1.0) return "temp-red"
+  if (precoPorKm < 1.5) return "temp-orange"
+  if (precoPorKm < 2.0) return "temp-yellow"
+  if (precoPorKm < 2.5) return "temp-light-green"
+  if (precoPorKm < 3.0) return "temp-dark-green"
+  return "temp-blue"
 }
 
 function renderHistorico() {
@@ -534,7 +494,7 @@ function renderHistorico() {
     el.appendChild(contentDiv)
 
     const editBtn = el.querySelector(".edit-btn")
-    editBtn.onclick = () => showEditModal(index)
+    editBtn.onclick = () => editarItem(index)
 
     const deleteBtn = el.querySelector(".delete-btn")
     deleteBtn.onclick = () => deletarItem(index)
@@ -569,122 +529,22 @@ function renderHistorico() {
   }
 }
 
-function showEditModal(index) {
+function editarItem(index) {
+  const item = historico[index]
+
   editingIndex = index
-  editingItem = { ...historico[index] }
 
-  const modal = document.getElementById("edit-modal")
-  modal.classList.remove("hidden")
+  pickupSelecionado = item.pickupKm
+  kmSelecionado = item.tripKm
 
-  // Reset checkboxes
-  document.getElementById("edit-pickup-check").checked = false
-  document.getElementById("edit-trip-check").checked = false
-  document.getElementById("edit-value-check").checked = false
-}
-
-document.getElementById("edit-modal-close").onclick = () => {
-  document.getElementById("edit-modal").classList.add("hidden")
-  editingIndex = null
-  editingItem = null
-  editSteps = []
-  currentEditStep = 0
-}
-
-document.getElementById("edit-modal-confirm").onclick = () => {
-  const editPickup = document.getElementById("edit-pickup-check").checked
-  const editTrip = document.getElementById("edit-trip-check").checked
-  const editValue = document.getElementById("edit-value-check").checked
-
-  if (!editPickup && !editTrip && !editValue) {
-    alert("Por favor, selecione pelo menos uma opção para editar.")
-    return
-  }
-
-  editSteps = []
-  if (editPickup) editSteps.push("pickup")
-  if (editTrip) editSteps.push("trip")
-  if (editValue) editSteps.push("value")
-
-  currentEditStep = 0
-
-  document.getElementById("edit-modal").classList.add("hidden")
-
-  // Start editing flow
-  proceedToNextEditStep()
-}
-
-function proceedToNextEditStep() {
-  if (currentEditStep >= editSteps.length) {
-    // Finished all edits, save the item
-    const calculo = calcularPrecoPorKm(editingItem.pickupKm, editingItem.tripKm, editingItem.valor)
-    editingItem.precoPorKm = calculo.precoPorKm
-    editingItem.distanciaTotal = calculo.distanciaTotal
-    editingItem.timestamp = new Date().toLocaleString("pt-BR")
-
-    historico[editingIndex] = editingItem
-    salvarHistorico()
-
-    showCalculoToast(calculo, editingItem.valor)
-
-    renderHistorico()
-
-    editingIndex = null
-    editingItem = null
-    editSteps = []
-    currentEditStep = 0
-
-    return
-  }
-
-  const step = editSteps[currentEditStep]
-  currentEditStep++
-
-  if (step === "pickup") {
-    showPicker(editingItem.pickupKm, "pickup")
-  } else if (step === "trip") {
-    showPicker(editingItem.tripKm, "trip")
-  } else if (step === "value") {
-    showValueEditor()
-  }
-}
-
-function showValueEditor() {
-  pickupSelecionado = editingItem.pickupKm
-  kmSelecionado = editingItem.tripKm
-
-  // Hide other sections and show valor section for editing
   historicoSection.classList.add("hidden")
+  calculoSection.classList.add("hidden")
+
   pickupSection.classList.add("hidden")
   kmSection.classList.add("hidden")
   valorSection.classList.remove("hidden")
+  valorSection.classList.add("fade-in")
 
-  // Render valor grid with current trip distance
-  renderValor()
-
-  // Add temporary cancel button for editing
-  const existingCancelBtn = document.getElementById("cancel-edit-valor-btn")
-  if (existingCancelBtn) existingCancelBtn.remove()
-
-  const cancelBtn = document.createElement("button")
-  cancelBtn.id = "cancel-edit-valor-btn"
-  cancelBtn.className = "button voltar-btn"
-  cancelBtn.textContent = "❌ Cancelar Edição"
-  cancelBtn.onclick = () => {
-    // Cancel editing
-    valorSection.classList.add("hidden")
-    historicoSection.classList.remove("hidden")
-    cancelBtn.remove()
-
-    editingIndex = null
-    editingItem = null
-    editSteps = []
-    currentEditStep = 0
-  }
-
-  valorSection.appendChild(cancelBtn)
-}
-
-function renderValor() {
   valorGrid.innerHTML = ""
   const valores = kmValores[Math.round(kmSelecionado * 10) / 10] ||
     kmValores[Math.round(kmSelecionado)] || [5, 10, 15, 20, 25, 30]
@@ -703,27 +563,46 @@ function renderValor() {
   document.getElementById("valor-manual-btn").classList.remove("hidden")
 }
 
-document.getElementById("voltar-pickup-btn").onclick = () => {
-  pickupSelecionado = null
+document.getElementById("limpar-historico").onclick = () => {
+  if (confirm("Deseja limpar todo o histórico?")) {
+    historico = []
+    salvarHistorico()
+    renderHistorico()
+  }
+}
+
+function resetarApp() {
   pickupSection.classList.remove("hidden")
   kmSection.classList.add("hidden")
+  valorSection.classList.add("hidden")
+  calculoSection.classList.add("hidden")
 
+  editingIndex = null
+
+  renderPickup()
+  renderKm()
+  valorGrid.innerHTML = ""
+
+  document.getElementById("pickup-manual").value = ""
   document.getElementById("km-manual").value = ""
+  document.getElementById("valor-manual").value = ""
+  document.getElementById("pickup-manual-box").classList.add("hidden")
   document.getElementById("km-manual-box").classList.add("hidden")
+  document.getElementById("valor-manual-box").classList.add("hidden")
+  document.getElementById("mostrar-mais-pickup").classList.remove("hidden")
   document.getElementById("mostrar-mais-km").classList.remove("hidden")
 
+  document.querySelectorAll("#pickup-grid .bubble").forEach((b, idx) => {
+    if (idx >= 6) b.classList.add("hidden")
+  })
   document.querySelectorAll("#km-grid .bubble").forEach((b, idx) => {
     if (idx >= 6) b.classList.add("hidden")
   })
 }
 
-function getThermometerClass(precoPorKm) {
-  if (precoPorKm < 1.0) return "temp-red"
-  if (precoPorKm < 1.5) return "temp-orange"
-  if (precoPorKm < 2.0) return "temp-yellow"
-  if (precoPorKm < 2.5) return "temp-light-green"
-  if (precoPorKm < 3.0) return "temp-dark-green"
-  return "temp-blue"
+if (historico.length > 0) {
+  renderHistorico()
+  historicoSection.classList.remove("hidden")
 }
 
 function deletarItem(index) {
@@ -788,49 +667,3 @@ document.getElementById("reset-real-km-btn").onclick = () => {
     renderHistorico()
   }
 }
-
-function resetarApp() {
-  pickupSection.classList.remove("hidden")
-  kmSection.classList.add("hidden")
-  valorSection.classList.add("hidden")
-
-  editingIndex = null
-  editingItem = null
-  editSteps = []
-  currentEditStep = 0
-
-  renderPickup()
-  renderKm()
-  valorGrid.innerHTML = ""
-
-  document.getElementById("pickup-manual").value = ""
-  document.getElementById("km-manual").value = ""
-  document.getElementById("valor-manual").value = ""
-  document.getElementById("pickup-manual-box").classList.add("hidden")
-  document.getElementById("km-manual-box").classList.add("hidden")
-  document.getElementById("valor-manual-box").classList.add("hidden")
-  document.getElementById("mostrar-mais-pickup").classList.remove("hidden")
-  document.getElementById("mostrar-mais-km").classList.remove("hidden")
-}
-
-function atualizarTotais() {
-  // Function to update totals, if needed
-}
-
-const config = JSON.parse(localStorage.getItem("corridasConfig")) || {
-  gasPrice: 0,
-  fuelAvg: 0,
-  totalKm: 0,
-  appFee: 0,
-}
-
-if (historico.length > 0) {
-  renderHistorico()
-  historicoSection.classList.remove("hidden")
-}
-
-// Initialization at the end to ensure pickup grid renders on page load
-atualizarTotais()
-renderPickup()
-renderKm()
-console.log("[v0] App initialized - pickup grid should be visible")
