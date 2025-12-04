@@ -24,10 +24,18 @@
                 </div>
         </div>
 
-        <!-- Total KM displays -->
+        <!-- Inverted prominence: trip-km is now main display, main-km is subtle -->
             <div class="historico-header-actions">
-                <!-- Real Total KM (main display) -->
+                <!-- Trip KM (now main display) -->
                 <div class="total-km-display main-km">
+                    <div class="total-km-label">📍 Total KM das Corridas (Calculado)</div>
+                    <div class="total-km-value">
+                        <span id="total-km-traveled">0.0 km</span>
+                    </div>
+                </div>
+
+                <!-- Real Total KM (now subtle display) -->
+                <div class="total-km-display trip-km">
                     <div class="total-km-label">📏 Total KM Real (Hodômetro)</div>
                     <div class="total-km-value">
                         <span id="total-real-km">0.0 km</span>
@@ -36,12 +44,6 @@
                             <button id="reset-real-km-btn" class="km-control-btn">🔄 Resetar</button>
                         </div>
                     </div>
-            </div>
-
-         <!-- Trip KM (subtle display) -->
-                <div class="total-km-display trip-km">
-                    <div class="total-km-label">📍 Total KM das Corridas (Calculado)</div>
-                    <div class="total-km-value" id="total-km-traveled">0.0 km</div>
                 </div>
                 
                 <button id="config-btn" class="button config-btn">⚙️ Configurações</button>
@@ -82,9 +84,9 @@
             </div>
         </div>
 
-        <!-- Calculo Section -->
-        <div id="calculo-section" class="hidden">
-            <div class="calculo-box">
+        <!-- Calculo Section now a toast notification -->
+        <div id="calculo-toast" class="calculo-toast hidden">
+            <div class="calculo-toast-content">
                 <div class="calculo-titulo">💰 Preço por Quilômetro</div>
                 <div class="calculo-resultado" id="preco-por-km">R$ 0,00/km</div>
                 <div class="calculo-info" id="calculo-detalhes">Cálculo sendo processado...</div>
@@ -141,6 +143,31 @@
             </div>
             <div id="picker-wheel" class="picker-wheel"></div>
             <button id="picker-confirm" class="button picker-confirm">✓ Confirmar</button>
+        </div>
+    </div>
+
+    <!-- Edit Modal for choosing what to edit -->
+    <div id="edit-modal" class="picker-overlay hidden">
+        <div class="picker-container">
+            <div class="picker-header">
+                <h3 class="picker-title">O que deseja editar?</h3>
+                <button id="edit-modal-close" class="picker-close">×</button>
+            </div>
+            <div class="edit-options">
+                <label class="edit-option">
+                    <input type="checkbox" id="edit-pickup-check">
+                    <span>🚗 Distância de busca</span>
+                </label>
+                <label class="edit-option">
+                    <input type="checkbox" id="edit-trip-check">
+                    <span>📍 Distância da corrida</span>
+                </label>
+                <label class="edit-option">
+                    <input type="checkbox" id="edit-value-check">
+                    <span>💰 Valor</span>
+                </label>
+            </div>
+            <button id="edit-modal-confirm" class="button picker-confirm">✓ Confirmar</button>
         </div>
     </div>
 

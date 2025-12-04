@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inevitable Love - Romantic Animation</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Georgia, 'Times New Roman', serif;
+      overflow: hidden;
+      background: linear-gradient(135deg, #8B0000 0%, #DC143C 50%, #FF1493 100%);
+      width: 100vw;
+      height: 100vh;
+    }
+
+    #canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .header {
+      position: absolute;
+      top: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    .header h1 {
+      font-size: 48px;
+      color: rgba(255, 255, 255, 0.95);
+      margin-bottom: 16px;
+      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+    }
+
+    .header p {
+      font-size: 20px;
+      color: rgba(255, 255, 255, 0.85);
+      max-width: 600px;
+      padding: 0 20px;
+      text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
+    }
+
+    .status {
+      position: absolute;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      z-index: 10;
+    }
+
+    .status-box {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px);
+      padding: 12px 32px;
+      border-radius: 50px;
+      border: 2px solid rgba(255, 192, 203, 0.5);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .status-text {
+      font-size: 16px;
+      color: rgba(139, 0, 0, 0.9);
+      text-transform: capitalize;
+      font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+      .header h1 {
+        font-size: 32px;
+      }
+      .header p {
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="canvas"></canvas>
+
+  <div class="header">
+    <h1>Inevitable Love</h1>
+    <p>No matter how far they go, their love always brings them back together</p>
+  </div>
+
+  <div class="status">
+    <div class="status-box">
+      <p class="status-text" id="status">Walking away...</p>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    const statusText = document.getElementById('status');
+
+    // Set canvas size
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    let heart1X = canvas.width * 0.4;
+    let heart1Y = canvas.height * 0.5;
+    let heart2X = canvas.width * 0.6;
+    let heart2Y = canvas.height * 0.5;
+
+    // Energy particles
+    const particles = [];
+    const explosionParticles = [];
+
+    // Animation phases
+    let phase = 0; // 0: walking away, 1: energy appears, 2: pulling back, 3: embracing
+    let phaseTimer = 0;
+    let pullStrength = 0;
+
+    // Create energy particle
+    function createParticle() {
+      const midX = (heart1X + heart2X) / 2;
+      const midY = (heart1Y + heart2Y) / 2;
+      const angle = Math.random() * Math.PI * 2;
+      const distance = Math.random() * 30;
+
+      particles.push({
+        x: midX + Math.cos(angle) * distance,
+        y: midY + Math.sin(angle) * distance,
+        vx: (Math.random() - 0.5) * 2,
+        vy: (Math.random() - 0.5) * 2,
+        life: 0,
+        maxLife: 60 + Math.random() * 60
+      });
+    }
+
+    function createExplosion() {
+      const centerX = (heart1X + heart2X) / 2;
+      const centerY = (heart1Y + heart2Y) / 2;
+      
+      for (let i = 0; i < 50; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const speed = 2 + Math.random() * 6;
+        
+        explosionParticles.push({
+          x: centerX,
+          y: centerY,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          life: 0,
+          maxLife: 80 + Math.random() * 40,
+          size: 5 + Math.random() * 15,
+          isHeart: Math.random() > 0.3
+        });
+      }
+    }
+
+    function drawHeart(x, y, size, color, glowColor) {
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.scale(size, size);
+
+      // Glow effect
+      ctx.shadowBlur = 30;
+      ctx.shadowColor = glowColor;
+
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      // Left curve
+      ctx.bezierCurveTo(-0.5, -0.4, -1, -0.1, -1, 0.3);
+      ctx.bezierCurveTo(-1, 0.7, -0.5, 1, 0, 1.5);
+      // Right curve
+      ctx.bezierCurveTo(0.5, 1, 1, 0.7, 1, 0.3);
+      ctx.bezierCurveTo(1, -0.1, 0.5, -0.4, 0, 0);
+      ctx.closePath();
+
+      // Heart gradient fill
+      const gradient = ctx.createRadialGradient(0, 0.3, 0, 0, 0.3, 1.5);
+      gradient.addColorStop(0, color);
+      gradient.addColorStop(1, '#8B0000');
+      ctx.fillStyle = gradient;
+      ctx.fill();
+
+      // Highlight
+      ctx.beginPath();
+      ctx.arc(-0.3, -0.1, 0.3, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+      ctx.fill();
+
+      ctx.shadowBlur = 0;
+      ctx.restore();
+    }
+
+    // Draw magnetic energy connection
+    function drawEnergy() {
+      if (phase < 1) return;
+
+      const numThreads = Math.min(12, Math.floor(pullStrength * 12));
+
+      for (let i = 0; i < numThreads; i++) {
+        const offset = (i - numThreads / 2) * 15;
+
+        // Glowing energy thread
+        ctx.beginPath();
+        ctx.moveTo(heart1X, heart1Y + offset);
+
+        const midX = (heart1X + heart2X) / 2;
+        const midY = (heart1Y + heart2Y) / 2 - 50 * Math.sin(phaseTimer * 0.02 + i);
+
+        ctx.quadraticCurveTo(midX, midY, heart2X, heart2Y + offset);
+
+        const gradient = ctx.createLinearGradient(heart1X, heart1Y, heart2X, heart2Y);
+        gradient.addColorStop(0, `rgba(255, 105, 180, ${pullStrength * 0.8})`);
+        gradient.addColorStop(0.5, `rgba(255, 255, 255, ${pullStrength * 0.9})`);
+        gradient.addColorStop(1, `rgba(255, 105, 180, ${pullStrength * 0.8})`);
+
+        ctx.strokeStyle = gradient;
+        ctx.lineWidth = 3 + pullStrength * 6;
+        ctx.lineCap = 'round';
+        ctx.shadowBlur = 25;
+        ctx.shadowColor = 'rgba(255, 255, 255, 0.9)';
+        ctx.stroke();
+        ctx.shadowBlur = 0;
+      }
+
+      // Update and draw particles
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const p = particles[i];
+        p.life++;
+        p.x += p.vx;
+        p.y += p.vy;
+
+        if (p.life > p.maxLife) {
+          particles.splice(i, 1);
+          continue;
+        }
+
+        const alpha = (1 - p.life / p.maxLife) * pullStrength;
+        const size = 3 + (p.life / p.maxLife) * 5;
+
+        // Outer glow
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 182, 193, ${alpha * 0.8})`;
+        ctx.fill();
+
+        // Inner bright core
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, size * 0.5, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
+        ctx.fill();
+      }
+    }
+
+    function drawExplosionParticles() {
+      for (let i = explosionParticles.length - 1; i >= 0; i--) {
+        const p = explosionParticles[i];
+        p.life++;
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += 0.1; // gravity
+
+        if (p.life > p.maxLife) {
+          explosionParticles.splice(i, 1);
+          continue;
+        }
+
+        const alpha = (1 - p.life / p.maxLife);
+
+        if (p.isHeart) {
+          // Draw heart particle
+          ctx.save();
+          ctx.globalAlpha = alpha;
+          drawHeart(p.x, p.y, p.size, '#FFB6C1', 'rgba(255, 255, 255, 0.8)');
+          ctx.restore();
+        } else {
+          // Draw sparkle particle
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size * 0.5, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
+          ctx.shadowBlur = 15;
+          ctx.shadowColor = 'rgba(255, 182, 193, 0.8)';
+          ctx.fill();
+          ctx.shadowBlur = 0;
+        }
+      }
+    }
+
+    // Draw floating hearts during embrace
+    const hearts = [];
+    function drawHearts() {
+      if (phase !== 3 || phaseTimer < 60) return;
+
+      // Create new hearts occasionally
+      if (phaseTimer % 30 === 0) {
+        hearts.push({
+          x: (heart1X + heart2X) / 2 + (Math.random() - 0.5) * 80,
+          y: (heart1Y + heart2Y) / 2,
+          vy: -1 - Math.random() * 1.5,
+          vx: (Math.random() - 0.5) * 2,
+          life: 0,
+          maxLife: 120,
+          size: 15 + Math.random() * 15
+        });
+      }
+
+      // Update and draw hearts
+      for (let i = hearts.length - 1; i >= 0; i--) {
+        const h = hearts[i];
+        h.life++;
+        h.y += h.vy;
+        h.x += h.vx;
+
+        if (h.life > h.maxLife) {
+          hearts.splice(i, 1);
+          continue;
+        }
+
+        const alpha = Math.min(1, (1 - h.life / h.maxLife));
+        ctx.save();
+        ctx.globalAlpha = alpha;
+        drawHeart(h.x, h.y, h.size, '#FFB6C1', 'rgba(255, 255, 255, 0.6)');
+        ctx.restore();
+      }
+    }
+
+    // Main animation loop
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      phaseTimer++;
+
+      // Phase 0: Walking away from each other
+      if (phase === 0) {
+        heart1X -= 1.5;
+        heart2X += 1.5;
+
+        if (phaseTimer > 120) {
+          phase = 1;
+          phaseTimer = 0;
+          statusText.textContent = 'Love pulls them back...';
+        }
+      }
+
+      // Phase 1: Magnetic energy appears and grows stronger
+      else if (phase === 1) {
+        pullStrength = Math.min(1, phaseTimer / 60);
+
+        if (phaseTimer % 3 === 0) {
+          createParticle();
+        }
+
+        if (phaseTimer > 80) {
+          phase = 2;
+          phaseTimer = 0;
+        }
+      }
+
+      // Phase 2: Being pulled back together by love
+      else if (phase === 2) {
+        const centerX = canvas.width / 2;
+        const pullForce = 0.05 + pullStrength * 0.05;
+
+        heart1X += (centerX - 40 - heart1X) * pullForce;
+        heart2X += (centerX + 40 - heart2X) * pullForce;
+
+        if (phaseTimer % 2 === 0) {
+          createParticle();
+        }
+
+        const distance = Math.abs(heart2X - heart1X);
+        if (distance < 100) {
+          phase = 3;
+          phaseTimer = 0;
+          createExplosion();
+          statusText.textContent = 'Together forever ♥';
+        }
+      }
+
+      // Phase 3: Embracing each other
+      else if (phase === 3) {
+        const centerX = canvas.width / 2;
+        heart1X += (centerX - 35 - heart1X) * 0.1;
+        heart2X += (centerX + 35 - heart2X) * 0.1;
+
+        pullStrength = Math.max(0, 1 - phaseTimer / 100);
+
+        if (phaseTimer % 5 === 0 && pullStrength > 0) {
+          createParticle();
+        }
+
+        if (phaseTimer % 90 === 0 && phaseTimer > 60) {
+          createExplosion();
+        }
+      }
+
+      // Draw everything in correct order
+      drawEnergy();
+      drawHeart(heart1X, heart1Y, 50, '#FF69B4', 'rgba(255, 255, 255, 0.8)');
+      drawHeart(heart2X, heart2Y, 50, '#FF1493', 'rgba(255, 255, 255, 0.8)');
+      drawHearts();
+      drawExplosionParticles();
+
+      requestAnimationFrame(animate);
+    }
+
+    // Start the animation
+    animate();
+
+    // Handle window resize
+    window.addEventListener('resize', () => {
+      const centerX = canvas.width / 2;
+      
+      resizeCanvas();
+      
+      // Reposition hearts relative to new center
+      if (phase < 3) {
+        heart1X = canvas.width * 0.4;
+        heart2X = canvas.width * 0.6;
+      } else {
+        heart1X = canvas.width / 2 - 35;
+        heart2X = canvas.width / 2 + 35;
+      }
+      heart1Y = canvas.height * 0.5;
+      heart2Y = canvas.height * 0.5;
+    });
+  </script>
+</body>
+</html>
