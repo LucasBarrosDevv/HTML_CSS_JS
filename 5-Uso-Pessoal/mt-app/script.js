@@ -164,12 +164,14 @@ function showPicker(initialValue, type) {
 
   wheel.innerHTML = '<div class="picker-highlight"></div>'
 
+  // Add padding at top
   for (let i = 0; i < 4; i++) {
     const padding = document.createElement("div")
     padding.className = "picker-item"
     wheel.appendChild(padding)
   }
 
+  // Add all picker values
   pickerValues.forEach((val, idx) => {
     const item = document.createElement("div")
     item.className = "picker-item"
@@ -180,9 +182,21 @@ function showPicker(initialValue, type) {
     }
     item.dataset.value = val
     item.dataset.index = idx
+
+    item.addEventListener("click", (e) => {
+      e.stopPropagation()
+      const targetIndex = Number.parseInt(item.dataset.index)
+      const itemHeight = 40
+      wheel.scrollTo({
+        top: targetIndex * itemHeight,
+        behavior: "smooth",
+      })
+    })
+
     wheel.appendChild(item)
   })
 
+  // Add padding at bottom
   for (let i = 0; i < 4; i++) {
     const padding = document.createElement("div")
     padding.className = "picker-item"
@@ -194,10 +208,15 @@ function showPicker(initialValue, type) {
   setTimeout(() => {
     const targetIndex = pickerValues.findIndex((v) => v >= initialValue)
     const itemHeight = 40
-    wheel.scrollTop = targetIndex * itemHeight
+    wheel.scrollTo({
+      top: targetIndex >= 0 ? targetIndex * itemHeight : 0,
+      behavior: "auto",
+    })
     updatePickerHighlight()
   }, 50)
 
+  // Remove old listener if exists to prevent duplicates
+  wheel.removeEventListener("scroll", updatePickerHighlight)
   wheel.addEventListener("scroll", updatePickerHighlight)
 }
 
@@ -363,10 +382,18 @@ function calcularCustos() {
 
   const totalTripKm = historico.reduce((acc, item) => acc + (item.tripKm || item.km || 0), 0)
 
-  // Use real total km from config for fuel calculation
   const realTotalKm = config.totalKm || 0
-  const fuelConsumed = config.fuelAvg > 0 && realTotalKm > 0 ? realTotalKm / config.fuelAvg : 0
-  const fuelCost = fuelConsumed * config.gasPrice
+  let fuelCost = 0
+  let fuelConsumed = 0
+
+  if (config.fuelAvg > 0 && config.gasPrice > 0 && totalTripKm > 0) {
+    // Calculate cost per 100 meters: (1 / fuelAvg) * gasPrice / 10
+    const costPer100m = ((1 / config.fuelAvg) * config.gasPrice) / 10
+    // Total fuel cost = totalTripKm * cost_per_100m
+    fuelCost = totalTripKm * costPer100m
+    // Calculate liters consumed for display
+    fuelConsumed = totalTripKm / config.fuelAvg
+  }
 
   const totalAppFee = config.appFee || 0
 
@@ -402,8 +429,17 @@ function selecionarValor(valor) {
 
   salvarHistorico()
 
+  const calculoBox = document.querySelector(".calculo-box")
   calculoSection.classList.remove("hidden")
   calculoSection.classList.add("fade-in")
+  calculoSection.style.position = "fixed"
+  calculoSection.style.top = "0"
+  calculoSection.style.left = "50%"
+  calculoSection.style.transform = "translateX(-50%) translateY(-100%)"
+  calculoSection.style.width = "calc(100% - 40px)"
+  calculoSection.style.maxWidth = "500px"
+  calculoSection.style.zIndex = "999"
+  calculoSection.style.transition = "transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)"
 
   const pickupDisplay =
     pickupSelecionado < 1 ? `${(pickupSelecionado * 1000).toFixed(0)}m` : `${pickupSelecionado.toFixed(1)}km`
@@ -416,13 +452,22 @@ function selecionarValor(valor) {
         <span class="destaque">Distância total percorrida:</span> ${calculo.distanciaTotal.toFixed(1)}km
     `
 
+  // Animate slide down
+  setTimeout(() => {
+    calculoSection.style.transform = "translateX(-50%) translateY(20px)"
+  }, 50)
+
   renderHistorico()
   historicoSection.classList.remove("hidden")
   historicoSection.classList.add("fade-in")
 
   setTimeout(() => {
-    resetarApp()
-  }, 5000)
+    // Animate slide up before hiding
+    calculoSection.style.transform = "translateX(-50%) translateY(-100%)"
+    setTimeout(() => {
+      resetarApp()
+    }, 400)
+  }, 10000)
 }
 
 document.getElementById("voltar-pickup-btn").onclick = () => {
@@ -576,6 +621,15 @@ function resetarApp() {
   kmSection.classList.add("hidden")
   valorSection.classList.add("hidden")
   calculoSection.classList.add("hidden")
+
+  calculoSection.style.position = ""
+  calculoSection.style.top = ""
+  calculoSection.style.left = ""
+  calculoSection.style.transform = ""
+  calculoSection.style.width = ""
+  calculoSection.style.maxWidth = ""
+  calculoSection.style.zIndex = ""
+  calculoSection.style.transition = ""
 
   editingIndex = null
 

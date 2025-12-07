@@ -303,12 +303,14 @@ input::placeholder {
 }
 
 .calculo-box {
-  background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(251, 191, 36, 0.1));
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.95), rgba(233, 36, 251, 0.95));
   border-radius: 16px;
   padding: 20px;
   margin: 0 0 20px 0;
   border: 2px solid var(--dourado);
   box-shadow: 0 6px 20px var(--sombra-dourada);
+  /* Added backdrop blur for toast notification effect */
+  backdrop-filter: blur(10px);
 }
 
 .calculo-titulo {
@@ -474,6 +476,7 @@ input::placeholder {
   scroll-snap-type: y mandatory;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
+  scroll-behavior: smooth; /* Added smooth scroll behavior for picker */
 }
 
 .picker-wheel::-webkit-scrollbar {
@@ -490,12 +493,18 @@ input::placeholder {
   color: var(--text-secondary);
   scroll-snap-align: center;
   transition: all 0.3s;
+  /* Added cursor pointer for tap-to-select */
+  cursor: pointer;
 }
 
 .picker-item.active {
   color: var(--verde-neon);
   font-size: 28px;
   font-weight: 800;
+}
+
+.picker-item:hover {
+  color: var(--verde-neon);
 }
 
 .picker-highlight {
@@ -628,8 +637,6 @@ input::placeholder {
 .total-km-display.main-km .total-km-label {
   font-size: 12px;
   margin-bottom: 4px;
-  
-  
 }
 
 .total-km-display.main-km .total-km-value {
