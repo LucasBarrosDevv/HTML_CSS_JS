@@ -1,5 +1,8 @@
 // Load data from localStorage
 const historico = JSON.parse(localStorage.getItem("historicocorridas")) || []
+const closedCycles = JSON.parse(localStorage.getItem("closedCycles")) || []
+const currentCycleNumber = Number.parseInt(localStorage.getItem("currentCycleNumber")) || 1
+
 const config = JSON.parse(localStorage.getItem("corridasConfig")) || {
   gasPrice: 0,
   fuelAvg: 0,
@@ -19,6 +22,7 @@ const currentFilter = {
   period: "week",
   startDate: null,
   endDate: null,
+  cycleFilter: "all", // Added cycle filter: 'all', 'current', or specific cycle number
 }
 
 // Chart settings
@@ -28,9 +32,94 @@ const chartSettings = {
 
 // Initialize the page
 document.addEventListener("DOMContentLoaded", () => {
-  initializeFilters()
+  renderFilters()
   renderDashboard()
+  renderCharts()
+  renderInsights()
+  renderComparisons()
+  renderCategories()
+  renderEfficiency()
+  renderHeatmap()
+  renderGoals()
+  renderRideList(getFilteredData())
+
+  renderCycleSelector()
 })
+
+function renderCycleSelector() {
+  const container = document.getElementById("filter-buttons")
+
+  // Create cycle selector container
+  const cycleSelector = document.createElement("div")
+  cycleSelector.style.cssText = "margin-top: 15px; padding-top: 15px; border-top: 1px solid var(--border-color);"
+
+  const cycleLabel = document.createElement("div")
+  cycleLabel.textContent = "📊 Visualizar Ciclos:"
+  cycleLabel.style.cssText = "font-size: 12px; color: var(--text-secondary); margin-bottom: 8px;"
+  cycleSelector.appendChild(cycleLabel)
+
+  const cycleButtons = document.createElement("div")
+  cycleButtons.style.cssText = "display: flex; gap: 8px; flex-wrap: wrap;"
+
+  // All cycles button
+  const allBtn = document.createElement("button")
+  allBtn.textContent = "Todos"
+  allBtn.className = "filter-btn"
+  if (currentFilter.cycleFilter === "all") allBtn.classList.add("active")
+  allBtn.onclick = () => {
+    currentFilter.cycleFilter = "all"
+    updateCycleButtons()
+    applyFilter()
+  }
+  cycleButtons.appendChild(allBtn)
+
+  // Current cycle button
+  const currentBtn = document.createElement("button")
+  currentBtn.textContent = `Ciclo Atual (${currentCycleNumber})`
+  currentBtn.className = "filter-btn"
+  if (currentFilter.cycleFilter === "current") currentBtn.classList.add("active")
+  currentBtn.onclick = () => {
+    currentFilter.cycleFilter = "current"
+    updateCycleButtons()
+    applyFilter()
+  }
+  cycleButtons.appendChild(currentBtn)
+
+  // Closed cycles buttons
+  closedCycles.slice(0, 5).forEach((cycle) => {
+    const btn = document.createElement("button")
+    btn.textContent = `Ciclo ${cycle.cycleNumber}`
+    btn.className = "filter-btn"
+    if (currentFilter.cycleFilter === cycle.cycleNumber) btn.classList.add("active")
+    btn.onclick = () => {
+      currentFilter.cycleFilter = cycle.cycleNumber
+      updateCycleButtons()
+      applyFilter()
+    }
+    cycleButtons.appendChild(btn)
+  })
+
+  cycleSelector.appendChild(cycleButtons)
+  container.appendChild(cycleSelector)
+}
+
+function updateCycleButtons() {
+  const buttons = document.querySelectorAll("#filter-buttons .filter-btn")
+  buttons.forEach((btn) => btn.classList.remove("active"))
+
+  buttons.forEach((btn) => {
+    if (btn.textContent === "Todos" && currentFilter.cycleFilter === "all") {
+      btn.classList.add("active")
+    } else if (btn.textContent.includes("Ciclo Atual") && currentFilter.cycleFilter === "current") {
+      btn.classList.add("active")
+    } else if (
+      btn.textContent.includes(`Ciclo ${currentFilter.cycleFilter}`) &&
+      typeof currentFilter.cycleFilter === "number"
+    ) {
+      btn.classList.add("active")
+    }
+  })
+}
 
 // Filter functions
 function initializeFilters() {
@@ -45,7 +134,7 @@ function initializeFilters() {
         document.getElementById("custom-range").classList.remove("hidden")
       } else {
         document.getElementById("custom-range").classList.add("hidden")
-        renderDashboard()
+        applyFilter()
       }
     })
   })
@@ -55,7 +144,7 @@ function initializeFilters() {
     currentFilter.startDate = document.getElementById("start-date").value
     currentFilter.endDate = document.getElementById("end-date").value
     if (currentFilter.startDate && currentFilter.endDate) {
-      renderDashboard()
+      applyFilter()
     }
   })
 
@@ -82,8 +171,58 @@ function initializeFilters() {
         chartSettings[chart].mode = mode
       }
 
-      renderDashboard()
+      applyFilter()
     })
+  })
+}
+
+function applyFilter() {
+  renderDashboard()
+  renderCharts()
+  renderInsights()
+  renderComparisons()
+  renderCategories()
+  renderEfficiency()
+  renderHeatmap()
+  renderGoals()
+  renderRideList(getFilteredData())
+}
+
+function getFilteredData() {
+  let allRides = []
+
+  // Filter by cycle first
+  if (currentFilter.cycleFilter === "all") {
+    // Include all: current + all closed cycles
+    allRides = [...historico]
+    closedCycles.forEach((cycle) => {
+      allRides = allRides.concat(cycle.rides)
+    })
+  } else if (currentFilter.cycleFilter === "current") {
+    // Only current cycle
+    allRides = [...historico]
+  } else if (typeof currentFilter.cycleFilter === "number") {
+    // Specific closed cycle
+    const targetCycle = closedCycles.find((c) => c.cycleNumber === currentFilter.cycleFilter)
+    if (targetCycle) {
+      allRides = [...targetCycle.rides]
+    }
+  }
+
+  // Then filter by period
+  if (currentFilter.period === "custom" && currentFilter.startDate && currentFilter.endDate) {
+    return allRides.filter((item) => {
+      const itemDate = new Date(item.timestamp.split(",")[0].split("/").reverse().join("-"))
+      return itemDate >= currentFilter.startDate && itemDate <= currentFilter.endDate
+    })
+  }
+
+  const now = new Date()
+  const startDate = getStartDate(currentFilter.period, now)
+
+  return allRides.filter((item) => {
+    const itemDate = new Date(item.timestamp.split(",")[0].split("/").reverse().join("-"))
+    return itemDate >= startDate
   })
 }
 
@@ -102,8 +241,8 @@ function filterDataByPeriod(data) {
       endDate = now
       break
     case "month":
-      startDate = new Date(now - 30 * 24 * 60 * 60 * 1000)
-      endDate = now
+      startDate = new Date(now.getFullYear(), now.getMonth(), 1)
+      endDate = new Date(now.getFullYear(), now.getMonth() + 1, 0)
       break
     case "year":
       startDate = new Date(now.getFullYear(), 0, 1)
@@ -130,18 +269,45 @@ function filterDataByPeriod(data) {
 
 // Main render function
 function renderDashboard() {
-  const filteredData = filterDataByPeriod(historico)
+  const filteredData = getFilteredData()
   renderSummaryCards(filteredData)
+}
+
+function renderCharts() {
+  const filteredData = getFilteredData()
   renderEarningsChart(filteredData)
   renderRidesChart(filteredData)
   renderDistanceChart(filteredData)
-  renderInsights(filteredData)
-  renderComparisons(filteredData)
-  renderCategories(filteredData)
-  renderKmAnalysis(filteredData)
-  renderHeatmap(filteredData)
-  renderGoals(filteredData)
-  renderRideList(filteredData)
+}
+
+function renderInsights() {
+  const filteredData = getFilteredData()
+  renderInsightsModule(filteredData)
+}
+
+function renderComparisons() {
+  const filteredData = getFilteredData()
+  renderComparisonsModule(filteredData)
+}
+
+function renderCategories() {
+  const filteredData = getFilteredData()
+  renderCategoriesModule(filteredData)
+}
+
+function renderEfficiency() {
+  const filteredData = getFilteredData()
+  renderKmAnalysisModule(filteredData)
+}
+
+function renderHeatmap() {
+  const filteredData = getFilteredData()
+  renderHeatmapModule(filteredData)
+}
+
+function renderGoals() {
+  const filteredData = getFilteredData()
+  renderGoalsModule(filteredData)
 }
 
 // Summary Cards
@@ -323,7 +489,7 @@ function renderLineChart(container, data) {
 }
 
 // Insights Module
-function renderInsights(data) {
+function renderInsightsModule(data) {
   const container = document.getElementById("insights-grid")
 
   if (data.length === 0) {
@@ -400,7 +566,7 @@ function renderInsights(data) {
 }
 
 // Comparisons Module
-function renderComparisons(data) {
+function renderComparisonsModule(data) {
   const container = document.getElementById("comparison-grid")
   const now = new Date()
 
@@ -479,7 +645,7 @@ function renderComparisons(data) {
 }
 
 // Categories Module
-function renderCategories(data) {
+function renderCategoriesModule(data) {
   const container = document.getElementById("category-grid")
 
   const categories = {
@@ -512,7 +678,7 @@ function renderCategories(data) {
 }
 
 // KM Analysis Module
-function renderKmAnalysis(data) {
+function renderKmAnalysisModule(data) {
   const container = document.getElementById("km-analysis")
   const chartContainer = document.getElementById("km-chart")
 
@@ -549,7 +715,7 @@ function renderKmAnalysis(data) {
 }
 
 // Heatmap Module
-function renderHeatmap(data) {
+function renderHeatmapModule(data) {
   const container = document.getElementById("heatmap")
 
   const hourlyData = Array.from({ length: 24 }, () => ({ count: 0, earnings: 0 }))
@@ -578,7 +744,7 @@ function renderHeatmap(data) {
 }
 
 // Goals Module
-function renderGoals(data) {
+function renderGoalsModule(data) {
   const container = document.getElementById("goals-container")
 
   const totalEarnings = data.reduce((sum, item) => sum + item.valor, 0)
@@ -645,7 +811,7 @@ function saveGoal(key) {
   const value = Number.parseFloat(document.getElementById(`goal-${key}`).value) || 0
   goals[key] = value
   localStorage.setItem("driverGoals", JSON.stringify(goals))
-  renderDashboard()
+  applyFilter()
 }
 
 // Ride List Module
@@ -678,61 +844,99 @@ function renderRideList(data) {
 }
 
 // Export to PDF (simplified - generates text report)
-function exportPDF(type) {
-  let filteredData
-  const now = new Date()
+function exportData(format) {
+  const data = getFilteredData()
 
-  switch (type) {
-    case "daily":
-      currentFilter.period = "today"
-      break
-    case "weekly":
-      currentFilter.period = "week"
-      break
-    case "monthly":
-      currentFilter.period = "month"
-      break
-    default:
-      currentFilter.period = "week"
+  if (data.length === 0) {
+    alert("Nenhum dado para exportar no período selecionado.")
+    return
   }
 
-  filteredData = filterDataByPeriod(historico)
+  const cycleInfo =
+    currentFilter.cycleFilter === "all"
+      ? "Todos os Ciclos"
+      : currentFilter.cycleFilter === "current"
+        ? `Ciclo Atual (${currentCycleNumber})`
+        : `Ciclo ${currentFilter.cycleFilter}`
 
-  // Generate text report
-  const totalEarnings = filteredData.reduce((sum, item) => sum + item.valor, 0)
-  const totalRides = filteredData.length
-  const totalDistance = filteredData.reduce((sum, item) => sum + item.distanciaTotal, 0)
+  if (format === "csv") {
+    const headers = ["Data/Hora", "Busca (km)", "Corrida (km)", "Total (km)", "Valor (R$)", "R$/km", "Ciclo"]
+    const rows = data.map((item) => {
+      const cycleNum = historico.includes(item)
+        ? currentCycleNumber
+        : closedCycles.find((c) => c.rides.includes(item))?.cycleNumber || "N/A"
+      return [
+        item.timestamp,
+        item.pickupKm.toFixed(2),
+        (item.tripKm || item.km).toFixed(2),
+        item.distanciaTotal.toFixed(2),
+        item.valor.toFixed(2),
+        item.precoPorKm.toFixed(2),
+        cycleNum,
+      ]
+    })
 
-  const report = `
-=== RELATÓRIO DE CORRIDAS ${type.toUpperCase()} ===
-Data: ${now.toLocaleDateString("pt-BR")}
+    const csv = [headers, ...rows].map((row) => row.join(",")).join("\n")
+    const blob = new Blob([csv], { type: "text/csv" })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement("a")
+    a.href = url
+    a.download = `corridas_${cycleInfo.replace(/\s/g, "_")}_${new Date().toISOString().split("T")[0]}.csv`
+    a.click()
+  } else if (format === "json") {
+    const exportData = {
+      cycleInfo,
+      period: currentFilter.period,
+      exportDate: new Date().toISOString(),
+      rides: data,
+      summary: calculateSummary(data),
+    }
 
-RESUMO:
-- Total de Corridas: ${totalRides}
-- Receita Total: R$ ${totalEarnings.toFixed(2)}
-- Distância Total: ${totalDistance.toFixed(1)} km
-- Média por Corrida: R$ ${(totalEarnings / totalRides || 0).toFixed(2)}
+    const json = JSON.stringify(exportData, null, 2)
+    const blob = new Blob([json], { type: "application/json" })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement("a")
+    a.href = url
+    a.download = `corridas_${cycleInfo.replace(/\s/g, "_")}_${new Date().toISOString().split("T")[0]}.json`
+    a.click()
+  }
+}
 
-DETALHES:
-${filteredData
-  .map(
-    (item, i) => `
-${i + 1}. ${item.timestamp}
-   Valor: R$ ${item.valor.toFixed(2)} | Distância: ${item.distanciaTotal.toFixed(1)}km | Preço/km: R$ ${item.precoPorKm.toFixed(2)}`,
-  )
-  .join("\n")}
+function calculateSummary(data) {
+  const totalRides = data.length
+  const grossEarnings = data.reduce((sum, item) => sum + item.valor, 0)
+  const totalKm = data.reduce((sum, item) => sum + item.distanciaTotal, 0)
+  const avgPerKm = totalKm > 0 ? grossEarnings / totalKm : 0
 
-=================================
-  `.trim()
+  return {
+    totalRides,
+    grossEarnings: grossEarnings.toFixed(2),
+    totalKm: totalKm.toFixed(2),
+    avgPerKm: avgPerKm.toFixed(2),
+  }
+}
 
-  // Create downloadable text file
-  const blob = new Blob([report], { type: "text/plain" })
-  const url = URL.createObjectURL(blob)
-  const a = document.createElement("a")
-  a.href = url
-  a.download = `relatorio_${type}_${now.getTime()}.txt`
-  a.click()
-  URL.revokeObjectURL(url)
+// Helper function to get start date based on period
+function getStartDate(period, now) {
+  switch (period) {
+    case "today":
+      return new Date(now.getFullYear(), now.getMonth(), now.getDate())
+    case "week":
+      return new Date(now - 7 * 24 * 60 * 60 * 1000)
+    case "month":
+      return new Date(now.getFullYear(), now.getMonth(), 1)
+    case "year":
+      return new Date(now.getFullYear(), 0, 1)
+    default:
+      return new Date(now - 30 * 24 * 60 * 60 * 1000)
+  }
+}
 
-  alert("Relatório exportado com sucesso!")
+// Placeholder functions for undeclared variables
+function renderFilters() {
+  console.log("renderFilters function is not implemented.")
+}
+
+function renderKmAnalysis() {
+  console.log("renderKmAnalysis function is not implemented.")
 }

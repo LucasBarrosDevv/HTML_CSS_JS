@@ -66,12 +66,23 @@ const config = JSON.parse(localStorage.getItem("corridasConfig")) || {
   appFee: 0,
 }
 
+const closedCycles = JSON.parse(localStorage.getItem("closedCycles")) || []
+let currentCycleNumber = Number.parseInt(localStorage.getItem("currentCycleNumber")) || 1
+
 function salvarHistorico() {
   localStorage.setItem("historicocorridas", JSON.stringify(historico))
 }
 
 function salvarConfig() {
   localStorage.setItem("corridasConfig", JSON.stringify(config))
+}
+
+function saveClosedCycles() {
+  localStorage.setItem("closedCycles", JSON.stringify(closedCycles))
+}
+
+function saveCurrentCycleNumber() {
+  localStorage.setItem("currentCycleNumber", currentCycleNumber.toString())
 }
 
 function renderPickup() {
@@ -467,7 +478,7 @@ function selecionarValor(valor) {
     setTimeout(() => {
       resetarApp()
     }, 400)
-  }, 10000)
+  }, 4000)
 }
 
 document.getElementById("voltar-pickup-btn").onclick = () => {
@@ -608,11 +619,85 @@ function editarItem(index) {
   document.getElementById("valor-manual-btn").classList.remove("hidden")
 }
 
-document.getElementById("limpar-historico").onclick = () => {
-  if (confirm("Deseja limpar todo o histórico?")) {
+document.getElementById("fechar-caixa-btn").onclick = () => {
+  if (historico.length === 0) {
+    alert("⚠️ Não há corridas para fechar o caixa.")
+    return
+  }
+
+  const custos = calcularCustos()
+  const ganhoTotal = historico.reduce((acc, item) => acc + item.valor, 0)
+  const ganhoLiquido = ganhoTotal - custos.totalCost
+
+  const confirmMessage = `💰 FECHAR CAIXA - Ciclo ${currentCycleNumber}
+
+📊 Resumo do Ciclo:
+• ${historico.length} corridas realizadas
+• Ganho Bruto: R$ ${ganhoTotal.toFixed(2)}
+• Lucro Líquido: R$ ${ganhoLiquido.toFixed(2)}
+• Combustível: R$ ${custos.fuelCost.toFixed(2)}
+• Taxa do App: R$ ${custos.totalAppFee.toFixed(2)}
+
+⚠️ Após fechar o caixa:
+✓ Este ciclo será arquivado
+✓ Um novo ciclo começará
+✓ Histórico será limpo para novas corridas
+✓ Você poderá visualizar ciclos fechados em Estatísticas Avançadas
+
+Deseja fechar o caixa agora?`
+
+  if (confirm(confirmMessage)) {
+    // Create closed cycle object
+    const closedCycle = {
+      cycleNumber: currentCycleNumber,
+      timestamp: new Date().toISOString(),
+      timestampFormatted: new Date().toLocaleString("pt-BR"),
+      rides: [...historico],
+      summary: {
+        totalRides: historico.length,
+        grossEarnings: ganhoTotal,
+        netEarnings: ganhoLiquido,
+        fuelCost: custos.fuelCost,
+        fuelConsumed: custos.fuelConsumed,
+        appFee: custos.totalAppFee,
+        totalCost: custos.totalCost,
+        totalKmTraveled: custos.totalKmViajado,
+        totalTripKm: custos.totalTripKm,
+        realTotalKm: custos.realTotalKm,
+      },
+      config: { ...config },
+    }
+
+    // Save closed cycle
+    closedCycles.unshift(closedCycle)
+    saveClosedCycles()
+
+    // Increment cycle number
+    currentCycleNumber++
+    saveCurrentCycleNumber()
+
+    // Clear current historico to start new cycle
     historico = []
     salvarHistorico()
+
+    // Reset config totalKm for new cycle
+    config.totalKm = 0
+    salvarConfig()
+
+    // Show success message
+    alert(
+      `✅ Caixa Fechado com Sucesso!
+
+Ciclo ${closedCycle.cycleNumber} arquivado.
+Novo Ciclo ${currentCycleNumber} iniciado.
+
+Acesse "Estatísticas Avançadas" para visualizar ciclos fechados.`,
+    )
+
+    // Refresh display
     renderHistorico()
+    historicoSection.classList.add("hidden")
+    resetarApp()
   }
 }
 
@@ -645,18 +730,6 @@ function resetarApp() {
   document.getElementById("valor-manual-box").classList.add("hidden")
   document.getElementById("mostrar-mais-pickup").classList.remove("hidden")
   document.getElementById("mostrar-mais-km").classList.remove("hidden")
-
-  document.querySelectorAll("#pickup-grid .bubble").forEach((b, idx) => {
-    if (idx >= 6) b.classList.add("hidden")
-  })
-  document.querySelectorAll("#km-grid .bubble").forEach((b, idx) => {
-    if (idx >= 6) b.classList.add("hidden")
-  })
-}
-
-if (historico.length > 0) {
-  renderHistorico()
-  historicoSection.classList.remove("hidden")
 }
 
 function deletarItem(index) {
@@ -720,4 +793,9 @@ document.getElementById("reset-real-km-btn").onclick = () => {
     salvarConfig()
     renderHistorico()
   }
+}
+
+if (historico.length > 0) {
+  renderHistorico()
+  historicoSection.classList.remove("hidden")
 }
