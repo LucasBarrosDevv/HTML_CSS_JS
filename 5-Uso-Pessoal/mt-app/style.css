@@ -303,7 +303,7 @@ input::placeholder {
 }
 
 .calculo-box {
-  background: linear-gradient(135deg, rgba(16, 185, 129, 0.95), rgba(251, 191, 36, 0.95));
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.95), rgba(233, 36, 251, 0.95));
   border-radius: 16px;
   padding: 20px;
   margin: 0 0 20px 0;
@@ -386,64 +386,6 @@ input::placeholder {
   margin-top: 12px;
   padding: 12px;
   font-size: 14px;
-}
-
-/* Added cash closing button styles with golden gradient */
-.fechar-caixa-btn {
-  background: linear-gradient(135deg, var(--dourado), var(--dourado-escuro));
-  border: 2px solid var(--dourado);
-  color: var(--bg-escuro);
-  margin-top: 20px;
-  padding: 16px;
-  font-size: 16px;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  box-shadow: 0 6px 20px var(--sombra-dourada);
-  position: relative;
-  overflow: hidden;
-}
-
-.fechar-caixa-btn::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-  transition: left 0.5s;
-}
-
-.fechar-caixa-btn:hover::before {
-  left: 100%;
-}
-
-.fechar-caixa-btn:hover {
-  background: linear-gradient(135deg, var(--dourado-escuro), var(--dourado));
-  box-shadow: 0 8px 30px var(--sombra-dourada);
-  transform: translateY(-3px) scale(1.02);
-  border-color: var(--dourado-escuro);
-}
-
-.fechar-caixa-btn:active {
-  transform: translateY(-1px) scale(1);
-}
-
-.analytics-btn {
-  padding: 10px 16px;
-  font-size: 13px;
-  margin-bottom: 12px;
-  background: linear-gradient(135deg, var(--verde-primario), var(--verde-escuro));
-  border: 1px solid var(--verde-primario);
-  color: white;
-  text-transform: none;
-  letter-spacing: normal;
-}
-
-.analytics-btn:hover {
-  background: linear-gradient(135deg, var(--verde-escuro), var(--verde-primario));
-  box-shadow: 0 4px 15px var(--sombra-verde);
 }
 
 .voltar-btn {
